@@ -452,7 +452,7 @@ namespace CapaDatos
 
         #region METODO BUSCAR VENTA
         public static DataTable BuscarVenta(string tipo_busqueda, string texto_busqueda,
-            string fecha1, string fecha2, string hora1, string hora2)
+            string fecha1 = "", string fecha2 = "", string hora1 = "", string hora2 = "")
         {
             DataTable DtResultado = new DataTable("Venta");
             SqlConnection SqlCon = new SqlConnection();

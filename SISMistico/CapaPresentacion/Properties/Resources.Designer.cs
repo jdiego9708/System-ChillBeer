@@ -103,6 +103,16 @@ namespace CapaPresentacion.Properties {
         /// <summary>
         ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap No_hay_cuentas_abiertas {
+            get {
+                object obj = ResourceManager.GetObject("No_hay_cuentas_abiertas", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap No_hay_domicilios {
             get {
                 object obj = ResourceManager.GetObject("No_hay_domicilios", resourceCulture);
@@ -126,6 +136,16 @@ namespace CapaPresentacion.Properties {
         internal static System.Drawing.Bitmap No_hay_reserva {
             get {
                 object obj = ResourceManager.GetObject("No_hay_reserva", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap No_hay_ventas {
+            get {
+                object obj = ResourceManager.GetObject("No_hay_ventas", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

@@ -6,6 +6,15 @@ namespace CapaPresentacion
 {
     public class LlenarListas
     {
+        public static void LlenarListaCatalogoGeneral(ComboBox lista)
+        {
+            lista.DataSource = null;
+
+            lista.DataSource = NCatalogo.BuscarCatalogo("CATALOGO PADRE", "TIPOS DE PRODUCTOS");
+
+            lista.ValueMember = "Id_tipo";
+            lista.DisplayMember = "Nombre_tipo";
+        }
         public static ComboBox ListaHoras(ComboBox lista)
         {
             lista.Items.Clear();
@@ -50,14 +59,12 @@ namespace CapaPresentacion
             lista.Items.Add("SERVICIOS VARIOS");
             return lista;
         }
-
         public static ComboBox LlenarListaBusquedaEmpleado(ComboBox lista)
         {
             lista.Items.Clear();
             lista.Items.Add("NOMBRE");
             return lista;
         }
-
         public static ComboBox LlenarListaTipoPlatos(ComboBox lista)
         {
             lista.DataSource = NPlatos.BuscarTipoPlatos("COMPLETO", "");
@@ -65,7 +72,6 @@ namespace CapaPresentacion
             lista.DisplayMember = "Tipo_plato";
             return lista;
         }
-
         public static ComboBox ListaBuscarPlatos(ComboBox lista)
         {
             lista.Items.Clear();
@@ -73,7 +79,6 @@ namespace CapaPresentacion
             lista.Items.Add("TIPO");
             return lista;
         }
-
         public static ComboBox LlenarListaTipoBebidas(ComboBox lista)
         {
             lista.DataSource = NBebidas.BuscarTipoBebidas("COMPLETO", "");
@@ -81,7 +86,6 @@ namespace CapaPresentacion
             lista.DisplayMember = "Tipo_bebida";
             return lista;
         }
-
         public static ComboBox ListaBuscarBebidas(ComboBox lista)
         {
             lista.Items.Clear();
@@ -89,7 +93,6 @@ namespace CapaPresentacion
             lista.Items.Add("TIPO");
             return lista;
         }
-
         public static ComboBox LlenarListaTipoInsumos(ComboBox lista)
         {
             lista.DataSource = NInsumos.BuscarTipoInsumos("COMPLETO", "");
@@ -97,14 +100,12 @@ namespace CapaPresentacion
             lista.DisplayMember = "Tipo_insumo";
             return lista;
         }
-
         public static ComboBox LlenarListaTipoMedidaInsumos(ComboBox lista)
         {
             lista.Items.Clear();
             lista.Items.Add("PORCIONES");
             return lista;
         }
-
         public static ComboBox LlenarListaMesas(ComboBox lista)
         {
             DataTable tabla = NMesas.BuscarMesas("COMPLETO", "");

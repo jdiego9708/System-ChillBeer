@@ -132,6 +132,9 @@ namespace CapaPresentacion.Formularios.FormsPrincipales
                     }
                 }
             }
+
+            this.Show();
+            this.txtPass.Focus();
         }
 
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData)

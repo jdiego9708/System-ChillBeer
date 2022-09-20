@@ -244,7 +244,7 @@ namespace CapaDatos
                 {
                     ParameterName = "@Id_tipo",
                     SqlDbType = SqlDbType.Int,
-                    Value = detalle.Id_tipo,
+                    Value = detalle.Id_producto,
                 };
                 SqlCmd.Parameters.Add(Id_tipo);
 
@@ -519,7 +519,7 @@ namespace CapaDatos
                 {
                     ParameterName = "@Id_tipo",
                     SqlDbType = SqlDbType.Int,
-                    Value = detalle.Id_tipo,
+                    Value = detalle.Id_producto,
                 };
                 SqlCmd.Parameters.Add(Id_tipo);
                 contador += 1;

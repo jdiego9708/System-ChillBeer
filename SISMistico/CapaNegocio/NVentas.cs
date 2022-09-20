@@ -43,7 +43,7 @@ namespace CapaNegocio
         #region BUSCAR VENTA
 
         public static DataTable BuscarVenta(string tipo_busqueda, string texto_busqueda,
-            string fecha1, string fecha2, string hora1, string hora2)
+            string fecha1 = "", string fecha2 = "", string hora1 = "", string hora2 = "")
         {
             return DVenta.BuscarVenta(tipo_busqueda,texto_busqueda, fecha1, fecha2, hora1, hora2);
         }

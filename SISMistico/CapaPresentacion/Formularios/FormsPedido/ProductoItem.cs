@@ -1,5 +1,6 @@
 ﻿using CapaPresentacion.Formularios.Controles;
 using CapaPresentacion.Formularios.FormsPlatos;
+using CapaPresentacion.Formularios.FormsProductos;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -32,18 +33,11 @@ namespace CapaPresentacion.Formularios.FormsPedido
         {
             if (this.Product == null) return;
 
-            if (this.Product.Tipo_producto.Equals("PLATO"))
-            {
-                CapaEntidades.Models.Platos plato = (CapaEntidades.Models.Platos)this.Product.Product;
-
-                FrmAgregarPlato frmplato = new FrmAgregarPlato()
-                {
-                    StartPosition = FormStartPosition.CenterScreen,
-                    Plato = plato,
-                };
-                frmplato.OnPlatoSuccess += Frmplato_OnPlatoSuccess;
-                frmplato.ShowDialog();
-            }
+            //FrmAgregarProducto frmAgregarProducto = new FrmAgregarProducto()
+            //{
+            //    StartPosition = FormStartPosition.CenterScreen,
+            //    Producto = this.Product.Product,
+            //}
         }
 
         private void Frmplato_OnPlatoSuccess(object sender, EventArgs e)

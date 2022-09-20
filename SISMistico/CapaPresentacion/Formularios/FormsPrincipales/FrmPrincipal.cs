@@ -45,6 +45,44 @@ namespace CapaPresentacion.Formularios.FormsPrincipales
             this.opcionesUsuario.btnCerrarSesion.Click += BtnCerrarSesion_Click;
             this.opcionesUsuario.btnFunciones.Click += BtnFunciones_Click;
             this.btnAdministracion.Click += BtnAdministracion_Click;
+
+            this.btnVentas.Click += BtnVentas_Click;
+        }
+
+        private void BtnVentas_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                FrmPantallaInicial frm = new FrmPantallaInicial
+                {
+                    TopLevel = false
+                };
+                Form FormComprobado = this.ComprobarExistencia(frm);
+                if (FormComprobado != null)
+                {
+                    frm.WindowState = FormWindowState.Maximized;
+                    frm.MinimizeBox = false;
+                    frm.MaximizeBox = false;
+                    frm.FormBorderStyle = FormBorderStyle.None;
+                    frm.Activate();
+                }
+                else
+                {
+                    frm.WindowState = FormWindowState.Maximized;
+                    frm.MinimizeBox = false;
+                    frm.MaximizeBox = false;
+                    frm.FormBorderStyle = FormBorderStyle.None;
+                    this.panel1.Controls.Add(frm);
+                    this.panel1.Tag = frm;
+                    frm.Show();
+                }
+                frm.BringToFront();
+            }
+            catch (Exception ex)
+            {
+                Mensajes.MensajeErrorCompleto(this.Name, "BtnVentas_Click",
+                    "Hubo un error con el menu observar ventas", ex.Message);
+            }
         }
 
         private void BtnAdministracion_Click(object sender, EventArgs e)
@@ -433,10 +471,7 @@ namespace CapaPresentacion.Formularios.FormsPrincipales
             menuEmpleados.btnObservarEmpleados.Click += BtnObservarEmpleados_Click;
             menuEmpleados.btnActivarEmpleado.Click += BtnActivarEmpleado_Click;
             menuEmpleados.btnInactivarEmpleados.Click += BtnInactivarEmpleados_Click;
-            menuEmpleados.btnCambiarClaveMaestra.Click += BtnCambiarClaveMaestra_Click;
             menuEmpleados.btnCambiarClaveUsuario.Click += BtnCambiarClaveUsuario_Click;
-            menuEmpleados.btnComandasEliminadas.Click += BtnComandasEliminadas_Click;
-            menuEmpleados.btnNotas.Click += BtnNotas_Click;
             menuEmpleados.btnNomina.Click += BtnNomina_Click;
             container = new PoperContainer(menuEmpleados);
             container.Show(this.btnEmpleados);

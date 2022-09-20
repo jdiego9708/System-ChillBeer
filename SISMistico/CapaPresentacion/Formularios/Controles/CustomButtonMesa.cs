@@ -42,16 +42,16 @@ namespace CapaPresentacion.Formularios
                         FrmPedido FrmPedido = new FrmPedido
                         {
                             StartPosition = FormStartPosition.CenterScreen,
-                            Numero_mesa = Convert.ToInt32(this.Numero_mesa),
-                            Tipo_servicio = "MESA",
-                            //EmpleadoSelected = datos.EmpleadoClaveMaestra,
-                            ClienteSelected = datos.ClienteDefault,
-                            MesaSelected = new CapaEntidades.Models.Mesas
-                            {
-                                Id_mesa = this.Id_mesa,
-                                Num_mesa = this.Numero_mesa,
-                                Descripcion_mesa = string.Empty,
-                            },
+                            //Numero_mesa = Convert.ToInt32(this.Numero_mesa),
+                            //Tipo_servicio = "MESA",
+                            ////EmpleadoSelected = datos.EmpleadoClaveMaestra,
+                            //ClienteSelected = datos.ClienteDefault,
+                            //MesaSelected = new CapaEntidades.Models.Mesas
+                            //{
+                            //    Id_mesa = this.Id_mesa,
+                            //    Num_mesa = this.Numero_mesa,
+                            //    Descripcion_mesa = string.Empty,
+                            //},
                             WindowState = FormWindowState.Maximized
                         };
                         FrmPedido.ShowDialog();

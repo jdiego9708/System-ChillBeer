@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CapaEntidades.Models;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -20,11 +21,12 @@ namespace CapaPresentacion.Formularios.FormsPedido
 
         private void BtnTipo_Click(object sender, EventArgs e)
         {
-            this.OnBtnTipoClick?.Invoke(this, e);
+            this.OnBtnTipoClick?.Invoke(this.Catalogo, e);
         }
 
         public event EventHandler OnBtnTipoClick;
 
+        private Catalogo _catalogo;
         private object _tipoObject;
         private string _tipo;
         private string _nombreTipo;
@@ -49,5 +51,6 @@ namespace CapaPresentacion.Formularios.FormsPedido
         }
 
         public object TipoObject { get => _tipoObject; set => _tipoObject = value; }
+        public Catalogo Catalogo { get => _catalogo; set => _catalogo = value; }
     }
 }

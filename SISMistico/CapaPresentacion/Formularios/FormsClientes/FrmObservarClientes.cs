@@ -22,7 +22,16 @@ namespace CapaPresentacion.Formularios.FormsClientes
             this.Load += FrmObservarClientes_Load;
             this.btnAddCliente.Click += BtnAddCliente_Click;
             this.txtBusqueda.KeyPress += TxtBusqueda_KeyPress;
+
+            this.btnClose.Click += BtnClose_Click;
         }
+
+        private void BtnClose_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        public event EventHandler OnBtnNext;
 
         private void TxtBusqueda_KeyPress(object sender, KeyPressEventArgs e)
         {
@@ -68,7 +77,7 @@ namespace CapaPresentacion.Formularios.FormsClientes
                     this.panelClientes.BackgroundImage = Properties.Resources.No_hay_clientes;
                     return;
                 }
-                    
+
                 if (dtClientes.Rows.Count < 1)
                 {
                     this.panelClientes.BackgroundImage = Properties.Resources.No_hay_clientes;
@@ -76,7 +85,7 @@ namespace CapaPresentacion.Formularios.FormsClientes
                 }
 
                 List<UserControl> controls = new List<UserControl>();
-                foreach(DataRow row in dtClientes.Rows)
+                foreach (DataRow row in dtClientes.Rows)
                 {
                     Clientes cliente = new Clientes(row);
 
@@ -84,6 +93,7 @@ namespace CapaPresentacion.Formularios.FormsClientes
                     {
                         Cliente = cliente,
                     };
+                    clienteSmall.OnBtnNext += ClienteSmall_OnBtnNext;
                     controls.Add(clienteSmall);
                 }
 
@@ -99,6 +109,15 @@ namespace CapaPresentacion.Formularios.FormsClientes
             {
                 Mensajes.MensajeErrorCompleto(this.Name, "BuscarClientes",
                     "Hubo un error con la tabla de datos", ex.Message);
+            }
+        }
+
+        private void ClienteSmall_OnBtnNext(object sender, EventArgs e)
+        {
+            if (this.OnBtnNext != null)
+            {
+                this.OnBtnNext?.Invoke(sender, e);
+                this.Close();
             }
         }
 

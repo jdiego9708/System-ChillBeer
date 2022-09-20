@@ -21,6 +21,8 @@ namespace CapaPresentacion.Formularios.FormsClientes
             this.btnEditar.Click += BtnEditar_Click;
         }
 
+        public event EventHandler OnBtnNext;
+
         private void BtnEditar_Click(object sender, EventArgs e)
         {
             FrmAgregarCliente frmAgregar = new FrmAgregarCliente()
@@ -42,7 +44,7 @@ namespace CapaPresentacion.Formularios.FormsClientes
 
         private void BtnNext_Click(object sender, EventArgs e)
         {
-            Mensajes.MensajeInformacion("Perfil del cliente | Función en mantenimiento");
+            this.OnBtnNext?.Invoke(this.Cliente, e);
         }
 
         private void AsignarDatos(Clientes cliente)

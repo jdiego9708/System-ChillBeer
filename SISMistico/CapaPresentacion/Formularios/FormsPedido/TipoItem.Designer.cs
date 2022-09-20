@@ -41,7 +41,7 @@ namespace CapaPresentacion.Formularios.FormsPedido
             this.btnTipo.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnTipo.FlatAppearance.BorderSize = 0;
             this.btnTipo.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnTipo.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnTipo.Font = new System.Drawing.Font("Segoe UI Emoji", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnTipo.Location = new System.Drawing.Point(2, 4);
             this.btnTipo.Name = "btnTipo";
             this.btnTipo.Size = new System.Drawing.Size(169, 50);

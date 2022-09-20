@@ -48,7 +48,9 @@
   <ItemGroup>
     <Compile Include="Conexion.cs" />
     <Compile Include="DBebidas.cs" />
+    <Compile Include="DCatalogo.cs" />
     <Compile Include="DClientes.cs" />
+    <Compile Include="DProductos.cs" />
     <Compile Include="DTurnos.cs" />
     <Compile Include="DIngresos.cs" />
     <Compile Include="DEgresos.cs" />

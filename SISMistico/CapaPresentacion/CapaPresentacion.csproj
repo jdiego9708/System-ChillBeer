@@ -70,6 +70,7 @@
     </Reference>
     <Reference Include="System.Web.Services" />
     <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Windows.Forms.DataVisualization" />
     <Reference Include="System.Xaml" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -445,6 +446,12 @@
     <Compile Include="Formularios\FormsPedido\ProductoItem.Designer.cs">
       <DependentUpon>ProductoItem.cs</DependentUpon>
     </Compile>
+    <Compile Include="Formularios\FormsPedido\ProductoPedidoSmall.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Formularios\FormsPedido\ProductoPedidoSmall.Designer.cs">
+      <DependentUpon>ProductoPedidoSmall.cs</DependentUpon>
+    </Compile>
     <Compile Include="Formularios\FormsPedido\PruebaDetallePedido.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -506,6 +513,12 @@
     <Compile Include="Formularios\FormsPrincipales\FrmFunciones.Designer.cs">
       <DependentUpon>FrmFunciones.cs</DependentUpon>
     </Compile>
+    <Compile Include="Formularios\FormsPrincipales\FrmPantallaInicial.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Formularios\FormsPrincipales\FrmPantallaInicial.Designer.cs">
+      <DependentUpon>FrmPantallaInicial.cs</DependentUpon>
+    </Compile>
     <Compile Include="Formularios\FormsPrincipales\FrmVentanaInicial.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -529,6 +542,12 @@
     </Compile>
     <Compile Include="Formularios\FormsPrincipales\Menus\MenuEmpleados.designer.cs">
       <DependentUpon>MenuEmpleados.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Formularios\FormsProductos\FrmAgregarProducto.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Formularios\FormsProductos\FrmAgregarProducto.Designer.cs">
+      <DependentUpon>FrmAgregarProducto.cs</DependentUpon>
     </Compile>
     <Compile Include="Formularios\FormsReservas\EReservas.cs" />
     <Compile Include="Formularios\FormsReservas\FrmNuevaReserva.cs">
@@ -554,6 +573,12 @@
     </Compile>
     <Compile Include="Formularios\FormsReservas\ReservaMesaSmall.Designer.cs">
       <DependentUpon>ReservaMesaSmall.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Formularios\FormsVentas\VentaSmall.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Formularios\FormsVentas\VentaSmall.Designer.cs">
+      <DependentUpon>VentaSmall.cs</DependentUpon>
     </Compile>
     <Compile Include="ReportesFacturas\Comandas\ConfigComandas.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -895,6 +920,9 @@
     <EmbeddedResource Include="Formularios\FormsPedido\ProductoItem.resx">
       <DependentUpon>ProductoItem.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Formularios\FormsPedido\ProductoPedidoSmall.resx">
+      <DependentUpon>ProductoPedidoSmall.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Formularios\FormsPedido\PruebaDetallePedido.resx">
       <DependentUpon>PruebaDetallePedido.cs</DependentUpon>
     </EmbeddedResource>
@@ -928,6 +956,9 @@
     <EmbeddedResource Include="Formularios\FormsPrincipales\FrmIniciarSesion.resx">
       <DependentUpon>FrmIniciarSesion.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Formularios\FormsPrincipales\FrmPantallaInicial.resx">
+      <DependentUpon>FrmPantallaInicial.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Formularios\FormsPrincipales\FrmPrincipal.resx">
       <DependentUpon>FrmPrincipal.cs</DependentUpon>
     </EmbeddedResource>
@@ -948,6 +979,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Formularios\FormsPrincipales\PasosError.resx">
       <DependentUpon>PasosError.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Formularios\FormsProductos\FrmAgregarProducto.resx">
+      <DependentUpon>FrmAgregarProducto.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Formularios\FormsReservas\FrmNuevaReserva.resx">
       <DependentUpon>FrmNuevaReserva.cs</DependentUpon>
@@ -972,6 +1006,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Formularios\FormsVentas\ResumenVenta.resx">
       <DependentUpon>ResumenVenta.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Formularios\FormsVentas\VentaSmall.resx">
+      <DependentUpon>VentaSmall.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Formularios\FrmComprobacion.resx">
       <DependentUpon>FrmComprobacion.cs</DependentUpon>
@@ -1094,6 +1131,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\No hay clientes.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\No hay ventas.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\No hay cuentas abiertas.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
