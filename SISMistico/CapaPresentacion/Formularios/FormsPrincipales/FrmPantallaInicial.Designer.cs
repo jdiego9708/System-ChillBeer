@@ -36,7 +36,7 @@
             this.panelVentas = new CapaPresentacion.Controles.CustomGridPanel();
             this.btnHistorialVentas = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.customGridPanel2 = new CapaPresentacion.Controles.CustomGridPanel();
+            this.panelCuentas = new CapaPresentacion.Controles.CustomGridPanel();
             this.btnNuevaVenta = new System.Windows.Forms.Button();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.chart1 = new System.Windows.Forms.DataVisualization.Charting.Chart();
@@ -95,7 +95,7 @@
             // 
             this.groupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
-            this.groupBox2.Controls.Add(this.customGridPanel2);
+            this.groupBox2.Controls.Add(this.panelCuentas);
             this.groupBox2.Controls.Add(this.btnNuevaVenta);
             this.groupBox2.Location = new System.Drawing.Point(477, -2);
             this.groupBox2.Name = "groupBox2";
@@ -104,19 +104,19 @@
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Cuentas en curso";
             // 
-            // customGridPanel2
+            // panelCuentas
             // 
-            this.customGridPanel2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.panelCuentas.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.customGridPanel2.AutoScroll = true;
-            this.customGridPanel2.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("customGridPanel2.BackgroundImage")));
-            this.customGridPanel2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.customGridPanel2.Location = new System.Drawing.Point(9, 103);
-            this.customGridPanel2.Name = "customGridPanel2";
-            this.customGridPanel2.PageSize = 10;
-            this.customGridPanel2.Size = new System.Drawing.Size(446, 532);
-            this.customGridPanel2.TabIndex = 6;
+            this.panelCuentas.AutoScroll = true;
+            this.panelCuentas.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("panelCuentas.BackgroundImage")));
+            this.panelCuentas.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.panelCuentas.Location = new System.Drawing.Point(9, 103);
+            this.panelCuentas.Name = "panelCuentas";
+            this.panelCuentas.PageSize = 10;
+            this.panelCuentas.Size = new System.Drawing.Size(446, 532);
+            this.panelCuentas.TabIndex = 6;
             // 
             // btnNuevaVenta
             // 
@@ -215,7 +215,7 @@
         private System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.DataVisualization.Charting.Chart chart1;
         private CapaPresentacion.Controles.CustomGridPanel panelVentas;
-        private CapaPresentacion.Controles.CustomGridPanel customGridPanel2;
+        private CapaPresentacion.Controles.CustomGridPanel panelCuentas;
         private System.Windows.Forms.Button btnClose;
     }
 }

@@ -1,6 +1,6 @@
-﻿namespace CapaPresentacion.Formularios.FormsVentas
+﻿namespace CapaPresentacion.Formularios.FormsPedido
 {
-    partial class VentaSmall
+    partial class ProductoSuperSmall
     {
         /// <summary> 
         /// Variable del diseñador necesaria.
@@ -28,10 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(VentaSmall));
             this.panel1 = new System.Windows.Forms.Panel();
             this.txtInfo = new System.Windows.Forms.TextBox();
-            this.btnNext = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // panel1
@@ -41,53 +39,35 @@
             this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(33)))), ((int)(((byte)(116)))));
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(430, 10);
-            this.panel1.TabIndex = 23;
+            this.panel1.Size = new System.Drawing.Size(395, 5);
+            this.panel1.TabIndex = 0;
             // 
             // txtInfo
             // 
             this.txtInfo.BackColor = System.Drawing.Color.White;
             this.txtInfo.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.txtInfo.Font = new System.Drawing.Font("Segoe UI Emoji", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtInfo.Enabled = false;
+            this.txtInfo.Font = new System.Drawing.Font("Segoe UI Emoji", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtInfo.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(4)))), ((int)(((byte)(0)))), ((int)(((byte)(85)))));
-            this.txtInfo.Location = new System.Drawing.Point(3, 16);
+            this.txtInfo.Location = new System.Drawing.Point(1, 7);
             this.txtInfo.Multiline = true;
             this.txtInfo.Name = "txtInfo";
-            this.txtInfo.ReadOnly = true;
-            this.txtInfo.Size = new System.Drawing.Size(359, 106);
-            this.txtInfo.TabIndex = 24;
+            this.txtInfo.Size = new System.Drawing.Size(394, 88);
+            this.txtInfo.TabIndex = 1;
             this.txtInfo.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
-            // btnNext
+            // ProductoSuperSmall
             // 
-            this.btnNext.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btnNext.BackgroundImage")));
-            this.btnNext.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.btnNext.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnNext.FlatAppearance.BorderColor = System.Drawing.Color.Silver;
-            this.btnNext.FlatAppearance.BorderSize = 0;
-            this.btnNext.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Silver;
-            this.btnNext.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.btnNext.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnNext.Font = new System.Drawing.Font("Segoe UI Semibold", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnNext.Location = new System.Drawing.Point(368, 36);
-            this.btnNext.Name = "btnNext";
-            this.btnNext.Size = new System.Drawing.Size(60, 60);
-            this.btnNext.TabIndex = 28;
-            this.btnNext.UseVisualStyleBackColor = true;
-            // 
-            // VentaSmall
-            // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(13F, 28F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 26F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.Controls.Add(this.btnNext);
             this.Controls.Add(this.txtInfo);
             this.Controls.Add(this.panel1);
-            this.Font = new System.Drawing.Font("Segoe UI Emoji", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Font = new System.Drawing.Font("Segoe UI Emoji", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(4)))), ((int)(((byte)(0)))), ((int)(((byte)(85)))));
-            this.Margin = new System.Windows.Forms.Padding(6);
-            this.Name = "VentaSmall";
-            this.Size = new System.Drawing.Size(431, 125);
+            this.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.Name = "ProductoSuperSmall";
+            this.Size = new System.Drawing.Size(398, 98);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -97,6 +77,5 @@
 
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.TextBox txtInfo;
-        private System.Windows.Forms.Button btnNext;
     }
 }

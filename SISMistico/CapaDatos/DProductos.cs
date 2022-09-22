@@ -80,7 +80,7 @@ namespace CapaDatos
                     ParameterName = "@Nombre_producto",
                     SqlDbType = SqlDbType.VarChar,
                     Size = 50,
-                    Value = producto.Nombre_producto.Trim(),
+                    Value = producto.Nombre_producto.Trim().ToUpper(),
                 };
                 SqlCmd.Parameters.Add(Nombre_producto);
 
@@ -106,7 +106,7 @@ namespace CapaDatos
                     ParameterName = "@Descripcion_producto",
                     SqlDbType = SqlDbType.VarChar,
                     Size = 200,
-                    Value = producto.Descripcion_producto.ToUpper().Trim(),
+                    Value = producto.Descripcion_producto.Trim(),
                 };
                 SqlCmd.Parameters.Add(Descripcion_producto);
 

@@ -71,6 +71,9 @@ namespace CapaPresentacion.Formularios.FormsClientes
             cliente.Nombre_cliente = this.txtNombre.Text;
             cliente.Correo_electronico = this.txtCorreo.Text;
             cliente.Telefono_cliente = this.txtTelefono.Text;
+            cliente.Referencia_ubicacion = string.Empty;
+            cliente.Direccion_cliente = string.Empty;
+            cliente.Otras_observaciones = string.Empty;
             cliente.Estado_cliente = "ACTIVO";
 
             return true;
@@ -83,7 +86,7 @@ namespace CapaPresentacion.Formularios.FormsClientes
             {
                 if (this.Comprobaciones(out Clientes cliente))
                 {
-                    if (this.Cliente != null)
+                    if (this.IsEditar)
                     {
                         rpta = NClientes.EditarCliente(cliente);
                         mensaje = "actualizó";
@@ -141,9 +144,14 @@ namespace CapaPresentacion.Formularios.FormsClientes
             get => _cliente;
             set
             {
+                this.IsEditar = true;
                 _cliente = value;
                 this.AsignarDatos(value);
             }
         }
+
+        public bool IsEditar { get => _isEditar; set => _isEditar = value; }
+
+        private bool _isEditar;
     }
 }

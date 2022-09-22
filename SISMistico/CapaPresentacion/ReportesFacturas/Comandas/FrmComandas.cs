@@ -116,7 +116,7 @@ namespace CapaPresentacion
         {
             this.TablaDatosPedido =
                 NPedido.BuscarPedidosYDetalle("ID PEDIDO Y DETALLE", Convert.ToString(this.Id_pedido),
-                out this.TablaDetallePedido, out DataTable dtDetallePlatosPedido, out string rpta);
+                out this.TablaDetallePedido, out string rpta);
 
             int cantidad_productos = 0;
             foreach (DataRow row in this.TablaDetallePedido.Rows)
@@ -127,42 +127,12 @@ namespace CapaPresentacion
                 string observaciones = Convert.ToString(row["Observaciones"]);
                 int cantidad = Convert.ToInt32(row["Cantidad"]);
                 cantidad_productos += cantidad;
-            
-                if (tipo.Equals("PLATO"))
-                {
-                    StringBuilder info = new StringBuilder();
-                    info.Append("-" + nombre);
 
-                    DataRow[] find = dtDetallePlatosPedido.Select(string.Format("Id_tipo = {0}", id_tipo));
-                    if (find.Length > 0)
-                    {
-                        info.Append(": ").Append(Environment.NewLine);
-                        foreach (DataRow re in find)
-                        {
-                            Ingredientes ing = new Ingredientes(re);
-                            info.Append(ing.Nombre_ingrediente).Append(Environment.NewLine);
-                        }
+                if (!string.IsNullOrEmpty(observaciones))
+                    nombre += Environment.NewLine + "**" + observaciones;
 
-                        if (!string.IsNullOrEmpty(observaciones))
-                            info.Append("**" + observaciones);
-                    }
-                    else
-                    {
-                        info.Append(Environment.NewLine);
+                row["Nombre"] = nombre;
 
-                        if (!string.IsNullOrEmpty(observaciones))
-                            info.Append("**" + observaciones);
-                    }
-
-                    row["Nombre"] = info.ToString();
-                }
-                else
-                {
-                    if (!string.IsNullOrEmpty(observaciones))
-                        nombre += Environment.NewLine + "**" + observaciones;
-
-                    row["Nombre"] = nombre;
-                }
             }
 
             this.ObservacionesGeneral = "Cantidad de platos/bebidas " + cantidad_productos;

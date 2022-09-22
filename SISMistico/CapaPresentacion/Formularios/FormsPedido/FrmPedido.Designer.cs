@@ -32,18 +32,19 @@ namespace CapaPresentacion.Formularios.FormsPedido
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmPedido));
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.panelCategorias = new CapaPresentacion.Controles.CustomGridPanel();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.btnRefresh = new System.Windows.Forms.Button();
+            this.btnAddProduct = new System.Windows.Forms.Button();
             this.txtBusqueda = new System.Windows.Forms.TextBox();
-            this.panelProductos = new CapaPresentacion.Controles.CustomGridPanel();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.gbInfo = new System.Windows.Forms.GroupBox();
             this.chkFacturar = new System.Windows.Forms.CheckBox();
+            this.btnSave = new System.Windows.Forms.Button();
             this.txtInfoPedido = new System.Windows.Forms.TextBox();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-            this.btnSave = new System.Windows.Forms.Button();
             this.panelPedido = new CapaPresentacion.Controles.CustomGridPanel();
-            this.btnAddProduct = new System.Windows.Forms.Button();
+            this.panelProductos = new CapaPresentacion.Controles.CustomGridPanel();
+            this.panelCategorias = new CapaPresentacion.Controles.CustomGridPanel();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.groupBox4.SuspendLayout();
@@ -64,58 +65,72 @@ namespace CapaPresentacion.Formularios.FormsPedido
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Tipos";
             // 
-            // panelCategorias
-            // 
-            this.panelCategorias.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.panelCategorias.AutoScroll = true;
-            this.panelCategorias.Location = new System.Drawing.Point(15, 37);
-            this.panelCategorias.Margin = new System.Windows.Forms.Padding(5);
-            this.panelCategorias.Name = "panelCategorias";
-            this.panelCategorias.PageSize = 10;
-            this.panelCategorias.Size = new System.Drawing.Size(179, 455);
-            this.panelCategorias.TabIndex = 0;
-            // 
             // groupBox3
             // 
             this.groupBox3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
+            this.groupBox3.Controls.Add(this.panelProductos);
+            this.groupBox3.Controls.Add(this.btnRefresh);
             this.groupBox3.Controls.Add(this.btnAddProduct);
             this.groupBox3.Controls.Add(this.txtBusqueda);
-            this.groupBox3.Controls.Add(this.panelProductos);
             this.groupBox3.Location = new System.Drawing.Point(229, 117);
             this.groupBox3.Margin = new System.Windows.Forms.Padding(5);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Padding = new System.Windows.Forms.Padding(5);
-            this.groupBox3.Size = new System.Drawing.Size(653, 502);
+            this.groupBox3.Size = new System.Drawing.Size(542, 502);
             this.groupBox3.TabIndex = 7;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Búsqueda de productos";
+            // 
+            // btnRefresh
+            // 
+            this.btnRefresh.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btnRefresh.BackgroundImage")));
+            this.btnRefresh.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.btnRefresh.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnRefresh.FlatAppearance.BorderColor = System.Drawing.Color.Silver;
+            this.btnRefresh.FlatAppearance.BorderSize = 0;
+            this.btnRefresh.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Silver;
+            this.btnRefresh.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.btnRefresh.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnRefresh.Font = new System.Drawing.Font("Segoe UI Semibold", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnRefresh.Location = new System.Drawing.Point(5, 35);
+            this.btnRefresh.Margin = new System.Windows.Forms.Padding(5);
+            this.btnRefresh.Name = "btnRefresh";
+            this.btnRefresh.Size = new System.Drawing.Size(40, 40);
+            this.btnRefresh.TabIndex = 29;
+            this.toolTip1.SetToolTip(this.btnRefresh, "Agreagr un nuevo producto");
+            this.btnRefresh.UseVisualStyleBackColor = true;
+            // 
+            // btnAddProduct
+            // 
+            this.btnAddProduct.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btnAddProduct.BackgroundImage")));
+            this.btnAddProduct.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.btnAddProduct.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnAddProduct.FlatAppearance.BorderColor = System.Drawing.Color.Silver;
+            this.btnAddProduct.FlatAppearance.BorderSize = 0;
+            this.btnAddProduct.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Silver;
+            this.btnAddProduct.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.btnAddProduct.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnAddProduct.Font = new System.Drawing.Font("Segoe UI Semibold", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnAddProduct.Location = new System.Drawing.Point(55, 35);
+            this.btnAddProduct.Margin = new System.Windows.Forms.Padding(5);
+            this.btnAddProduct.Name = "btnAddProduct";
+            this.btnAddProduct.Size = new System.Drawing.Size(40, 40);
+            this.btnAddProduct.TabIndex = 28;
+            this.toolTip1.SetToolTip(this.btnAddProduct, "Agreagr un nuevo producto");
+            this.btnAddProduct.UseVisualStyleBackColor = true;
             // 
             // txtBusqueda
             // 
             this.txtBusqueda.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtBusqueda.Location = new System.Drawing.Point(61, 37);
+            this.txtBusqueda.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(4)))), ((int)(((byte)(0)))), ((int)(((byte)(85)))));
+            this.txtBusqueda.Location = new System.Drawing.Point(103, 37);
             this.txtBusqueda.Name = "txtBusqueda";
-            this.txtBusqueda.Size = new System.Drawing.Size(581, 35);
+            this.txtBusqueda.Size = new System.Drawing.Size(428, 35);
             this.txtBusqueda.TabIndex = 3;
             this.txtBusqueda.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.toolTip1.SetToolTip(this.txtBusqueda, "Escriba cualquier texto para buscar productos");
-            // 
-            // panelProductos
-            // 
-            this.panelProductos.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.panelProductos.AutoScroll = true;
-            this.panelProductos.Location = new System.Drawing.Point(5, 82);
-            this.panelProductos.Margin = new System.Windows.Forms.Padding(5);
-            this.panelProductos.Name = "panelProductos";
-            this.panelProductos.PageSize = 10;
-            this.panelProductos.Size = new System.Drawing.Size(637, 411);
-            this.panelProductos.TabIndex = 0;
             // 
             // groupBox4
             // 
@@ -123,11 +138,11 @@ namespace CapaPresentacion.Formularios.FormsPedido
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox4.Controls.Add(this.panelPedido);
-            this.groupBox4.Location = new System.Drawing.Point(892, 117);
+            this.groupBox4.Location = new System.Drawing.Point(781, 117);
             this.groupBox4.Margin = new System.Windows.Forms.Padding(5);
             this.groupBox4.Name = "groupBox4";
             this.groupBox4.Padding = new System.Windows.Forms.Padding(5);
-            this.groupBox4.Size = new System.Drawing.Size(410, 502);
+            this.groupBox4.Size = new System.Drawing.Size(521, 502);
             this.groupBox4.TabIndex = 8;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Pedido";
@@ -161,25 +176,6 @@ namespace CapaPresentacion.Formularios.FormsPedido
         "odría facturar después el pedido");
             this.chkFacturar.UseVisualStyleBackColor = true;
             // 
-            // txtInfoPedido
-            // 
-            this.txtInfoPedido.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtInfoPedido.BackColor = System.Drawing.Color.White;
-            this.txtInfoPedido.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.txtInfoPedido.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtInfoPedido.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.txtInfoPedido.Location = new System.Drawing.Point(10, 31);
-            this.txtInfoPedido.Margin = new System.Windows.Forms.Padding(5);
-            this.txtInfoPedido.Multiline = true;
-            this.txtInfoPedido.Name = "txtInfoPedido";
-            this.txtInfoPedido.ReadOnly = true;
-            this.txtInfoPedido.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.txtInfoPedido.Size = new System.Drawing.Size(1030, 58);
-            this.txtInfoPedido.TabIndex = 0;
-            this.txtInfoPedido.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
             // btnSave
             // 
             this.btnSave.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
@@ -200,6 +196,25 @@ namespace CapaPresentacion.Formularios.FormsPedido
             this.toolTip1.SetToolTip(this.btnSave, "Terminar este pedido");
             this.btnSave.UseVisualStyleBackColor = true;
             // 
+            // txtInfoPedido
+            // 
+            this.txtInfoPedido.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtInfoPedido.BackColor = System.Drawing.Color.White;
+            this.txtInfoPedido.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.txtInfoPedido.Font = new System.Drawing.Font("Segoe UI Emoji", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtInfoPedido.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(4)))), ((int)(((byte)(0)))), ((int)(((byte)(85)))));
+            this.txtInfoPedido.Location = new System.Drawing.Point(10, 31);
+            this.txtInfoPedido.Margin = new System.Windows.Forms.Padding(5);
+            this.txtInfoPedido.Multiline = true;
+            this.txtInfoPedido.Name = "txtInfoPedido";
+            this.txtInfoPedido.ReadOnly = true;
+            this.txtInfoPedido.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.txtInfoPedido.Size = new System.Drawing.Size(1030, 58);
+            this.txtInfoPedido.TabIndex = 0;
+            this.txtInfoPedido.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
             // panelPedido
             // 
             this.panelPedido.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -212,28 +227,34 @@ namespace CapaPresentacion.Formularios.FormsPedido
             this.panelPedido.Margin = new System.Windows.Forms.Padding(5);
             this.panelPedido.Name = "panelPedido";
             this.panelPedido.PageSize = 10;
-            this.panelPedido.Size = new System.Drawing.Size(394, 458);
+            this.panelPedido.Size = new System.Drawing.Size(505, 458);
             this.panelPedido.TabIndex = 0;
             // 
-            // btnAddProduct
+            // panelProductos
             // 
-            this.btnAddProduct.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnAddProduct.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btnAddProduct.BackgroundImage")));
-            this.btnAddProduct.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.btnAddProduct.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnAddProduct.FlatAppearance.BorderColor = System.Drawing.Color.Silver;
-            this.btnAddProduct.FlatAppearance.BorderSize = 0;
-            this.btnAddProduct.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Silver;
-            this.btnAddProduct.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.btnAddProduct.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnAddProduct.Font = new System.Drawing.Font("Segoe UI Semibold", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnAddProduct.Location = new System.Drawing.Point(13, 33);
-            this.btnAddProduct.Margin = new System.Windows.Forms.Padding(5);
-            this.btnAddProduct.Name = "btnAddProduct";
-            this.btnAddProduct.Size = new System.Drawing.Size(40, 40);
-            this.btnAddProduct.TabIndex = 28;
-            this.toolTip1.SetToolTip(this.btnAddProduct, "Agreagr un nuevo producto");
-            this.btnAddProduct.UseVisualStyleBackColor = true;
+            this.panelProductos.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.panelProductos.AutoScroll = true;
+            this.panelProductos.Location = new System.Drawing.Point(10, 85);
+            this.panelProductos.Margin = new System.Windows.Forms.Padding(5);
+            this.panelProductos.Name = "panelProductos";
+            this.panelProductos.PageSize = 10;
+            this.panelProductos.Size = new System.Drawing.Size(521, 408);
+            this.panelProductos.TabIndex = 1;
+            // 
+            // panelCategorias
+            // 
+            this.panelCategorias.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.panelCategorias.AutoScroll = true;
+            this.panelCategorias.Location = new System.Drawing.Point(15, 37);
+            this.panelCategorias.Margin = new System.Windows.Forms.Padding(5);
+            this.panelCategorias.Name = "panelCategorias";
+            this.panelCategorias.PageSize = 10;
+            this.panelCategorias.Size = new System.Drawing.Size(179, 455);
+            this.panelCategorias.TabIndex = 0;
             // 
             // FrmPedido
             // 
@@ -268,12 +289,13 @@ namespace CapaPresentacion.Formularios.FormsPedido
         private System.Windows.Forms.GroupBox gbInfo;
         private System.Windows.Forms.TextBox txtInfoPedido;
         private CapaPresentacion.Controles.CustomGridPanel panelCategorias;
-        private CapaPresentacion.Controles.CustomGridPanel panelProductos;
         private CapaPresentacion.Controles.CustomGridPanel panelPedido;
         private System.Windows.Forms.Button btnSave;
         private System.Windows.Forms.CheckBox chkFacturar;
         private System.Windows.Forms.TextBox txtBusqueda;
         private System.Windows.Forms.Button btnAddProduct;
         private System.Windows.Forms.ToolTip toolTip1;
+        private System.Windows.Forms.Button btnRefresh;
+        private CapaPresentacion.Controles.CustomGridPanel panelProductos;
     }
 }

@@ -383,12 +383,6 @@
     <Compile Include="Formularios\FormsPedido\FrmCambiarMesa.Designer.cs">
       <DependentUpon>FrmCambiarMesa.cs</DependentUpon>
     </Compile>
-    <Compile Include="Formularios\FormsPedido\FrmDetallePedido.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Formularios\FormsPedido\FrmDetallePedido.Designer.cs">
-      <DependentUpon>FrmDetallePedido.cs</DependentUpon>
-    </Compile>
     <Compile Include="Formularios\FormsPedido\FrmFacturarPedido.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -451,6 +445,12 @@
     </Compile>
     <Compile Include="Formularios\FormsPedido\ProductoPedidoSmall.Designer.cs">
       <DependentUpon>ProductoPedidoSmall.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Formularios\FormsPedido\ProductoSuperSmall.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Formularios\FormsPedido\ProductoSuperSmall.Designer.cs">
+      <DependentUpon>ProductoSuperSmall.cs</DependentUpon>
     </Compile>
     <Compile Include="Formularios\FormsPedido\PruebaDetallePedido.cs">
       <SubType>Form</SubType>
@@ -890,9 +890,6 @@
     <EmbeddedResource Include="Formularios\FormsPedido\FrmCambiarMesa.resx">
       <DependentUpon>FrmCambiarMesa.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Formularios\FormsPedido\FrmDetallePedido.resx">
-      <DependentUpon>FrmDetallePedido.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Formularios\FormsPedido\FrmFacturarPedido.resx">
       <DependentUpon>FrmFacturarPedido.cs</DependentUpon>
     </EmbeddedResource>
@@ -922,6 +919,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Formularios\FormsPedido\ProductoPedidoSmall.resx">
       <DependentUpon>ProductoPedidoSmall.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Formularios\FormsPedido\ProductoSuperSmall.resx">
+      <DependentUpon>ProductoSuperSmall.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Formularios\FormsPedido\PruebaDetallePedido.resx">
       <DependentUpon>PruebaDetallePedido.cs</DependentUpon>
@@ -1137,6 +1137,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\No hay cuentas abiertas.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\editx64.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\commentsx128.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

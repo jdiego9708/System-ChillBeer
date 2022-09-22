@@ -459,8 +459,8 @@ namespace CapaDatos
             try
             {
                 #region DATOS
-
                 SqlCon.ConnectionString = Conexion.Cn;
+
                 SqlCommand SqlCmd = new SqlCommand
                 {
                     Connection = SqlCon,
@@ -529,13 +529,18 @@ namespace CapaDatos
                 }
                 #endregion
             }
-            catch (SqlException)
+            catch (SqlException ex)
             {
                 DtResultado = null;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 DtResultado = null;
+            }
+            finally
+            {
+                if (SqlCon.State == ConnectionState.Open)
+                    SqlCon.Close();
             }
 
             return DtResultado;

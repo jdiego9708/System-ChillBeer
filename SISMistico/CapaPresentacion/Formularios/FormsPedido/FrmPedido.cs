@@ -5,6 +5,7 @@
     using CapaNegocio;
     using CapaPresentacion.Formularios.FormsClientes;
     using CapaPresentacion.Formularios.FormsPedido.Platos;
+    using CapaPresentacion.Formularios.FormsProductos;
     using CapaPresentacion.Properties;
     using Microsoft.ReportingServices.Diagnostics.Utilities;
     using System;
@@ -26,6 +27,34 @@
             //this.txtBusqueda.KeyPress += TxtBusqueda_OnTextoKeyPress;
             this.btnSave.Click += BtnSave_Click;
             this.Load += FrmPedido_Load;
+            this.btnAddProduct.Click += BtnAddProduct_Click;
+            this.btnRefresh.Click += BtnRefresh_Click;
+        }
+
+        private void BtnRefresh_Click(object sender, EventArgs e)
+        {
+            if (this.TipoProductoSelected == null)
+                return;
+
+            this.LoadProductos("ID TIPO PRODUCTO", TipoProductoSelected.Id_tipo.ToString());
+        }
+        private void BtnAddProduct_Click(object sender, EventArgs e)
+        {
+            FrmAgregarProducto frmAgregarProducto = new FrmAgregarProducto()
+            {
+                MinimizeBox = false,
+                MaximizeBox = false,
+                StartPosition = FormStartPosition.CenterScreen,
+            };
+            frmAgregarProducto.OnProductSuccess += FrmAgregarProducto_OnProductSuccess;
+            frmAgregarProducto.ShowDialog();
+        }
+        private void FrmAgregarProducto_OnProductSuccess(object sender, EventArgs e)
+        {
+            if (this.TipoProductoSelected == null)
+                return;
+
+            this.LoadProductos("ID TIPO PRODUCTO", TipoProductoSelected.Id_tipo.ToString());
         }
         private bool Comprobaciones(out Pedidos pedido,
             out List<Detalle_pedido> detalles,
@@ -64,7 +93,7 @@
                     frmObservarClientes.OnBtnNext += FrmObservarClientes_OnBtnNext;
                     frmObservarClientes.ShowDialog();
                 }
-                        
+
                 if (this.ClienteSelected == null)
                 {
                     if (tipo_pedido.Equals("CUENTA ABIERTA"))
@@ -77,7 +106,7 @@
                             Id_cliente = 0,
                         };
                 }
-                    
+
                 if (datos.EmpleadoClaveMaestra == null)
                     datos.EmpleadoClaveMaestra = new Empleados
                     {
@@ -93,17 +122,19 @@
 
                 decimal total_venta = 0;
 
-                foreach (ProductoPedidoBindingModel product in this.ProductsSelected)
+                foreach (ProductoPedidoBindingModel product in this.ProductsAddSelected)
                 {
                     Detalle_pedido detalle = new Detalle_pedido()
                     {
                         Id_pedido = id_pedido,
                         Id_producto = product.Id_producto,
-                        Fecha_detalle = DateTime.UtcNow,
-                        Hora_detalle = DateTime.UtcNow.TimeOfDay,
+                        Fecha_detalle = DateTime.Now,
+                        Hora_detalle = DateTime.Now.TimeOfDay,
                         Precio = product.DetallePedido.Precio,
                         Cantidad = product.DetallePedido.Cantidad,
                         Precio_total = product.DetallePedido.Precio * product.DetallePedido.Cantidad,
+                        Observaciones = product.DetallePedido.Observaciones ?? string.Empty,
+                        Tipo = "PRODUCTO"
                     };
 
                     total_venta += detalle.Precio_total;
@@ -113,12 +144,14 @@
 
                 pedido = new Pedidos()
                 {
-                    Fecha_pedido = DateTime.UtcNow,
-                    Hora_pedido = DateTime.UtcNow.ToString("HH:mm"),
+                    Fecha_pedido = DateTime.Now,
+                    Hora_pedido = DateTime.Now.ToString("HH:mm"),
                     Id_cliente = this.ClienteSelected.Id_cliente,
                     Id_empleado = datos.EmpleadoClaveMaestra.Id_empleado,
                     Estado_pedido = estado_pedido,
-                    Tipo_pedido = tipo_pedido, 
+                    Tipo_pedido = tipo_pedido,
+                    Observaciones_pedido = string.Empty,
+                    CantidadClientes = 0,
                 };
 
                 return true;
@@ -146,8 +179,9 @@
                 if (!rpta.Equals("OK"))
                     throw new Exception($"No se pudo insertar el pedido, comuníquese con el administrador | {rpta}");
 
-                foreach(Detalle_pedido detalle in detalles)
+                foreach (Detalle_pedido detalle in detalles)
                 {
+                    detalle.Id_pedido = pedido.Id_pedido;
                     rpta = NPedido.InsertarDetallePedido(detalle);
                     if (!rpta.Equals("OK"))
                         throw new Exception($"No se pudo insertar un detalle de un pedido, se canceló la operación | {rpta}");
@@ -166,48 +200,49 @@
         {
             try
             {
-                //Comprobar existencia del producto en los productos seleccionados
-                if (this.ProductsSelected != null)
+                //Veririfico los productos SELECCIONADOS
+                if (this.ProductsAddSelected == null)
+                    this.ProductsAddSelected = new List<ProductoPedidoBindingModel>();
+
+                List<ProductoPedidoBindingModel> findProductsSelected =
+                    this.ProductsAddSelected.Where(x => x.Id_producto == product.Id_producto).ToList();
+                if (findProductsSelected.Count > 0)
                 {
-                    List<ProductoPedidoBindingModel> findProductsSelected =
-                        this.ProductsSelected.Where(x => x.Id_producto == product.Id_producto).ToList();
-                    if (findProductsSelected.Count > 0)
+                    ProductoPedidoBindingModel productSelected = findProductsSelected[0];
+                    productSelected.DetallePedido.Cantidad++;
+
+                    productSelected.DetallePedido.Precio_total =
+                        productSelected.DetallePedido.Precio * productSelected.DetallePedido.Cantidad;
+                }
+                else
+                {
+                    this.ProductsAddSelected.Add(new ProductoPedidoBindingModel()
                     {
-                        ProductoPedidoBindingModel productSelected = findProductsSelected[0];
-                        //productSelected.DetallePedido.Cantidad++;
-                    }
-                    else
-                    {
-                        this.ProductsSelected.Add(new ProductoPedidoBindingModel()
+                        Producto = product.Producto,
+                        Id_producto = product.Id_producto,
+                        DetallePedido = new Detalle_pedido
                         {
-                            Producto = product.Producto,
                             Id_producto = product.Id_producto,
-                            DetallePedido = product.DetallePedido,
-                        });
-                    }
+                            Cantidad = 1,
+                            Precio = product.Producto.Precio_producto,
+                            Precio_total = product.Producto.Precio_producto,
+                        },
+                    });
                 }
 
-                //Comprobar existencia del producto en los productos nuevos seleccionados 
-                if (this.ProductsAddSelected != null)
-                {
-                    List<ProductoPedidoBindingModel> findProductsSelected =
-                        this.ProductsAddSelected.Where(x => x.Id_producto == product.Id_producto).ToList();
-                    if (findProductsSelected.Count > 0)
-                    {
-                        ProductoPedidoBindingModel productSelected = findProductsSelected[0];
-                        productSelected.DetallePedido.Cantidad++;
-                    }
-                    else
-                    {
-                        this.ProductsSelected.Add(new ProductoPedidoBindingModel()
-                        {
-                            Producto = product.Producto,
-                            Id_producto = product.Id_producto,
-                            DetallePedido = product.DetallePedido,
-                        });
-                    }
-                }
+                this.LoadInfoInformacionSuperior();
 
+                this.panelPedido.clearDataSource();
+
+                this.LoadProductosSelected(this.ProductsAddSelected);
+
+                if (this.ProductsSelected == null)
+                    return;
+
+                if (this.ProductsSelected.Count < 1)
+                    return;
+
+                this.LoadProductosSelected(this.ProductsSelected);
             }
             catch (Exception ex)
             {
@@ -218,27 +253,6 @@
         {
             try
             {
-                //Comprobar existencia del producto en los productos seleccionados
-                if (this.ProductsSelected != null)
-                {
-                    List<ProductoPedidoBindingModel> findProductsSelected =
-                        this.ProductsSelected.Where(x => x.Id_producto == product.Id_producto).ToList();
-                    if (findProductsSelected.Count > 0)
-                    {
-                        ProductoPedidoBindingModel productSelected = findProductsSelected[0];
-                        //productSelected.DetallePedido.Cantidad++;
-                    }
-                    else
-                    {
-                        this.ProductsSelected.Add(new ProductoPedidoBindingModel()
-                        {
-                            Producto = product.Producto,
-                            Id_producto = product.Id_producto,
-                            DetallePedido = product.DetallePedido,
-                        });
-                    }
-                }
-
                 //Comprobar existencia del producto en los productos nuevos seleccionados 
                 if (this.ProductsAddSelected != null)
                 {
@@ -247,19 +261,61 @@
                     if (findProductsSelected.Count > 0)
                     {
                         ProductoPedidoBindingModel productSelected = findProductsSelected[0];
-                        productSelected.DetallePedido.Cantidad++;
-                    }
-                    else
-                    {
-                        this.ProductsSelected.Add(new ProductoPedidoBindingModel()
+                        productSelected.DetallePedido.Cantidad--;
+
+                        if (productSelected.DetallePedido.Cantidad != 0)
                         {
-                            Producto = product.Producto,
-                            Id_producto = product.Id_producto,
-                            DetallePedido = product.DetallePedido,
-                        });
+                            productSelected.DetallePedido.Precio_total =
+                                productSelected.DetallePedido.Precio * productSelected.DetallePedido.Cantidad;
+                        }
+                        else
+                        {
+                            ProductsAddSelected.Remove(product);
+                        }
                     }
                 }
 
+                //Comprobar existencia del producto en los productos seleccionados
+                if (this.ProductsSelected != null)
+                {
+                    List<ProductoPedidoBindingModel> findProductsSelected =
+                        this.ProductsSelected.Where(x => x.Id_producto == product.Id_producto).ToList();
+                    if (findProductsSelected.Count > 0)
+                    {
+                        ProductoPedidoBindingModel productSelected = findProductsSelected[0];
+
+                        //Comprobación de eliminación en base de datos
+                        Mensajes.MensajePregunta("Va a eliminar un producto ya guardado, desea continuar?",
+                            "Continuar", "Cancelar", out DialogResult dialog);
+                        if (dialog != DialogResult.Yes)
+                        {
+                            DatosInicioSesion datos = DatosInicioSesion.GetInstancia();
+
+                            productSelected.DetallePedido.Cantidad--;
+
+                            //Actualizar la base de datos
+                            string rpta = NPedido.ActualizarDetallePedido(productSelected.DetallePedido, datos.Id_empleado, "");
+                            if (!rpta.Equals("OK"))
+                                Mensajes.MensajeInformacion("No se pudo eliminar el detalle del pedido, comuníquese con el administrador");
+
+                            this.ProductsAddSelected.Remove(productSelected);
+                        }
+                    }
+                }
+
+                this.LoadInfoInformacionSuperior();
+
+                this.panelPedido.clearDataSource();
+
+                this.LoadProductosSelected(this.ProductsAddSelected);
+
+                if (this.ProductsSelected == null)
+                    return;
+
+                if (this.ProductsSelected.Count < 1)
+                    return;
+
+                this.LoadProductosSelected(this.ProductsSelected);
             }
             catch (Exception ex)
             {
@@ -268,10 +324,19 @@
         }
         private void FrmPedido_Load(object sender, EventArgs e)
         {
+            this.gbInfo.Text = $"Nueva venta | {DateTime.Now.ToLongDateString()} | {DateTime.Now.ToLongTimeString()}";
+
             this.LoadCategorias("CATALOGO PADRE", "TIPOS DE PRODUCTOS");
 
             if (this.Categorias != null)
-                this.LoadProductos("ID TIPO PRODUCTO", this.Categorias[0].Id_tipo.ToString());
+            {
+                Catalogo TipoDefault = this.Categorias[0];
+
+                if (TipoDefault == null)
+                    return;
+
+                this.LoadProductos("ID TIPO PRODUCTO", TipoDefault.Id_tipo.ToString());
+            }
         }
         private void LoadProductos(string tipo_busqueda, string texto_busqueda)
         {
@@ -289,17 +354,31 @@
                     foreach (DataRow row in dtProductos.Rows)
                     {
                         Productos producto = new Productos(row);
+
                         ProductoPedidoSmall productoSmall = new ProductoPedidoSmall()
                         {
-                            Producto = new ProductoPedidoBindingModel
+                            Producto = new ProductoPedidoBindingModel()
                             {
+                                Id_producto = producto.Id_producto,
                                 Producto = producto,
-                            },
+                                DetallePedido = null,
+                            }
                         };
+                        productoSmall.OnAddButtonClick += ProductoSmall_OnAddButtonClick;
+                        productoSmall.OnRemoveButtonClick += ProductoSmall_OnRemoveButtonClick;
+                        productoSmall.OnRefreshList += ProductoSmall_OnRefreshList;
+
                         controls.Add(productoSmall);
                     }
                     this.panelProductos.BackgroundImage = null;
                     this.panelProductos.AddArrayControl(controls);
+
+                    this.threadLoadImages = new Thread(new ThreadStart(() => LoadImages()))
+                    {
+                        IsBackground = true
+                    };
+                    this.threadLoadImages.SetApartmentState(ApartmentState.STA);
+                    this.threadLoadImages.Start();
                 }
                 else
                 {
@@ -326,22 +405,37 @@
                     };
                     productoSmall.OnAddButtonClick += ProductoSmall_OnAddButtonClick;
                     productoSmall.OnRemoveButtonClick += ProductoSmall_OnRemoveButtonClick;
-                    productoSmall.OnCommentButtonClick += ProductoSmall_OnCommentButtonClick;
+                    productoSmall.OnRefreshList += ProductoSmall_OnRefreshList;
 
                     controls.Add(productoSmall);
                 }
 
-                this.panelProductos.BackgroundImage = null;
-                this.panelProductos.AddArrayControl(controls);
+                this.panelPedido.BackgroundImage = null;
+                this.panelPedido.AddArrayControl(controls);
+
+                this.threadLoadImages = new Thread(new ThreadStart(() => LoadImagesProductsSelected()))
+                {
+                    IsBackground = true
+                };
+                this.threadLoadImages.SetApartmentState(ApartmentState.STA);
+                this.threadLoadImages.Start();
             }
             catch (Exception ex)
             {
                 Mensajes.MensajeInformacion($"Error cargando los productos seleccionados | {ex.Message}");
             }
         }
-        private void ProductoSmall_OnCommentButtonClick(object sender, EventArgs e)
+        private void ProductoSmall_OnRefreshList(object sender, EventArgs e)
         {
-            ProductoPedidoBindingModel product = (ProductoPedidoBindingModel)sender;
+            if (this.Categorias != null)
+            {
+                Catalogo TipoDefault = this.Categorias[0];
+
+                if (TipoDefault == null)
+                    return;
+
+                this.LoadProductos("ID TIPO PRODUCTO", TipoDefault.Id_tipo.ToString());
+            }
         }
         private void ProductoSmall_OnRemoveButtonClick(object sender, EventArgs e)
         {
@@ -392,6 +486,12 @@
         private void Categoria_OnBtnCatalogo(object sender, EventArgs e)
         {
             Catalogo catalogo = (Catalogo)sender;
+
+            if (catalogo == null)
+                return;
+
+            TipoProductoSelected = catalogo;
+
             this.LoadProductos("ID TIPO PRODUCTO", catalogo.Id_tipo.ToString());
         }
         private void AsignarDatos(Pedidos pedido)
@@ -418,7 +518,96 @@
             }
             this.gbInfo.Text = $"Agregar/Remover productos | {pedido.Tipo_pedido}";
         }
+        private void LoadImages()
+        {
+            foreach (UserControl control in this.panelProductos.controlsUser)
+            {
+                if (control is ProductoPedidoSmall product)
+                {
+                    Image img;
+                    string nombreimagen = product.Producto.Producto.Imagen_producto;
+                    if (!string.IsNullOrEmpty(nombreimagen))
+                    {
+                        img = Imagenes.ObtenerImagen("RUTAIMAGES", nombreimagen, out string ruta_destino);
 
+                        if (img == null)
+                            img = Resources.SIN_IMAGENES;
+
+                        product.ImagenProducto = img;
+                    }
+                    else
+                    {
+                        img = Resources.SIN_IMAGENES;
+                        product.ImagenProducto = img;
+                    }
+                }
+            }
+
+            if (this.threadLoadImages.IsAlive)
+                this.threadLoadImages.Interrupt();
+        }
+        private void LoadImagesProductsSelected()
+        {
+            if (this.ProductsSelected != null || this.ProductsAddSelected != null)
+            {
+                foreach (UserControl control in this.panelPedido.controlsUser)
+                {
+                    if (control is ProductoPedidoSmall product)
+                    {
+                        Image img;
+                        string nombreimagen = product.Producto.Producto.Imagen_producto;
+                        if (!string.IsNullOrEmpty(nombreimagen))
+                        {
+                            img = Imagenes.ObtenerImagen("RUTAIMAGES", nombreimagen, out string ruta_destino);
+
+                            if (img == null)
+                                img = Resources.SIN_IMAGENES;
+
+                            product.ImagenProducto = img;
+                        }
+                        else
+                        {
+                            img = Resources.SIN_IMAGENES;
+                            product.ImagenProducto = img;
+                        }
+                    }
+                }
+
+                if (this.threadLoadImages.IsAlive)
+                    this.threadLoadImages.Interrupt();
+            }
+        }
+        private void LoadInfoInformacionSuperior()
+        {
+            try
+            {
+                StringBuilder info = new StringBuilder();
+
+                if (this.ProductsAddSelected != null)
+                {
+                    int cantidad_productos = ProductsAddSelected.Sum(x => x.DetallePedido.Cantidad);
+                    decimal total = ProductsAddSelected.Sum(x => x.DetallePedido.Precio_total);
+                    info.Append($"Cantidad de productos para agregar al pedido {cantidad_productos} | ");
+                    info.Append($"Total ${total:N} ");
+                }
+
+                if (this.ProductsSelected != null)
+                {
+                    int cantidad_productos = ProductsSelected.Sum(x => x.DetallePedido.Cantidad);
+                    decimal total = ProductsSelected.Sum(x => x.DetallePedido.Precio_total);
+                    info.Append($" | Cantidad de productos agregados anteriormente al pedido {cantidad_productos} | ");
+                    info.Append($"Total ${total:N} ");
+                }
+
+                this.txtInfoPedido.Text = info.ToString();
+            }
+            catch (Exception)
+            {
+                this.txtInfoPedido.Text = "SIN INFORMACIÓN DISPONIBLE";
+            }
+        }
+
+        Thread threadLoadImages;
         public event EventHandler OnBtnActualizarPedido;
         public event EventHandler OnBtnNuevoPedido;
         public event EventHandler OnBtnPedidoSuccess;
@@ -426,8 +615,8 @@
         public List<ProductoPedidoBindingModel> ProductsSelected { get; set; }
         public List<ProductoPedidoBindingModel> ProductsAddSelected { get; set; }
         public List<Catalogo> Categorias { get; set; }
+        public Catalogo TipoProductoSelected { get; set; }
         public string Tipo_pedido { get; set; }
-
         public Clientes ClienteSelected { get; set; }
 
         private Pedidos _pedido;

@@ -156,8 +156,7 @@ namespace CapaPresentacion.Formularios.FormsPedido
             //Obtener los datos principales
             DataTable TablaDatosPrincipales = NPedido.BuscarPedidosYDetalle("ID PEDIDO Y DETALLE",
                 Convert.ToString(pedido.Id_pedido), 
-                out DataTable dtDetallePedido,
-                out DataTable dtDetallePlatosPedido, out string rpta);
+                out DataTable dtDetallePedido, out string rpta);
             if (TablaDatosPrincipales != null)
             {
                 string cliente = Convert.ToString(TablaDatosPrincipales.Rows[0]["Cliente"]);

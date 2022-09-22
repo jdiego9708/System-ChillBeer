@@ -41,10 +41,11 @@ namespace CapaPresentacion.Formularios.FormsPedido
             this.btnTipo.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnTipo.FlatAppearance.BorderSize = 0;
             this.btnTipo.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnTipo.Font = new System.Drawing.Font("Segoe UI Emoji", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnTipo.Location = new System.Drawing.Point(2, 4);
+            this.btnTipo.Font = new System.Drawing.Font("Segoe UI Emoji", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnTipo.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(4)))), ((int)(((byte)(0)))), ((int)(((byte)(85)))));
+            this.btnTipo.Location = new System.Drawing.Point(2, 11);
             this.btnTipo.Name = "btnTipo";
-            this.btnTipo.Size = new System.Drawing.Size(169, 50);
+            this.btnTipo.Size = new System.Drawing.Size(169, 59);
             this.btnTipo.TabIndex = 0;
             this.btnTipo.Text = "Botón 1";
             this.btnTipo.UseVisualStyleBackColor = true;
@@ -53,10 +54,10 @@ namespace CapaPresentacion.Formularios.FormsPedido
             // 
             this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.panel1.BackColor = System.Drawing.Color.SteelBlue;
+            this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(33)))), ((int)(((byte)(116)))));
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(172, 5);
+            this.panel1.Size = new System.Drawing.Size(173, 10);
             this.panel1.TabIndex = 1;
             // 
             // TipoItem
@@ -70,7 +71,7 @@ namespace CapaPresentacion.Formularios.FormsPedido
             this.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.Name = "TipoItem";
-            this.Size = new System.Drawing.Size(172, 54);
+            this.Size = new System.Drawing.Size(172, 73);
             this.ResumeLayout(false);
 
         }

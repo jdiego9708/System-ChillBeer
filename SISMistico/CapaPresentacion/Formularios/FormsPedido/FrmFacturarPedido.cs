@@ -1,9 +1,12 @@
-﻿using CapaNegocio;
+﻿using CapaEntidades.Models;
+using CapaNegocio;
 using CapaPresentacion.Formularios.FormsEmpleados;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Linq;
 using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.ListView;
 
 namespace CapaPresentacion.Formularios.FormsPedido
 {
@@ -19,7 +22,6 @@ namespace CapaPresentacion.Formularios.FormsPedido
             this.poperContainer1 = new PoperContainer(opcionesPedido);
 
             this.lblCliente.Click += LblCliente_Click;
-            this.btnDescuentos.Click += BtnDescuentos_Click;
             this.Load += FrmFacturarPedido_Load;
             this.btnTerminar.Click += BtnTerminar_Click;
             this.lblMesero.Click += LblMesero_Click;
@@ -179,7 +181,7 @@ namespace CapaPresentacion.Formularios.FormsPedido
                                     string metodo = this.ObtenerValorPanel(this.panelTipoPedido);
                                     if (metodo.Equals("IMPRIMIR"))
                                     {
-                                        frmFacturaFinal.ImprimirFactura((int)this.numericCantidadFacturas.Value);
+                                        frmFacturaFinal.ImprimirFactura(1);
                                     }
                                     else if (metodo.Equals("CORREO"))
                                     {
@@ -193,7 +195,7 @@ namespace CapaPresentacion.Formularios.FormsPedido
                                     }
                                     else if (metodo.Equals("AMBAS"))
                                     {
-                                        frmFacturaFinal.ImprimirFactura((int)this.numericCantidadFacturas.Value);
+                                        frmFacturaFinal.ImprimirFactura(1);
                                         string rpta_email =
                                             EmailFactura.SendEmailFactura(this.Id_pedido, this.Correo_electronico);
                                         if (!rpta_email.Equals("OK"))
@@ -244,7 +246,7 @@ namespace CapaPresentacion.Formularios.FormsPedido
             this.poperContainer2.Show(this.lblCliente);
         }
 
-        public void ObtenerTotales(int total_parcial, int sub_total, int total)
+        public void ObtenerTotales(decimal total_parcial, int sub_total, int total)
         {
             this.Total_parcial = total_parcial;
             this.lblTotalParcial.Text = string.Format("{0:C}", this.Total_parcial);
@@ -261,8 +263,6 @@ namespace CapaPresentacion.Formularios.FormsPedido
 
         private void FrmFacturarPedido_Load(object sender, EventArgs e)
         {
-            this.dgvPedido =
-                ConfiguracionDatagridview.ConfigurationGrid(this.dgvPedido);
             this.panelSubTotal.Visible = false;
             this.rdImprimir.Checked = true;
             this.chkRecordarOpcion.Checked = true;
@@ -275,14 +275,6 @@ namespace CapaPresentacion.Formularios.FormsPedido
             this.opcionesPedido.frmFacturarPedido = this;
             this.panelDescuentos.Controls.Add(this.opcionesPedido);
             this.Show();
-        }
-
-        private void BtnDescuentos_Click(object sender, EventArgs e)
-        {
-            this.btnTerminar.Enabled = true;
-            this.opcionesPedido.Total_parcial = this.Total_parcial;
-            this.opcionesPedido.frmFacturarPedido = this;
-            this.poperContainer1.Show(btnDescuentos);
         }
 
         private void Comprobacion()
@@ -306,8 +298,8 @@ namespace CapaPresentacion.Formularios.FormsPedido
         private string nombre_empleado;
         private DataTable tablaVista;
         private DataTable tablaDetalle;
-        private int total_parcial;
-        private int total_final;
+        private decimal total_parcial;
+        private decimal total_final;
         private int cantidad_pedidos;
         private int id_mesa;
         private string mesa;
@@ -322,8 +314,8 @@ namespace CapaPresentacion.Formularios.FormsPedido
         public string Nombre_empleado { get => nombre_empleado; set => nombre_empleado = value; }
         public DataTable TablaVista { get => tablaVista; set => tablaVista = value; }
         public DataTable TablaDetalle { get => tablaDetalle; set => tablaDetalle = value; }
-        public int Total_parcial { get => total_parcial; set => total_parcial = value; }
-        public int Total_final
+        public decimal Total_parcial { get => total_parcial; set => total_parcial = value; }
+        public decimal Total_final
         {
             get => total_final;
             set
@@ -331,7 +323,6 @@ namespace CapaPresentacion.Formularios.FormsPedido
                 total_final = value;
             }
         }
-
         public int Cantidad_pedidos { get => cantidad_pedidos; set => cantidad_pedidos = value; }
         public int Id_mesa { get => id_mesa; set => id_mesa = value; }
         public string Mesa { get => mesa; set => mesa = value; }
@@ -343,75 +334,115 @@ namespace CapaPresentacion.Formularios.FormsPedido
 
         public void ObtenerPedido(int id_pedido)
         {
-            string rpta = "";
             this.Id_pedido = id_pedido;
-            DataTable tablaDetalle;
-            DataTable TablaDatosPrincipales =
-                NPedido.BuscarPedidosYDetalle("ID PEDIDO Y DETALLE", Convert.ToString(this.Id_pedido),
-                out tablaDetalle,
-                out DataTable dtDetallePlatosPedido, out rpta);
-            this.TablaDetalle = tablaDetalle;
-            this.dgvPedido.DataSource = this.TablaDetalle;
-
-            if (this.TablaDetalle != null & TablaDatosPrincipales != null)
+            try
             {
-                this.dgvPedido.Enabled = true;
-                string[] columnsHeaderText =
-                {
-                        "Id_detalle_pedido", "Id pedido", "Id tipo", "Tipo", "Nombre", "Precio", "Cantidad", "Total", "Observaciones"
-                    };
-                bool[] columnsVisible =
-                {
-                        false, false, false, true, true, true, true, true, true
-                    };
-                this.dgvPedido =
-                    DatagridString.ChangeHeaderTextAndVisible(this.dgvPedido, columnsHeaderText, columnsVisible);
+                DataTable dtPedido = NPedido.BuscarPedidos("ID PEDIDO", id_pedido.ToString());
 
-                this.Id_pedido = Convert.ToInt32(TablaDatosPrincipales.Rows[0]["Id_pedido"]);
-                this.Fecha_pedido = Convert.ToDateTime(TablaDatosPrincipales.Rows[0]["Fecha_pedido"]);
-                this.Id_mesa = Convert.ToInt32(TablaDatosPrincipales.Rows[0]["Id_mesa"]);
-                this.Mesa = Convert.ToString(TablaDatosPrincipales.Rows[0]["Mesa"]);
-                this.Id_empleado = Convert.ToInt32(TablaDatosPrincipales.Rows[0]["Id_empleado"]);
-                this.Nombre_empleado = Convert.ToString(TablaDatosPrincipales.Rows[0]["Nombre_empleado"]);
-                this.Id_cliente = Convert.ToInt32(TablaDatosPrincipales.Rows[0]["Id_cliente"]);
+                if (dtPedido == null)
+                    throw new Exception($"Error buscando el pedido {id_pedido}");
 
-                DataTable tablaCliente =
-                NClientes.BuscarClientes("ID CLIENTE Y VENTA", this.Id_cliente.ToString());
-                if (tablaCliente != null)
+                if (dtPedido.Rows.Count < 1)
+                    throw new Exception($"Error buscando el pedido {id_pedido}");
+
+                Pedidos pedido = new Pedidos(dtPedido.Rows[0]);
+
+                this.Nombre_cliente = pedido.Cliente.Nombre_cliente;
+                this.Correo_electronico = pedido.Cliente.Correo_electronico;
+
+                this.toolTip1.SetToolTip(this.lblCliente, "Correo electrónico registrado: " + pedido.Cliente.Correo_electronico);
+
+                this.gbInfo.Text = pedido.Id_pedido.ToString();
+                this.lblFecha.Text = $"{pedido.Fecha_pedido.ToLongDateString()} | {pedido.Hora_pedido}" ;
+                this.lblCliente.Text = pedido.Cliente.Nombre_cliente;
+                this.lblMesero.Text = pedido.Empleado.Nombre_empleado;
+
+                DataTable dtDetalles = NPedido.BuscarPedidos("ID PEDIDO DETALLE PRODUCTOS", id_pedido.ToString());
+
+                if (dtPedido == null)
+                    throw new Exception($"Error buscando los detalles del pedido {id_pedido}");
+
+                if (dtPedido.Rows.Count < 1)
+                    throw new Exception($"Error buscando los detalles del pedido {id_pedido}");
+
+                List<Detalle_pedido> detalles = (from DataRow row in dtDetalles.Rows
+                                                 select new Detalle_pedido(row)).ToList();
+
+                this.DetallesPedido = detalles;
+
+                List<UserControl> controls = new List<UserControl>();
+
+                foreach (Detalle_pedido detalle in detalles)
                 {
-                    this.Nombre_cliente = Convert.ToString(tablaCliente.Rows[0]["Nombre_cliente"]);
-                    this.Cantidad_pedidos = Convert.ToInt32(tablaCliente.Rows[0]["CantidadPedidos"]);
-                    this.Correo_electronico = Convert.ToString(tablaCliente.Rows[0]["Correo_electronico"]);
-                    this.toolTip1.SetToolTip(this.lblCliente, "Correo electrónico registrado: " + this.Correo_electronico);
+                    ProductoSuperSmall producto = new ProductoSuperSmall()
+                    {
+                        Detalle = detalle,
+                    };
+                    controls.Add(producto);
                 }
-
-                this.txtCantidadPedidosCliente.Text = "¡El cliente ha hecho " + this.Cantidad_pedidos +
-                    " pedidos en el restaurante!";
-                this.lblIdPedido.Text = Convert.ToString(this.Id_pedido);
-                this.lblFecha.Text = this.Fecha_pedido.ToShortDateString();
-                this.lblCliente.Text = this.Nombre_cliente;
-                this.lblMesero.Text = this.Nombre_empleado;
-                this.lblMesa.Text = this.Mesa;
+                this.panelProductos.AddArrayControl(controls);
 
                 this.SumarPrecios();
             }
-            else
+            catch (Exception)
             {
-                this.dgvPedido.Enabled = false;
+
             }
         }
+        public void AsignarDatos(Pedidos pedido)
+        {
+            this.Id_pedido = id_pedido;
+            try
+            {
+                this.Nombre_cliente = pedido.Cliente.Nombre_cliente;
+                this.Correo_electronico = pedido.Cliente.Correo_electronico;
 
+                this.toolTip1.SetToolTip(this.lblCliente, "Correo electrónico registrado: " + pedido.Cliente.Correo_electronico);
+
+                this.gbInfo.Text = $"Pedido número {pedido.Id_pedido}";
+                this.lblFecha.Text = $"{pedido.Fecha_pedido.ToLongDateString()} | {pedido.Hora_pedido}";
+                this.lblCliente.Text = pedido.Cliente.Nombre_cliente;
+                this.lblMesero.Text = pedido.Empleado.Nombre_empleado;
+
+                DataTable dtDetalles = NPedido.BuscarPedidos("ID PEDIDO DETALLE PRODUCTOS", id_pedido.ToString());
+
+                if (dtDetalles == null)
+                    throw new Exception($"Error buscando los detalles del pedido {id_pedido}");
+
+                if (dtDetalles.Rows.Count < 1)
+                    throw new Exception($"Error buscando los detalles del pedido {id_pedido}");
+
+                List<Detalle_pedido> detalles = (from DataRow row in dtDetalles.Rows
+                                                 select new Detalle_pedido(row)).ToList();
+
+                this.DetallesPedido = detalles;
+
+                List<UserControl> controls = new List<UserControl>();
+
+                foreach (Detalle_pedido detalle in detalles)
+                {
+                    ProductoSuperSmall producto = new ProductoSuperSmall()
+                    {
+                        Detalle = detalle,
+                    };
+                    controls.Add(producto);
+                }
+                this.panelProductos.AddArrayControl(controls);
+
+                this.SumarPrecios();
+            }
+            catch (Exception)
+            {
+
+            }
+        }
         private void SumarPrecios()
         {
-            int total_parcial = 0;
-            DataTable Tabla = (DataTable)this.dgvPedido.DataSource;
-            if (Tabla != null)
-            {
-                foreach (DataRow row in Tabla.Rows)
-                {
-                    total_parcial += Convert.ToInt32(row["Total"]);
-                }
-            }
+            decimal total_parcial = 0;
+
+            if (this.DetallesPedido != null)
+                total_parcial = this.DetallesPedido.Sum(x => x.Precio_total); 
+
             this.Total_parcial = total_parcial;
             this.lblTotalParcial.Text = string.Format("{0:C}", this.Total_parcial);
             this.lblTotalParcial.Tag = total_parcial;
@@ -420,7 +451,9 @@ namespace CapaPresentacion.Formularios.FormsPedido
             this.lblTotal.Text = string.Format("{0:C}", this.Total_parcial);
             this.lblTotal.Tag = total_parcial;
         }
+        public List<Detalle_pedido> DetallesPedido { get; set; }
 
+        private Pedidos _pedido;
         private bool _isDomicilio;
         public bool IsDomicilio
         {
@@ -430,6 +463,15 @@ namespace CapaPresentacion.Formularios.FormsPedido
                 _isDomicilio = value;
             }
         }
-        private bool _isPrecuenta;
+
+        public Pedidos Pedido
+        {
+            get => _pedido;
+            set
+            {
+                _pedido = value;
+                this.AsignarDatos(value);
+            }
+        }
     }
 }

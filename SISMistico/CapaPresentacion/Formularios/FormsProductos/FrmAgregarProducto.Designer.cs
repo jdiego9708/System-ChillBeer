@@ -42,8 +42,8 @@
             this.txtPrecio = new System.Windows.Forms.TextBox();
             this.txtCorreo = new System.Windows.Forms.TextBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.uploadImagen = new CapaPresentacion.Formularios.Controles.UploadImage();
             this.txtDescripcion = new System.Windows.Forms.TextBox();
+            this.uploadImagen = new CapaPresentacion.Formularios.Controles.UploadImage();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).BeginInit();
             this.gbNombre.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -78,7 +78,7 @@
             this.txtNombre.BackColor = System.Drawing.Color.White;
             this.txtNombre.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.txtNombre.Font = new System.Drawing.Font("Segoe UI Emoji", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtNombre.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.txtNombre.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(4)))), ((int)(((byte)(0)))), ((int)(((byte)(85)))));
             this.txtNombre.Location = new System.Drawing.Point(10, 38);
             this.txtNombre.Margin = new System.Windows.Forms.Padding(5);
             this.txtNombre.Name = "txtNombre";
@@ -155,13 +155,14 @@
             // listaTipoProductos
             // 
             this.listaTipoProductos.BackColor = System.Drawing.Color.White;
-            this.listaTipoProductos.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.listaTipoProductos.Font = new System.Drawing.Font("Segoe UI Emoji", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.listaTipoProductos.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.listaTipoProductos.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.listaTipoProductos.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.listaTipoProductos.Font = new System.Drawing.Font("Segoe UI Emoji", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.listaTipoProductos.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(4)))), ((int)(((byte)(0)))), ((int)(((byte)(85)))));
             this.listaTipoProductos.FormattingEnabled = true;
-            this.listaTipoProductos.Location = new System.Drawing.Point(8, 36);
+            this.listaTipoProductos.Location = new System.Drawing.Point(10, 35);
             this.listaTipoProductos.Name = "listaTipoProductos";
-            this.listaTipoProductos.Size = new System.Drawing.Size(262, 40);
+            this.listaTipoProductos.Size = new System.Drawing.Size(260, 36);
             this.listaTipoProductos.TabIndex = 0;
             // 
             // groupBox4
@@ -184,7 +185,7 @@
             this.txtPrecio.BackColor = System.Drawing.Color.White;
             this.txtPrecio.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.txtPrecio.Font = new System.Drawing.Font("Segoe UI Emoji", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtPrecio.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.txtPrecio.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(4)))), ((int)(((byte)(0)))), ((int)(((byte)(85)))));
             this.txtPrecio.Location = new System.Drawing.Point(10, 40);
             this.txtPrecio.Margin = new System.Windows.Forms.Padding(5);
             this.txtPrecio.Name = "txtPrecio";
@@ -221,6 +222,20 @@
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Descripción";
             // 
+            // txtDescripcion
+            // 
+            this.txtDescripcion.BackColor = System.Drawing.Color.White;
+            this.txtDescripcion.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.txtDescripcion.Font = new System.Drawing.Font("Segoe UI Emoji", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtDescripcion.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(4)))), ((int)(((byte)(0)))), ((int)(((byte)(85)))));
+            this.txtDescripcion.Location = new System.Drawing.Point(13, 33);
+            this.txtDescripcion.Multiline = true;
+            this.txtDescripcion.Name = "txtDescripcion";
+            this.txtDescripcion.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.txtDescripcion.Size = new System.Drawing.Size(519, 119);
+            this.txtDescripcion.TabIndex = 26;
+            this.txtDescripcion.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
             // uploadImagen
             // 
             this.uploadImagen.BackColor = System.Drawing.Color.White;
@@ -238,19 +253,6 @@
             this.uploadImagen.Size = new System.Drawing.Size(342, 156);
             this.uploadImagen.TabIndex = 1;
             this.uploadImagen.Tipo_imagen = null;
-            // 
-            // txtDescripcion
-            // 
-            this.txtDescripcion.BackColor = System.Drawing.Color.White;
-            this.txtDescripcion.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.txtDescripcion.Font = new System.Drawing.Font("Segoe UI Historic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtDescripcion.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(4)))), ((int)(((byte)(0)))), ((int)(((byte)(85)))));
-            this.txtDescripcion.Location = new System.Drawing.Point(13, 33);
-            this.txtDescripcion.Multiline = true;
-            this.txtDescripcion.Name = "txtDescripcion";
-            this.txtDescripcion.ReadOnly = true;
-            this.txtDescripcion.Size = new System.Drawing.Size(519, 119);
-            this.txtDescripcion.TabIndex = 26;
             // 
             // FrmAgregarProducto
             // 
@@ -295,12 +297,12 @@
         private System.Windows.Forms.Button btnGuardar;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.GroupBox groupBox3;
-        private System.Windows.Forms.ComboBox listaTipoProductos;
         private System.Windows.Forms.GroupBox groupBox4;
         private System.Windows.Forms.TextBox txtPrecio;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.TextBox txtCorreo;
         private Controles.UploadImage uploadImagen;
         private System.Windows.Forms.TextBox txtDescripcion;
+        private System.Windows.Forms.ComboBox listaTipoProductos;
     }
 }

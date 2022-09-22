@@ -17,11 +17,9 @@ namespace CapaPresentacion.Formularios.FormsPedido
         public DatosMesaSmall()
         {
             InitializeComponent();
-            this.btnCambiarMesa.Click += BtnCambiarMesa_Click;
             this.btnCancelarPedido.Click += BtnCancelarPedido_Click;
             this.btnEditarPedido.Click += BtnEditarPedido_Click;
             this.btnFacturar.Click += BtnFacturar_Click;
-            this.btnPrecuenta.Click += BtnPrecuenta_Click;
         }
 
         private void BtnPrecuenta_Click(object sender, EventArgs e)
@@ -53,12 +51,12 @@ namespace CapaPresentacion.Formularios.FormsPedido
             {
                 this.Pedido.Observaciones_pedido = "Justificación: " + mensaje;
                 this.OnBtnCancelarPedidoClick?.Invoke(this.Pedido, e);
-            }       
+            }
         }
 
         private void BtnCambiarMesa_Click(object sender, EventArgs e)
         {
-            this.OnBtnCambiarMesaClick?.Invoke(this.Pedido, e);           
+            this.OnBtnCambiarMesaClick?.Invoke(this.Pedido, e);
         }
 
         private void AsignarDatos(Pedidos pedido)
@@ -66,40 +64,17 @@ namespace CapaPresentacion.Formularios.FormsPedido
             StringBuilder info = new StringBuilder();
             info.Append("Fecha y hora: ").Append(pedido.Fecha_pedido.ToLongDateString() + " - ");
             info.Append(pedido.Hora_pedido).Append(Environment.NewLine);
-            info.Append("Mesa: " + pedido.Mesa.Num_mesa).Append(Environment.NewLine);
             info.Append("Atiende: ").Append(pedido.Empleado.Nombre_empleado).Append(Environment.NewLine);
 
             DataTable dtDatosPedido =
                NPedido.BuscarPedidosYDetalle("ID PEDIDO Y DETALLE", pedido.Id_pedido.ToString(),
-               out DataTable dtDetallePedido, out DataTable dtDetallePlatosPedido, out string rpta);
+               out DataTable dtDetallePedido, out string rpta);
 
             foreach (DataRow row in dtDetallePedido.Rows)
             {
-                int id_detalle = Convert.ToInt32(row["Id_detalle_pedido"]);
-                int id_tipo = Convert.ToInt32(row["Id_tipo"]);
-                string tipo = Convert.ToString(row["Tipo"]);
-                string nombre = Convert.ToString(row["Nombre"]);
+                Detalle_pedido detalle = new Detalle_pedido(row);
 
-                if (tipo.Equals("PLATO"))
-                {
-                    info.Append("-" + nombre).Append(": ").Append(Environment.NewLine);
-
-                    DataRow[] find = dtDetallePlatosPedido.Select(string.Format("Id_detalle_pedido = {0}", id_detalle));
-                    if (find.Length > 0)
-                    {
-                        foreach (DataRow re in find)
-                        {
-                            Ingredientes ing = new Ingredientes(re);
-                            info.Append("*" + ing.Nombre_ingrediente).Append(Environment.NewLine);
-                        }
-                    }
-
-                    //row["Nombre"] = info.ToString();
-                }
-                else
-                {
-                    info.Append("-" + nombre).Append(Environment.NewLine);
-                }
+                info.Append($" | {detalle.Producto.Nombre_producto} | Cantidad: {detalle.Cantidad}").Append(Environment.NewLine);
             }
 
             this.txtInfo.Text = info.ToString();

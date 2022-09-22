@@ -1,6 +1,7 @@
 ﻿using CapaEntidades.Models;
 using CapaNegocio;
 using System;
+using System.Web.Services.Description;
 using System.Windows.Forms;
 
 namespace CapaPresentacion.Formularios.FormsProductos
@@ -18,13 +19,13 @@ namespace CapaPresentacion.Formularios.FormsProductos
 
         private void ListaTipoProductos_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (int.TryParse(Convert.ToString(this.listaTipoProductos.SelectedValue), out int id_tipo_producto))
-                LlenarListas.LlenarListaCatalogoGeneral(this.listaTipoProductos);
+            //if (int.TryParse(Convert.ToString(this.listaTipoProductos.SelectedValue), out int id_tipo_producto))
+            //    LlenarListas.LlenarListaCatalogoGeneral(this.listaTipoProductos);
         }
 
         private void FrmAddProduct_Load(object sender, EventArgs e)
         {
-            if (!this.IsEditar)
+            if (this.Producto == null)
             {
                 LlenarListas.LlenarListaCatalogoGeneral(this.listaTipoProductos);
             }
@@ -32,59 +33,78 @@ namespace CapaPresentacion.Formularios.FormsProductos
 
         public event EventHandler OnProductSuccess;
 
-        private Productos Comprobaciones()
+        private bool Comprobaciones(out Productos product)
         {
+            if (this.Producto == null)
+                product = new Productos();
+            else
+                product = this.Producto;
+
             if (string.IsNullOrEmpty(this.txtNombre.Text))
             {
                 Mensajes.MensajeInformacion("Verifique los campos");
-                return null;
+                return false;
             }
 
             if (!decimal.TryParse(this.txtPrecio.Text, out decimal precio))
             {
                 Mensajes.MensajeInformacion("Verifique el precio");
-                return null;
+                return false;
             }
             else
             {
                 if (precio == 0)
                 {
                     Mensajes.MensajeInformacion("Verifique el precio del producto");
-                    return null;
+                    return false;
                 }
             }
 
             if (!int.TryParse(Convert.ToString(this.listaTipoProductos.SelectedValue), out int id_tipo_producto))
             {
                 Mensajes.MensajeInformacion("Verifique el tipo de producto");
-                return null;
+                return false;
             }
 
-            return new Productos
+            string imagen = string.Empty;
+
+            if (this.uploadImagen.Nombre_imagen != null)
             {
-                Id_tipo_producto = id_tipo_producto,
-                Nombre_producto = this.txtNombre.Text,
-                Precio_producto = precio,
-                Descripcion_producto = this.txtDescripcion.Text,
-                Estado_producto = "ACTIVO",
-            };
+                imagen = string.Concat(this.uploadImagen.Nombre_imagen);
+            }
+
+            product.Id_tipo_producto = id_tipo_producto;
+            product.Nombre_producto = this.txtNombre.Text;
+            product.Precio_producto = precio;
+            product.Descripcion_producto = this.txtDescripcion.Text;
+            product.Estado_producto = "ACTIVO";
+            product.Imagen_producto = imagen;
+
+            return true;        
         }
 
         private void BtnSave_Click(object sender, EventArgs e)
         {
             try
             {
-                Productos product = this.Comprobaciones();
-                if (product != null)
+                string mensaje = string.Empty;
+                string rpta;
+                bool result = this.Comprobaciones(out Productos product);
+                if (result)
                 {
-                    string mensaje = string.Empty;
-
-                    string rpta = NProductos.InsertarProducto(product).Result;
+                    if (!this.IsEditar)
+                    {
+                        rpta = NProductos.InsertarProducto(product).Result;
+                        mensaje = "Producto guardado con exito";
+                    }
+                    else
+                    {
+                        rpta = NProductos.EditarProducto(product).Result;
+                        mensaje = "Producto actualizado con exito";
+                    }
 
                     if (rpta.Equals("OK"))
                     {
-                        mensaje = "Producto guardado con exito";
-
                         if (this.uploadImagen.Nombre_imagen == null)
                             this.uploadImagen.Nombre_imagen = "SIN IMAGEN";
 
@@ -94,10 +114,8 @@ namespace CapaPresentacion.Formularios.FormsProductos
                                 this.uploadImagen.Nombre_imagen,
                                 this.uploadImagen.Ruta_origen);
 
-                            if (rpta.Equals("OK"))
-                                mensaje = "Producto guardado con exito";
-                            else
-                                mensaje = "Producto guardado con exito pero no se pudo guardar su imagen";
+                            if (!rpta.Equals("OK"))
+                                mensaje += " pero no se pudo guardar su imagen";
                         }
 
                         Mensajes.MensajeOkForm(mensaje);
@@ -121,8 +139,9 @@ namespace CapaPresentacion.Formularios.FormsProductos
             this.txtDescripcion.Text = product.Descripcion_producto;
 
             LlenarListas.LlenarListaCatalogoGeneral(this.listaTipoProductos);
-
             this.listaTipoProductos.SelectedValue = product.Id_tipo_producto;
+
+            this.uploadImagen.AsignarImagen(product.Imagen_producto, "RUTAIMAGES");
         }
 
         private bool _isEditar;
@@ -134,7 +153,8 @@ namespace CapaPresentacion.Formularios.FormsProductos
             set
             {
                 _product = value;
-                this.AsignarDatos(value);
+                this.IsEditar = true;
+                this.AsignarDatos(value);            
             }
         }
 

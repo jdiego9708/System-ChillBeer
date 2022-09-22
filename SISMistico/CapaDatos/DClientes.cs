@@ -110,7 +110,7 @@ namespace CapaDatos
                     ParameterName = "@Correo_electronico",
                     SqlDbType = SqlDbType.VarChar,
                     Size = 500,
-                    Value = cliente.Correo_electronico.Trim().ToUpper()
+                    Value = cliente.Correo_electronico.Trim()
                 };
                 SqlCmd.Parameters.Add(Correo_electronico);
                 contador += 1;

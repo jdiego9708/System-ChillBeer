@@ -165,24 +165,35 @@ namespace CapaDatos
 
                 //Ejecutamos nuestro comando              
                 //Se puede ejecutar este metodo pero ya tenemos el mensaje que devuelve sql
-                //rpta = SqlCmd.ExecuteNonQuery() >= 1 ? "OK" : "NO se Ingreso el Registro";
+                rpta = SqlCmd.ExecuteNonQuery() >= 1 ? "OK" : "NO se Ingreso el Registro";
 
-                DataSet ds = new DataSet();
-                SqlDataAdapter SqlData = new SqlDataAdapter(SqlCmd);
-                SqlData.Fill(ds);
-
-                if (ds.Tables.Count > 0)
+                if (rpta != "OK")
                 {
-                    if (ds.Tables[0].Rows[0]["Respuesta"].Equals("OK"))
+                    if (this.Mensaje_respuesta != null)
                     {
-                        pedido.Id_pedido = Convert.ToInt32(ds.Tables[0].Rows[0]["Id_pedido"]);
-                        rpta = "OK";
+                        rpta = this.Mensaje_respuesta;
                     }
                 }
                 else
                 {
-                    rpta = "No se encontraron las tablas correspondientes a la respuesta";
+                    pedido.Id_pedido = Convert.ToInt32(SqlCmd.Parameters["@Id_pedido"].Value);
                 }
+                //DataSet ds = new DataSet();
+                //SqlDataAdapter SqlData = new SqlDataAdapter(SqlCmd);
+                //SqlData.Fill(ds);
+
+                //if (ds.Tables.Count > 0)
+                //{
+                //    if (ds.Tables[0].Rows[0]["Respuesta"].Equals("OK"))
+                //    {
+                //        pedido.Id_pedido = Convert.ToInt32(ds.Tables[0].Rows[0]["Id_pedido"]);
+                //        rpta = "OK";
+                //    }
+                //}
+                //else
+                //{
+                //    rpta = "No se encontraron las tablas correspondientes a la respuesta";
+                //}
             }
             //Mostramos posible error que tengamos
             catch (SqlException ex)
@@ -610,12 +621,10 @@ namespace CapaDatos
 
         #region METODO BUSCAR PEDIDOS Y DETALLE
         public static DataTable BuscarPedidosYDetalle(string tipo_busqueda, string texto_busqueda,
-            out DataTable DtResultadoDetalle,
-            out DataTable dtDetallePlatoDetallado, out string rpta)
+            out DataTable DtResultadoDetalle, out string rpta)
         {
             rpta = "OK";
             DtResultadoDetalle = new DataTable("PedidosDetalle");
-            dtDetallePlatoDetallado = new DataTable("PlatosDetallados");
             DataSet ds = new DataSet();
             DataTable dtPedidosDatosPrincipales = new DataTable("PedidosDatosPrincipales");
             SqlConnection SqlCon = new SqlConnection();
@@ -675,12 +684,6 @@ namespace CapaDatos
                     {
                         dtPedidosDatosPrincipales = ds.Tables[0];
                         DtResultadoDetalle = ds.Tables[1];
-                    }
-                    else if (ds.Tables.Count == 3)
-                    {
-                        dtPedidosDatosPrincipales = ds.Tables[0];
-                        DtResultadoDetalle = ds.Tables[1];
-                        dtDetallePlatoDetallado = ds.Tables[2];
                     }
                 }
 

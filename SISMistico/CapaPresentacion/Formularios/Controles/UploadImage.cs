@@ -106,6 +106,7 @@ namespace CapaPresentacion.Formularios.Controles
             this.txtImagen.Text = nombre_imagen;
             this.txtImagen.Tag = rutaOr;
             this.Ruta_origen = rutaOr;
+            this.Nombre_imagen = nombre_imagen;
         }
 
         private void BtnLimpiar_Click(object sender, EventArgs e)

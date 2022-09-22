@@ -51,11 +51,10 @@ namespace CapaNegocio
         #region BUSCAR PEDIDOS
 
         public static DataTable BuscarPedidosYDetalle(string tipo_busqueda, string texto_busqueda,
-            out DataTable TablaDetalle,
-            out DataTable dtDetallePlatosDetallado, out string rpta)
+            out DataTable TablaDetalle, out string rpta)
         {
             return DPedidos.BuscarPedidosYDetalle(tipo_busqueda, texto_busqueda, 
-                out TablaDetalle, out dtDetallePlatosDetallado, out rpta);
+                out TablaDetalle, out rpta);
         }
 
         public static DataTable BuscarPedidos(string tipo_busqueda, string texto_busqueda)

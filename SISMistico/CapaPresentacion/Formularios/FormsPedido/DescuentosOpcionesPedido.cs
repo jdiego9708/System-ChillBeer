@@ -277,7 +277,7 @@ namespace CapaPresentacion.Formularios.FormsPedido
             decimal desc = Convert.ToDecimal(this.ListaDescuentos.SelectedValue);
             decimal descuento = desc / 100;
             int propina = Convert.ToInt32(this.txtPropina.Tag);
-            int subtotal = this.Total_parcial + propina + Convert.ToInt32(desechables) + Convert.ToInt32(domicilio);
+            decimal subtotal = this.Total_parcial + propina + Convert.ToInt32(desechables) + Convert.ToInt32(domicilio);
 
             decimal total_con_descuento = subtotal - (subtotal * descuento);
 
@@ -329,7 +329,7 @@ namespace CapaPresentacion.Formularios.FormsPedido
             this.lblTotal.Text = this.Total_parcial.ToString("C");
 
             this.txtPropina.Enabled = false;
-            double propinaSugerida = this.Total_parcial * 0.10;
+            double propinaSugerida = (double)this.Total_parcial * 0.10;
 
             this.lblPropinaSugerida.Text = propinaSugerida.ToString("C");
             this.lblPropinaSugerida.Tag = propinaSugerida;
@@ -343,7 +343,7 @@ namespace CapaPresentacion.Formularios.FormsPedido
 
         private DataTable dtCuenta;
         private decimal total;
-        private int total_parcial;
+        private decimal total_parcial;
         private bool _isDomicilio;
         public bool IsDomicilio
         {
@@ -391,6 +391,6 @@ namespace CapaPresentacion.Formularios.FormsPedido
                 this.CambioTotal();
             }
         }
-        public int Total_parcial { get => total_parcial; set => total_parcial = value; }
+        public decimal Total_parcial { get => total_parcial; set => total_parcial = value; }
     }
 }

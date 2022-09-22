@@ -53,6 +53,9 @@ namespace CapaPresentacion.Formularios.FormsPrincipales
         {
             try
             {
+                if (this.panel1.Controls.Count > 0)
+                    this.panel1.Controls.Clear();
+
                 FrmPantallaInicial frm = new FrmPantallaInicial
                 {
                     TopLevel = false
@@ -301,6 +304,9 @@ namespace CapaPresentacion.Formularios.FormsPrincipales
         {
             try
             {
+                if (this.panel1.Controls.Count > 0)
+                    this.panel1.Controls.Clear();
+
                 FrmObservarClientes frm = new FrmObservarClientes
                 {
                     TopLevel = false

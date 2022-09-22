@@ -103,6 +103,7 @@ namespace CapaPresentacion.Formularios.FormsClientes
                     return;
                 }
 
+                this.panelClientes.BackgroundImage = null;
                 this.panelClientes.AddArrayControl(controls);
             }
             catch (Exception ex)

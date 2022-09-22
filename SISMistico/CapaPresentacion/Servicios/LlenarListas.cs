@@ -10,7 +10,12 @@ namespace CapaPresentacion
         {
             lista.DataSource = null;
 
-            lista.DataSource = NCatalogo.BuscarCatalogo("CATALOGO PADRE", "TIPOS DE PRODUCTOS");
+            var result = NCatalogo.BuscarCatalogo("CATALOGO PADRE", "TIPOS DE PRODUCTOS");
+
+            if (result == null)
+                return;
+
+            lista.DataSource = result.Result.dt;
 
             lista.ValueMember = "Id_tipo";
             lista.DisplayMember = "Nombre_tipo";
