@@ -23,6 +23,7 @@ namespace CapaEntidades.Models
                 this.Empleado = new Empleados(row);
                 this.Id_cliente = Convert.ToInt32(row["Id_cliente"]);
                 this.Cliente = new Clientes(row);
+                this.Id_turno = Convert.ToInt32(row["Id_turno"]);
                 this.Estado_pedido = Convert.ToString(row["Estado_pedido"]);
                 this.Fecha_pedido = Convert.ToDateTime(row["Fecha_pedido"]);
                 this.Hora_pedido = Convert.ToString(row["Hora_pedido"]);
@@ -49,7 +50,7 @@ namespace CapaEntidades.Models
         public int Id_cliente { get; set; }
 
         public Clientes Cliente { get; set; }
-
+        public int Id_turno { get; set; }
         public string Estado_pedido { get; set; }
 
         public DateTime Fecha_pedido { get; set; } = DateTime.Now;

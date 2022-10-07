@@ -21,6 +21,8 @@ namespace CapaEntidades.Models
                 this.Imagen_producto = Convert.ToString(row["Imagen_producto"]);
                 this.Descripcion_producto = Convert.ToString(row["Descripcion_producto"]);
                 this.Estado_producto = Convert.ToString(row["Estado_producto"]);
+
+                this.Tipo_producto = new Catalogo(row);
             }
             catch (Exception ex)
             {
@@ -35,5 +37,6 @@ namespace CapaEntidades.Models
         public string Imagen_producto { get; set; }
         public string Descripcion_producto { get; set; }
         public string Estado_producto { get; set; }
+        public Catalogo Tipo_producto { get; set; }
     }
 }

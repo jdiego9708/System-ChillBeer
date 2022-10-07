@@ -63,10 +63,11 @@ namespace CapaPresentacion.Formularios.FormsEstadisticas
             this.groupBox1.Controls.Add(this.date1);
             this.groupBox1.Location = new System.Drawing.Point(12, 12);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(1339, 76);
+            this.groupBox1.Size = new System.Drawing.Size(1026, 76);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Búsqueda por rango de fechas";
+            this.groupBox1.Visible = false;
             // 
             // btnRefresh
             // 
@@ -132,8 +133,6 @@ namespace CapaPresentacion.Formularios.FormsEstadisticas
             // chkInfoNomina
             // 
             this.chkInfoNomina.AutoSize = true;
-            this.chkInfoNomina.Checked = true;
-            this.chkInfoNomina.CheckState = System.Windows.Forms.CheckState.Checked;
             this.chkInfoNomina.Location = new System.Drawing.Point(622, 16);
             this.chkInfoNomina.Name = "chkInfoNomina";
             this.chkInfoNomina.Size = new System.Drawing.Size(162, 21);
@@ -190,9 +189,9 @@ namespace CapaPresentacion.Formularios.FormsEstadisticas
             this.gbReporte.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.gbReporte.Location = new System.Drawing.Point(12, 94);
+            this.gbReporte.Location = new System.Drawing.Point(12, 12);
             this.gbReporte.Name = "gbReporte";
-            this.gbReporte.Size = new System.Drawing.Size(1339, 450);
+            this.gbReporte.Size = new System.Drawing.Size(1026, 937);
             this.gbReporte.TabIndex = 1;
             this.gbReporte.TabStop = false;
             this.gbReporte.Text = "Reporte";
@@ -202,7 +201,7 @@ namespace CapaPresentacion.Formularios.FormsEstadisticas
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(1363, 556);
+            this.ClientSize = new System.Drawing.Size(1050, 961);
             this.Controls.Add(this.gbReporte);
             this.Controls.Add(this.groupBox1);
             this.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));

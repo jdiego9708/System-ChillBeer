@@ -1,4 +1,5 @@
-﻿using CapaEntidades.Models;
+﻿using CapaEntidades.Helpers;
+using CapaEntidades.Models;
 using CapaNegocio;
 using System;
 using System.Collections.Generic;
@@ -73,8 +74,12 @@ namespace CapaPresentacion.Formularios.FormsClientes
             if (dtClientes.Rows.Count == 1)
             {
                 info.Append("Una venta registrada en Chill.");
-                string fecha_ultima_venta = Convert.ToString(dtClientes.Rows[0]["Fecha_venta"]);
-                info.Append($" | Última venta: {fecha_ultima_venta}");
+             
+                TimeSpan hora_ultima_venta = ConvertValueHelper.ConvertirHora(dtClientes.Rows[0]["Hora_venta"]);
+                DateTime fecha_ultima_venta = ConvertValueHelper.ConvertirFecha(dtClientes.Rows[0]["Fecha_venta"]);
+                DateTime fecha_ultima_venta_editada = fecha_ultima_venta.Add(hora_ultima_venta);
+
+                info.Append($" | Última venta: {fecha_ultima_venta_editada.ToLongDateString()} - {fecha_ultima_venta_editada.ToLongTimeString()}");
                 this.txtInformacion.Text = info.ToString();
                 return;
             }
@@ -82,8 +87,12 @@ namespace CapaPresentacion.Formularios.FormsClientes
             if (dtClientes.Rows.Count > 1)
             {
                 info.Append($"{dtClientes.Rows.Count} ventas registradas en Chill.");
-                string fecha_ultima_venta = Convert.ToString(dtClientes.Rows[0]["Fecha_venta"]);
-                info.Append($" | Última venta: {fecha_ultima_venta}");
+
+                TimeSpan hora_ultima_venta = ConvertValueHelper.ConvertirHora(dtClientes.Rows[0]["Hora_venta"]);
+                DateTime fecha_ultima_venta = ConvertValueHelper.ConvertirFecha(dtClientes.Rows[0]["Fecha_venta"]);
+                DateTime fecha_ultima_venta_editada = fecha_ultima_venta.Add(hora_ultima_venta);
+
+                info.Append($" | Última venta: {fecha_ultima_venta_editada.ToLongDateString()} - {fecha_ultima_venta_editada.ToLongTimeString()}");
                 this.txtInformacion.Text = info.ToString();
                 return;
             }       

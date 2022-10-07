@@ -31,10 +31,10 @@ namespace CapaNegocio
         #endregion
 
         #region CAMBIAR ESTADO PEDIDO
-        public static string CambiarEstadoPedido(List<string> variables)
+        public static string CambiarEstadoPedido(int id_pedido, string estado)
         {
             DPedidos DPedidos = new DPedidos();
-            return DPedidos.CambiarEstadoPedido(variables);
+            return DPedidos.CambiarEstadoPedido(id_pedido, estado);
         }
 
         #endregion

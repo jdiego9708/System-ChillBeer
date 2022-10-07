@@ -129,10 +129,10 @@ namespace CapaPresentacion.Formularios
             this.Id_pedido = id_pedido;
             this.Estado_mesa = estado;
 
-            string rpta = NPedido.CambiarEstadoPedido(new System.Collections.Generic.List<string>()
-            {
-                this.Id_pedido.ToString(), this.Estado_mesa, this.Id_mesa.ToString()
-            });
+            //string rpta = NPedido.CambiarEstadoPedido(new System.Collections.Generic.List<string>()
+            //{
+            //    this.Id_pedido.ToString(), this.Estado_mesa, this.Id_mesa.ToString()
+            //});
 
             if (this.Estado_mesa.Equals("DISPONIBLE"))
             {

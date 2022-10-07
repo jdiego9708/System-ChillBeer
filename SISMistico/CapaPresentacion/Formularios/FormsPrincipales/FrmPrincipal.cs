@@ -22,6 +22,8 @@ using System.Text;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using CapaPresentacion.Formularios.FormsPrincipales.FormsConfiguracion;
+using CapaPresentacion.Formularios.FormsProductos;
+using CapaPresentacion.Formularios.FormsAdministracion;
 
 namespace CapaPresentacion.Formularios.FormsPrincipales
 {
@@ -39,14 +41,53 @@ namespace CapaPresentacion.Formularios.FormsPrincipales
             this.containerOpcionesUsuario = new PoperContainer(opcionesUsuario);
             this.Load += FrmPrincipal_Load;
             this.btnEmpleados.Click += BtnEmpleados_Click;
-            this.btnBebidas.Click += BtnBebidas_Click;
+            this.btnProductos.Click += BtnBebidas_Click;
             this.btnClientes.Click += BtnClientes_Click;
             this.FormClosing += FrmPrincipal_FormClosing;
             this.opcionesUsuario.btnCerrarSesion.Click += BtnCerrarSesion_Click;
             this.opcionesUsuario.btnFunciones.Click += BtnFunciones_Click;
             this.btnAdministracion.Click += BtnAdministracion_Click;
-
+            this.btnProductos.Click += BtnProductos_Click;
             this.btnVentas.Click += BtnVentas_Click;
+        }
+
+        private void BtnProductos_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (this.panel1.Controls.Count > 0)
+                    this.panel1.Controls.Clear();
+
+                FrmObservarProductos frm = new FrmObservarProductos
+                {
+                    TopLevel = false
+                };
+                Form FormComprobado = this.ComprobarExistencia(frm);
+                if (FormComprobado != null)
+                {
+                    frm.WindowState = FormWindowState.Maximized;
+                    frm.MinimizeBox = false;
+                    frm.MaximizeBox = false;
+                    frm.FormBorderStyle = FormBorderStyle.None;
+                    frm.Activate();
+                }
+                else
+                {
+                    frm.WindowState = FormWindowState.Maximized;
+                    frm.MinimizeBox = false;
+                    frm.MaximizeBox = false;
+                    frm.FormBorderStyle = FormBorderStyle.None;
+                    this.panel1.Controls.Add(frm);
+                    this.panel1.Tag = frm;
+                    frm.Show();
+                }
+                frm.BringToFront();
+            }
+            catch (Exception ex)
+            {
+                Mensajes.MensajeErrorCompleto(this.Name, "BtnProductos_Click",
+                    "Hubo un error con el menu observar productos", ex.Message);
+            }
         }
 
         private void BtnVentas_Click(object sender, EventArgs e)
@@ -90,12 +131,41 @@ namespace CapaPresentacion.Formularios.FormsPrincipales
 
         private void BtnAdministracion_Click(object sender, EventArgs e)
         {
-            MenuAdministracion menuAdmin = new MenuAdministracion();
-            menuAdmin.btnEstadisticasDiarias.Click += BtnEstadisticasDiarias_Click;
-            menuAdmin.btnObservarMovimientos.Click += BtnObservarMovimientos_Click;
-            menuAdmin.btnHistorialVentas.Click += BtnHistorialVentas_Click;
-            container = new PoperContainer(menuAdmin);
-            container.Show(this.btnAdministracion);
+            try
+            {
+                if (this.panel1.Controls.Count > 0)
+                    this.panel1.Controls.Clear();
+
+                FrmAdministracion frm = new FrmAdministracion
+                {
+                    TopLevel = false
+                };
+                Form FormComprobado = this.ComprobarExistencia(frm);
+                if (FormComprobado != null)
+                {
+                    frm.WindowState = FormWindowState.Maximized;
+                    frm.MinimizeBox = false;
+                    frm.MaximizeBox = false;
+                    frm.FormBorderStyle = FormBorderStyle.None;
+                    frm.Activate();
+                }
+                else
+                {
+                    frm.WindowState = FormWindowState.Maximized;
+                    frm.MinimizeBox = false;
+                    frm.MaximizeBox = false;
+                    frm.FormBorderStyle = FormBorderStyle.None;
+                    this.panel1.Controls.Add(frm);
+                    this.panel1.Tag = frm;
+                    frm.Show();
+                }
+                frm.BringToFront();
+            }
+            catch (Exception ex)
+            {
+                Mensajes.MensajeErrorCompleto(this.Name, "BtnAdministracion_Click",
+                    "Hubo un error con el menu administracion", ex.Message);
+            }
         }
 
         private void BtnHistorialVentas_Click(object sender, EventArgs e)
@@ -856,35 +926,35 @@ namespace CapaPresentacion.Formularios.FormsPrincipales
             {
                 this.btnEmpleados.Enabled = true;
                 this.btnClientes.Enabled = true;
-                this.btnBebidas.Enabled = true;
+                this.btnProductos.Enabled = true;
                 this.btnAdministracion.Enabled = true;
             }
             else if (datos.Cargo_empleado.Equals("MESERO"))
             {
                 this.btnEmpleados.Enabled = false;
                 this.btnClientes.Enabled = true;
-                this.btnBebidas.Enabled = false;
+                this.btnProductos.Enabled = false;
                 this.btnAdministracion.Enabled = false;
             }
             else if (datos.Cargo_empleado.Equals("CAJERO"))
             {
                 this.btnEmpleados.Enabled = false;
                 this.btnClientes.Enabled = true;
-                this.btnBebidas.Enabled = false;
+                this.btnProductos.Enabled = false;
                 this.btnAdministracion.Enabled = false;
             }
             else if (datos.Cargo_empleado.Equals("COCINERO"))
             {
                 this.btnEmpleados.Enabled = false;
                 this.btnClientes.Enabled = true;
-                this.btnBebidas.Enabled = false;
+                this.btnProductos.Enabled = false;
                 this.btnAdministracion.Enabled = false;
             }
             else
             {
                 this.btnEmpleados.Enabled = false;
                 this.btnClientes.Enabled = false;
-                this.btnBebidas.Enabled = false;
+                this.btnProductos.Enabled = false;
                 this.btnAdministracion.Enabled = false;
             }
 

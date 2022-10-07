@@ -55,7 +55,7 @@
             this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(33)))), ((int)(((byte)(116)))));
             this.panel1.Location = new System.Drawing.Point(1, 1);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(672, 10);
+            this.panel1.Size = new System.Drawing.Size(613, 10);
             this.panel1.TabIndex = 22;
             // 
             // groupBox1
@@ -73,12 +73,12 @@
             // 
             this.txtNombre.BackColor = System.Drawing.Color.White;
             this.txtNombre.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.txtNombre.Font = new System.Drawing.Font("Segoe UI Historic", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtNombre.Font = new System.Drawing.Font("Segoe UI Emoji", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtNombre.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(4)))), ((int)(((byte)(0)))), ((int)(((byte)(85)))));
             this.txtNombre.Location = new System.Drawing.Point(6, 31);
             this.txtNombre.Name = "txtNombre";
             this.txtNombre.ReadOnly = true;
-            this.txtNombre.Size = new System.Drawing.Size(311, 29);
+            this.txtNombre.Size = new System.Drawing.Size(311, 26);
             this.txtNombre.TabIndex = 3;
             this.txtNombre.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
@@ -88,7 +88,7 @@
             this.groupBox2.Font = new System.Drawing.Font("Segoe UI Historic", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.groupBox2.Location = new System.Drawing.Point(338, 17);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(329, 76);
+            this.groupBox2.Size = new System.Drawing.Size(270, 76);
             this.groupBox2.TabIndex = 24;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Correo";
@@ -97,12 +97,12 @@
             // 
             this.txtCorreo.BackColor = System.Drawing.Color.White;
             this.txtCorreo.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.txtCorreo.Font = new System.Drawing.Font("Segoe UI Historic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtCorreo.Font = new System.Drawing.Font("Segoe UI Emoji", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtCorreo.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(4)))), ((int)(((byte)(0)))), ((int)(((byte)(85)))));
-            this.txtCorreo.Location = new System.Drawing.Point(9, 37);
+            this.txtCorreo.Location = new System.Drawing.Point(8, 35);
             this.txtCorreo.Name = "txtCorreo";
             this.txtCorreo.ReadOnly = true;
-            this.txtCorreo.Size = new System.Drawing.Size(311, 22);
+            this.txtCorreo.Size = new System.Drawing.Size(255, 26);
             this.txtCorreo.TabIndex = 2;
             this.txtCorreo.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
@@ -112,7 +112,7 @@
             this.groupBox3.Font = new System.Drawing.Font("Segoe UI Historic", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.groupBox3.Location = new System.Drawing.Point(338, 99);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(329, 76);
+            this.groupBox3.Size = new System.Drawing.Size(270, 76);
             this.groupBox3.TabIndex = 25;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Celular";
@@ -121,12 +121,12 @@
             // 
             this.txtCelular.BackColor = System.Drawing.Color.White;
             this.txtCelular.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.txtCelular.Font = new System.Drawing.Font("Segoe UI Historic", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtCelular.Font = new System.Drawing.Font("Segoe UI Emoji", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtCelular.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(4)))), ((int)(((byte)(0)))), ((int)(((byte)(85)))));
-            this.txtCelular.Location = new System.Drawing.Point(9, 36);
+            this.txtCelular.Location = new System.Drawing.Point(9, 34);
             this.txtCelular.Name = "txtCelular";
             this.txtCelular.ReadOnly = true;
-            this.txtCelular.Size = new System.Drawing.Size(311, 29);
+            this.txtCelular.Size = new System.Drawing.Size(254, 26);
             this.txtCelular.TabIndex = 1;
             this.txtCelular.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
@@ -153,6 +153,7 @@
             this.txtInformacion.ReadOnly = true;
             this.txtInformacion.Size = new System.Drawing.Size(317, 124);
             this.txtInformacion.TabIndex = 0;
+            this.txtInformacion.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // btnEditar
             // 
@@ -165,7 +166,7 @@
             this.btnEditar.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
             this.btnEditar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnEditar.Font = new System.Drawing.Font("Segoe UI Semibold", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnEditar.Location = new System.Drawing.Point(537, 194);
+            this.btnEditar.Location = new System.Drawing.Point(479, 191);
             this.btnEditar.Name = "btnEditar";
             this.btnEditar.Size = new System.Drawing.Size(60, 60);
             this.btnEditar.TabIndex = 28;
@@ -183,7 +184,7 @@
             this.btnNext.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
             this.btnNext.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnNext.Font = new System.Drawing.Font("Segoe UI Semibold", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnNext.Location = new System.Drawing.Point(603, 194);
+            this.btnNext.Location = new System.Drawing.Point(545, 191);
             this.btnNext.Name = "btnNext";
             this.btnNext.Size = new System.Drawing.Size(60, 60);
             this.btnNext.TabIndex = 27;
@@ -206,7 +207,7 @@
             this.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.Margin = new System.Windows.Forms.Padding(6, 7, 6, 7);
             this.Name = "ClienteSmall";
-            this.Size = new System.Drawing.Size(674, 263);
+            this.Size = new System.Drawing.Size(615, 263);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.groupBox2.ResumeLayout(false);

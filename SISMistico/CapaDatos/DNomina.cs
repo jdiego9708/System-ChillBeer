@@ -530,14 +530,6 @@ namespace CapaDatos
                 };
                 Sqlcmd.Parameters.Add(Id_turno);
 
-                SqlParameter Fecha = new SqlParameter
-                {
-                    ParameterName = "@Fecha",
-                    SqlDbType = SqlDbType.Date,
-                    Value = fecha.Trim(),
-                };
-                Sqlcmd.Parameters.Add(Fecha);
-
                 SqlDataAdapter SqlData = new SqlDataAdapter(Sqlcmd);
                 SqlData.Fill(dsResultados);
 
@@ -650,7 +642,6 @@ namespace CapaDatos
 
             return (rpta, dtNomina, dtDetalles, dtPagos);
         }
-
         #endregion
     }
 }

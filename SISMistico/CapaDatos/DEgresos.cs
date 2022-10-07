@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -45,7 +46,7 @@ namespace CapaDatos
         {
             int contador = 0;
             int id_egreso = 0;
-            string consulta = "INSERT INTO Egresos VALUES (@Id_empleado, @Fecha_egreso, @Valor_egreso, " +
+            string consulta = "INSERT INTO Egresos VALUES (@Id_empleado, @Id_turno, @Fecha_egreso, @Hora_egreso, @Valor_egreso, " +
                 "@Descripcion_egreso, @Estado_egreso) " +
                 "SET @Id_egreso = SCOPE_IDENTITY(); ";
 
@@ -83,6 +84,15 @@ namespace CapaDatos
                 };
                 SqlCmd.Parameters.Add(Id_empleado);
 
+                SqlParameter Id_turno = new SqlParameter
+                {
+                    ParameterName = "@Id_turno",
+                    SqlDbType = SqlDbType.Int,
+                    Value = egreso.Id_turno,
+                };
+                SqlCmd.Parameters.Add(Id_turno);
+                contador += 1;
+
                 SqlParameter Fecha_egreso = new SqlParameter
                 {
                     ParameterName = "@Fecha_egreso",
@@ -90,6 +100,15 @@ namespace CapaDatos
                     Value = egreso.Fecha_egreso,
                 };
                 SqlCmd.Parameters.Add(Fecha_egreso);
+                contador += 1;
+
+                SqlParameter Hora_egreso = new SqlParameter
+                {
+                    ParameterName = "@Hora_egreso",
+                    SqlDbType = SqlDbType.Time,
+                    Value = egreso.Hora_egreso,
+                };
+                SqlCmd.Parameters.Add(Hora_egreso);
                 contador += 1;
 
                 SqlParameter Valor_egreso = new SqlParameter
@@ -316,7 +335,7 @@ namespace CapaDatos
                 Sqlcmd.Parameters.Add(Texto_busqueda2);
 
                 SqlDataAdapter SqlData = new SqlDataAdapter(Sqlcmd);
-                await Task.Run(() => SqlData.Fill(dtNomina));                
+                SqlData.Fill(dtNomina);                
             }
             catch (SqlException ex)
             {

@@ -81,8 +81,10 @@ namespace CapaPresentacion.Formularios.FormsEgresos
             }
 
             egreso.Id_empleado = datosInicioSesion.EmpleadoLogin.Id_empleado;
+            egreso.Id_turno = datosInicioSesion.Turno.Id_turno;
             egreso.Empleado = datosInicioSesion.EmpleadoLogin;
             egreso.Fecha_egreso = DateTime.Now;
+            egreso.Hora_egreso = DateTime.Now.TimeOfDay;
             egreso.Valor_egreso = valor;
             egreso.Descripcion_egreso = this.txtDescripcion.Text;
             egreso.Estado_egreso = "TERMINADO";
@@ -102,24 +104,24 @@ namespace CapaPresentacion.Formularios.FormsEgresos
                         Mensajes.MensajeInformacion("Se guardó correctamente el egreso", "Entendido");
                         egreso.Id_egreso = id_egreso;
 
-                        StringBuilder infoEmpleado = new StringBuilder();
-                        infoEmpleado.Append("Nombre de quien genera el egreso " + egreso.Empleado.Nombre_empleado).Append(Environment.NewLine);
-                        infoEmpleado.Append("Identificación " + egreso.Empleado.Identificacion_empleado).Append(Environment.NewLine);
+                        //StringBuilder infoEmpleado = new StringBuilder();
+                        //infoEmpleado.Append("Nombre de quien genera el egreso " + egreso.Empleado.Nombre_empleado).Append(Environment.NewLine);
+                        //infoEmpleado.Append("Identificación " + egreso.Empleado.Identificacion_empleado).Append(Environment.NewLine);
 
-                        StringBuilder infoGasto = new StringBuilder();
-                        infoGasto.Append("Concepto/Observaciones del egreso:").Append(Environment.NewLine);
-                        infoGasto.Append(egreso.Descripcion_egreso).Append(Environment.NewLine);
+                        //StringBuilder infoGasto = new StringBuilder();
+                        //infoGasto.Append("Concepto/Observaciones del egreso:").Append(Environment.NewLine);
+                        //infoGasto.Append(egreso.Descripcion_egreso).Append(Environment.NewLine);
 
-                        FrmReporteGastos frmReporteGastos = new FrmReporteGastos
-                        {
-                            FechaHora = egreso.Fecha_egreso.ToLongDateString() + " - " + DateTime.Now.ToLongTimeString(),
-                            InformacionEmpleado = infoEmpleado.ToString(),
-                            InformacionGasto = infoGasto.ToString(),
-                            Valor_gasto = egreso.Valor_egreso.ToString("C"),
-                            Observaciones = string.Empty,
-                        };
-                        frmReporteGastos.ObtenerReporte();
-                        frmReporteGastos.ImprimirFactura(2);
+                        //FrmReporteGastos frmReporteGastos = new FrmReporteGastos
+                        //{
+                        //    FechaHora = egreso.Fecha_egreso.ToLongDateString() + " - " + DateTime.Now.ToLongTimeString(),
+                        //    InformacionEmpleado = infoEmpleado.ToString(),
+                        //    InformacionGasto = infoGasto.ToString(),
+                        //    Valor_gasto = egreso.Valor_egreso.ToString("C").Replace(",00", ""),
+                        //    Observaciones = string.Empty,
+                        //};
+                        //frmReporteGastos.ObtenerReporte();
+                        //frmReporteGastos.ImprimirFactura(2);
 
                         this.OnEgresoSuccess?.Invoke(egreso, e);
                         this.Close();

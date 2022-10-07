@@ -113,6 +113,15 @@ namespace CapaDatos
                 SqlCmd.Parameters.Add(Id_cliente);
                 contador += 1;
 
+                SqlParameter Id_turno = new SqlParameter
+                {
+                    ParameterName = "@Id_turno",
+                    SqlDbType = SqlDbType.Int,
+                    Value = pedido.Id_turno,
+                };
+                SqlCmd.Parameters.Add(Id_turno);
+                contador += 1;
+
                 SqlParameter Fecha_pedido = new SqlParameter
                 {
                     ParameterName = "@Fecha_pedido",
@@ -259,6 +268,22 @@ namespace CapaDatos
                 };
                 SqlCmd.Parameters.Add(Id_tipo);
 
+                SqlParameter Fecha_detalle = new SqlParameter
+                {
+                    ParameterName = "@Fecha_detalle",
+                    SqlDbType = SqlDbType.Date,
+                    Value = detalle.Fecha_detalle,
+                };
+                SqlCmd.Parameters.Add(Fecha_detalle);
+
+                SqlParameter Hora_detalle = new SqlParameter
+                {
+                    ParameterName = "@Hora_detalle",
+                    SqlDbType = SqlDbType.Time,
+                    Value = detalle.Hora_detalle,
+                };
+                SqlCmd.Parameters.Add(Hora_detalle);
+
                 SqlParameter Tipo = new SqlParameter
                 {
                     ParameterName = "@Tipo",
@@ -282,6 +307,14 @@ namespace CapaDatos
                     Value = detalle.Cantidad,
                 };
                 SqlCmd.Parameters.Add(Cantidad);
+
+                SqlParameter Precio_total = new SqlParameter
+                {
+                    ParameterName = "@Precio_total",
+                    SqlDbType = SqlDbType.Decimal,
+                    Value = detalle.Precio_total,
+                };
+                SqlCmd.Parameters.Add(Precio_total);
 
                 SqlParameter Observaciones = new SqlParameter
                 {
@@ -365,6 +398,22 @@ namespace CapaDatos
                 };
                 SqlCmd.Parameters.Add(Observaciones);
 
+                SqlParameter Fecha = new SqlParameter
+                {
+                    ParameterName = "@Fecha",
+                    SqlDbType = SqlDbType.Date,
+                    Value = DateTime.Now.ToString("yyyy-MM-dd"),
+                };
+                SqlCmd.Parameters.Add(Fecha);
+
+                SqlParameter Hora = new SqlParameter
+                {
+                    ParameterName = "@Hora",
+                    SqlDbType = SqlDbType.Time,
+                    Value = DateTime.Now.ToString("HH:mm"),
+                };
+                SqlCmd.Parameters.Add(Hora);
+
                 //Ejecutamos nuestro comando
                 //Se puede ejecutar este metodo pero ya tenemos el mensaje que devuelve sql
                 rpta = SqlCmd.ExecuteNonQuery() >= 1 ? "OK" : "NO se Ingreso el Registro";
@@ -397,9 +446,8 @@ namespace CapaDatos
         #endregion
 
         #region METODO CAMBIAR ESTADO PEDIDO
-        public string CambiarEstadoPedido(List<string> Variables)
+        public string CambiarEstadoPedido(int id_pedido, string estado)
         {
-            int contador = 0;
             //asignamos a una cadena string la variable rpta y la iniciamos en vacía
             string rpta = "";
             SqlConnection SqlCon = new SqlConnection();
@@ -423,29 +471,18 @@ namespace CapaDatos
                 {
                     ParameterName = "@Id_pedido",
                     SqlDbType = SqlDbType.Int,
-                    Value = Convert.ToInt32(Variables[contador])
+                    Value = id_pedido,
                 };
                 SqlCmd.Parameters.Add(Id_pedido);
-                contador += 1;
 
                 SqlParameter Estado = new SqlParameter
                 {
                     ParameterName = "@Estado",
                     SqlDbType = SqlDbType.VarChar,
                     Size = 50,
-                    Value = Variables[contador].Trim().ToUpper()
+                    Value = estado,
                 };
                 SqlCmd.Parameters.Add(Estado);
-                contador += 1;
-
-                SqlParameter Id_mesa = new SqlParameter
-                {
-                    ParameterName = "@Id_mesa",
-                    SqlDbType = SqlDbType.Int,
-                    Value = Convert.ToInt32(Variables[contador])
-                };
-                SqlCmd.Parameters.Add(Id_mesa);
-                contador += 1;
 
                 //Ejecutamos nuestro comando
                 //Se puede ejecutar este metodo pero ya tenemos el mensaje que devuelve sql

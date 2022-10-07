@@ -72,8 +72,10 @@ namespace CapaPresentacion.Formularios.FormsIngresos
             }
 
             ingreso.Id_empleado = datosInicioSesion.EmpleadoLogin.Id_empleado;
+            ingreso.Id_turno = datosInicioSesion.Turno.Id_turno;
             ingreso.Empleado = datosInicioSesion.EmpleadoLogin;
             ingreso.Fecha_ingreso = DateTime.Now;
+            ingreso.Hora_ingreso = DateTime.Now.TimeOfDay;
             ingreso.Valor_ingreso = valor;
             ingreso.Descripcion_ingreso = this.txtDescripcion.Text;
             ingreso.Estado_ingreso = "TERMINADO";
@@ -93,24 +95,24 @@ namespace CapaPresentacion.Formularios.FormsIngresos
                         Mensajes.MensajeInformacion("Se guardó correctamente el ingreso", "Entendido");
                         ingreso.Id_ingreso = id_ingreso;
 
-                        StringBuilder infoEmpleado = new StringBuilder();
-                        infoEmpleado.Append("Nombre de quien genera el ingreso " + ingreso.Empleado.Nombre_empleado).Append(Environment.NewLine);
-                        infoEmpleado.Append("Identificación " + ingreso.Empleado.Identificacion_empleado).Append(Environment.NewLine);
+                        //StringBuilder infoEmpleado = new StringBuilder();
+                        //infoEmpleado.Append("Nombre de quien genera el ingreso " + ingreso.Empleado.Nombre_empleado).Append(Environment.NewLine);
+                        //infoEmpleado.Append("Identificación " + ingreso.Empleado.Identificacion_empleado).Append(Environment.NewLine);
 
-                        StringBuilder infoingreso = new StringBuilder();
-                        infoingreso.Append("Concepto/Observaciones del ingreso:").Append(Environment.NewLine);
-                        infoingreso.Append(ingreso.Descripcion_ingreso).Append(Environment.NewLine);
+                        //StringBuilder infoingreso = new StringBuilder();
+                        //infoingreso.Append("Concepto/Observaciones del ingreso:").Append(Environment.NewLine);
+                        //infoingreso.Append(ingreso.Descripcion_ingreso).Append(Environment.NewLine);
 
-                        FrmReporteIngresos frmReporteingresos = new FrmReporteIngresos
-                        {
-                            FechaHora = ingreso.Fecha_ingreso.ToLongDateString() + " - " + DateTime.Now.ToLongTimeString(),
-                            InformacionEmpleado = infoEmpleado.ToString(),
-                            InformacionIngreso = infoingreso.ToString(),
-                            Valor_ingreso = ingreso.Valor_ingreso.ToString("C"),
-                            Observaciones = string.Empty,
-                        };
-                        frmReporteingresos.ObtenerReporte();
-                        frmReporteingresos.ImprimirFactura(2);
+                        //FrmReporteIngresos frmReporteingresos = new FrmReporteIngresos
+                        //{
+                        //    FechaHora = ingreso.Fecha_ingreso.ToLongDateString() + " - " + DateTime.Now.ToLongTimeString(),
+                        //    InformacionEmpleado = infoEmpleado.ToString(),
+                        //    InformacionIngreso = infoingreso.ToString(),
+                        //    Valor_ingreso = ingreso.Valor_ingreso.ToString("C").Replace(",00", ""),
+                        //    Observaciones = string.Empty,
+                        //};
+                        //frmReporteingresos.ObtenerReporte();
+                        //frmReporteingresos.ImprimirFactura(2);
 
                         this.OnIngresoSuccess?.Invoke(ingreso, e);
                         this.Close();

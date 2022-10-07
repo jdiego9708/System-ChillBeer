@@ -66,7 +66,7 @@ namespace CapaPresentacion.Formularios.FormsEstadisticas
             DatosInicioSesion datos = DatosInicioSesion.GetInstancia();
 
             string informacionEmpleado = "Reporte generado por " +
-                datos.Nombre_empleado + " - Teléfono: " + datos.EmpleadoLogin.Telefono_empleado;
+                datos.Nombre_empleado + " | Teléfono: " + datos.EmpleadoLogin.Telefono_empleado;
             string cantidadPedidos = "";
             var (rpta, dtPedidos) =
                await NPedido.BuscarPedidos("RANGO FECHAS", date1.ToString("yyyy-MM-dd"), date2.ToString("yyyy-MM-dd"));
@@ -112,17 +112,17 @@ namespace CapaPresentacion.Formularios.FormsEstadisticas
                 //else
                 //    resumenResultados.Append("Entre ").Append(date1.ToLongDateString() + " y ").Append(date2.ToLongDateString()).Append(" se registra la siguiente información:").Append(Environment.NewLine);
 
-                resumenResultados.Append("Total ingresos: ").Append(turno.Total_ingresos.ToString("C")).Append(Environment.NewLine);
+                resumenResultados.Append("Total ingresos: ").Append(turno.Total_ingresos.ToString("C").Replace(",00", "")).Append(Environment.NewLine);
 
                 if (this.chkInfoGastos.Checked)
-                    resumenResultados.Append("Total egresos: ").Append(turno.Total_egresos.ToString("C")).Append(Environment.NewLine);
+                    resumenResultados.Append("Total egresos: ").Append(turno.Total_egresos.ToString("C").Replace(",00", "")).Append(Environment.NewLine);
 
-                resumenResultados.Append("Total ventas: ").Append(turno.Total_ventas.ToString("C")).Append(Environment.NewLine);
+                resumenResultados.Append("Total ventas: ").Append(turno.Total_ventas.ToString("C").Replace(",00", "")).Append(Environment.NewLine);
 
                 if (this.chkInfoNomina.Checked)
-                    resumenResultados.Append("Total nomina: ").Append(turno.Total_nomina.ToString("C")).Append(Environment.NewLine);
+                    resumenResultados.Append("Total nomina: ").Append(turno.Total_nomina.ToString("C").Replace(",00", "")).Append(Environment.NewLine);
 
-                resumenResultados.Append("Total: ").Append(turno.Total_turno.ToString("C")).Append(Environment.NewLine);
+                resumenResultados.Append("Total: ").Append(turno.Total_turno.ToString("C").Replace(",00", "")).Append(Environment.NewLine);
 
                 if (this.chkInfoDetalleVentas.Checked)
                 {
@@ -165,7 +165,7 @@ namespace CapaPresentacion.Formularios.FormsEstadisticas
                         foreach (TipoResumen re in detallesOrdenados)
                         {
                             resumenResultados.Append("* " + re.Nombre + " - Cantidad ").Append(re.Cantidad);
-                            resumenResultados.Append(" - Valor total: ").Append(re.Valor_total.ToString("C"));
+                            resumenResultados.Append(" - Valor total: ").Append(re.Valor_total.ToString("C").Replace(",00", ""));
                             resumenResultados.Append(Environment.NewLine);
                         }
                     }
@@ -213,7 +213,7 @@ namespace CapaPresentacion.Formularios.FormsEstadisticas
                             contador += 1;
                             Egresos egreso = new Egresos(row);
                             infoEgresos.Append(contador + ") Fecha: ").Append(egreso.Fecha_egreso).Append(" | ");
-                            infoEgresos.Append("Valor: ").Append(egreso.Valor_egreso.ToString("C")).Append(Environment.NewLine);
+                            infoEgresos.Append("Valor: ").Append(egreso.Valor_egreso.ToString("C").Replace(",00", "")).Append(Environment.NewLine);
                             infoEgresos.Append("Observaciones: ").Append(egreso.Descripcion_egreso).Append(Environment.NewLine);
                         }
                     }
@@ -254,7 +254,7 @@ namespace CapaPresentacion.Formularios.FormsEstadisticas
                             contador += 1;
                             Ingresos ingreso = new Ingresos(row);
                             infoIngresos.Append(contador + ") Fecha: ").Append(ingreso.Fecha_ingreso.ToString("yyyy-MM-dd")).Append(" | ");
-                            infoIngresos.Append("Valor: ").Append(ingreso.Valor_ingreso.ToString("C")).Append(Environment.NewLine);
+                            infoIngresos.Append("Valor: ").Append(ingreso.Valor_ingreso.ToString("C").Replace(",00", "")).Append(Environment.NewLine);
                             infoIngresos.Append("Observaciones: ").Append(ingreso.Descripcion_ingreso).Append(Environment.NewLine);
                         }
                     }
@@ -293,7 +293,7 @@ namespace CapaPresentacion.Formularios.FormsEstadisticas
                             {
                                 infoEgresos.Append("*Fecha: ").Append(nomina.Fecha_nomina.ToString("dd-MM-yyyy")).Append(" | ");
                                 infoEgresos.Append(nomina.Empleado.Nombre_empleado).Append(" | ");
-                                infoEgresos.Append("Valor: ").Append(nomina.Total_nomina.ToString("C")).Append(Environment.NewLine);
+                                infoEgresos.Append("Valor: ").Append(nomina.Total_nomina.ToString("C").Replace(",00", "")).Append(Environment.NewLine);
                                 if (!string.IsNullOrEmpty(nomina.Observaciones))
                                     infoEgresos.Append("Observaciones: " + nomina.Observaciones).Append(Environment.NewLine);
                                 else
@@ -315,7 +315,7 @@ namespace CapaPresentacion.Formularios.FormsEstadisticas
                     int cantidad = Convert.ToInt32(rowPago["Cantidad"]);
                     string metodo = Convert.ToString(rowPago["Metodo_pago"]);
                     decimal total = Convert.ToInt32(rowPago["Total"]);
-                    infoPagos.Append("*").Append(metodo).Append(" - Cantidad " + cantidad + " por valor de " + total.ToString("C")).Append(Environment.NewLine);
+                    infoPagos.Append("*").Append(metodo).Append(" - Cantidad " + cantidad + " por valor de " + total.ToString("C").Replace(",00", "")).Append(Environment.NewLine);
                 }
                 resumenResultados.Append(infoPagos);
             }
@@ -352,6 +352,275 @@ namespace CapaPresentacion.Formularios.FormsEstadisticas
             this.InformacionEgresos = infoEgresos.ToString();
             this.InformacionIngresos = infoIngresos.ToString();
             this.IdentificacionTurno = id_turno;
+            this.FechaHora = DateTime.Now.ToLongDateString();
+            this.ObtenerReporte();
+            MensajeEspera.CloseForm();
+        }
+        public void LoadEstadistica(int id_turno)
+        {
+            MensajeEspera.ShowWait("Cargando...");
+
+            DatosInicioSesion datos = DatosInicioSesion.GetInstancia();
+
+            string informacionEmpleado = "Reporte generado por " +
+                datos.Nombre_empleado + " | Teléfono: " + datos.EmpleadoLogin.Telefono_empleado;
+            string cantidadPedidos = "";            
+
+            DataTable dtVentas = NVentas.BuscarVenta("ID TURNO", id_turno.ToString());
+
+            if (dtVentas == null)
+                cantidadPedidos = "No hay ventas el día de hoy";
+            else
+                cantidadPedidos = "Cantidad de ventas: " + dtVentas.Rows.Count + "";
+
+            StringBuilder resumenResultados = new StringBuilder();
+
+            DataTable dtEstadistica;
+            DataTable dtDetalle;
+            DataTable dtPagos;
+            bool isRango = false;
+
+            var result = NTurnos.BuscarEstadistica(id_turno).Result;
+
+            dtEstadistica = result.dtEstadistica;
+            dtDetalle = result.dtDetalle;
+            dtPagos = result.dtPagos;
+
+            string info_id_turno = "";
+
+            if (dtEstadistica != null)
+            {
+                Turno turno = new Turno(dtEstadistica.Rows[0]);
+                info_id_turno = "Identificación del turno: " + turno.Id_turno.ToString();
+
+                resumenResultados.Append("Base inicial: ").Append(turno.Valor_inicial.ToString("C").Replace(",00", "")).Append(Environment.NewLine);
+
+                resumenResultados.Append("Total ventas: ").Append(turno.Total_ventas.ToString("C").Replace(",00", "")).Append(Environment.NewLine);
+
+                resumenResultados.Append("Total ingresos extras: ").Append(turno.Total_ingresos.ToString("C").Replace(",00", "")).Append(Environment.NewLine);
+
+                if (this.chkInfoGastos.Checked)
+                    resumenResultados.Append("Total egresos: ").Append(turno.Total_egresos.ToString("C").Replace(",00", "")).Append(Environment.NewLine);          
+
+                if (this.chkInfoNomina.Checked)
+                    resumenResultados.Append("Total nomina: ").Append(turno.Total_nomina.ToString("C").Replace(",00", "")).Append(Environment.NewLine);
+
+                resumenResultados.Append("Total: ").Append(turno.Total_turno.ToString("C").Replace(",00", "")).Append(Environment.NewLine);
+
+                if (this.chkInfoDetalleVentas.Checked)
+                {
+                    List<TipoResumen> resumen = new List<TipoResumen>();
+                    //PLATOS Y BEBIDAS
+                    foreach (DataRow row in dtDetalle.Rows)
+                    {
+                        int id_tipo = Convert.ToInt32(row["Id_tipo"]);
+                        int cantidad = Convert.ToInt32(row["Cantidad"]);
+                        string nombre = Convert.ToString(row["Nombre"]);
+                        decimal precio = Convert.ToDecimal(row["Precio"]) * cantidad;
+
+                        List<TipoResumen> results = resumen.Where(x => x.Id_tipo == id_tipo).ToList();
+                        if (results.Count > 0)
+                        {
+                            results[0].Cantidad += cantidad;
+                            results[0].Valor_total += precio;
+                        }
+                        else
+                        {
+                            TipoResumen tipo = new TipoResumen
+                            {
+                                Id_tipo = id_tipo,
+                                Nombre = nombre,
+                                Cantidad = cantidad,
+                                Valor_total = precio,
+                            };
+                            resumen.Add(tipo);
+                        }
+                    }
+
+                    if (resumen.Count > 0)
+                    {
+                        IOrderedEnumerable<TipoResumen> detallesOrdenados = from s in resumen
+                                                                            orderby s.Cantidad descending
+                                                                            select s;
+
+                        resumenResultados.Append("Detalles del día: ").Append(Environment.NewLine);
+
+                        foreach (TipoResumen re in detallesOrdenados)
+                        {
+                            resumenResultados.Append("* " + re.Nombre + " - Cantidad ").Append(re.Cantidad);
+                            resumenResultados.Append(" - Valor total: ").Append(re.Valor_total.ToString("C").Replace(",00", ""));
+                            resumenResultados.Append(Environment.NewLine);
+                        }
+                    }
+                    else
+                    {
+                        resumenResultados.Append("No se encontraron detalles");
+                    }
+                }
+
+            }
+            else
+            {
+                resumenResultados.Append("Hubo un error al encontrar los datos de estadísticas diarias");
+            }
+
+            StringBuilder infoEgresos = new StringBuilder();
+
+            if (this.chkInfoGastos.Checked)
+            {
+                DataTable dtEgresos = null;
+
+                var resultEgresos =
+                    NEgresos.BuscarEgresos("ID TURNO", id_turno.ToString()).Result;
+                dtEgresos = resultEgresos.dtEgresos;
+
+                if (dtEgresos != null)
+                {
+                    if (dtEgresos.Rows.Count == 0)
+                    {
+                        infoEgresos.Append("No hay conceptos de egresos.").Append(Environment.NewLine);
+                    }
+                    else
+                    {
+                        infoEgresos.Append("Descripción de los egresos: ").Append(Environment.NewLine);
+                        int contador = 0;
+                        foreach (DataRow row in dtEgresos.Rows)
+                        {
+                            contador += 1;
+                          
+                            Egresos egreso = new Egresos(row);
+
+                            DateTime datemain = egreso.Fecha_egreso;
+                            DateTime dateeditado = datemain.Add(egreso.Hora_egreso);
+
+                            infoEgresos.Append(contador + ") Fecha: ").Append(dateeditado.ToString("yyyy-MM-dd")).Append(" | ");
+                            infoEgresos.Append(dateeditado.ToString("hh:mm tt")).Append(" | ");
+                            infoEgresos.Append("Valor: ").Append(egreso.Valor_egreso.ToString("C").Replace(",00", "")).Append(Environment.NewLine);
+                            infoEgresos.Append("Observaciones: ").Append(egreso.Descripcion_egreso).Append(Environment.NewLine);
+                        }
+                    }
+                }
+                else
+                    infoEgresos.Append("No hay conceptos de egresos.").Append(Environment.NewLine);
+            }
+
+            StringBuilder infoIngresos = new StringBuilder();
+
+            if (this.chkIngresos.Checked)
+            {
+                DataTable dtIngresos = null;
+
+                var resultIngresos = NIngresos.BuscarIngresos("ID TURNO", id_turno.ToString()).Result;
+                dtIngresos = resultIngresos.dtIngresos;
+
+                if (dtIngresos != null)
+                {
+                    if (dtIngresos.Rows.Count == 0)
+                    {
+                        infoIngresos.Append("No hay conceptos de ingresos extras.").Append(Environment.NewLine);
+                    }
+                    else
+                    {
+                        infoIngresos.Append("Descripción de los ingresos: ").Append(Environment.NewLine);
+                        int contador = 0;
+                        foreach (DataRow row in dtIngresos.Rows)
+                        {
+                            contador += 1;
+                            Ingresos ingreso = new Ingresos(row);
+                            infoIngresos.Append(contador + ") Fecha: ").Append(ingreso.Fecha_ingreso.ToString("yyyy-MM-dd")).Append(" | ");
+                            infoIngresos.Append("Valor: ").Append(ingreso.Valor_ingreso.ToString("C").Replace(",00", "")).Append(Environment.NewLine);
+                            infoIngresos.Append("Observaciones: ").Append(ingreso.Descripcion_ingreso).Append(Environment.NewLine);
+                        }
+                    }
+                }
+                else
+                    infoIngresos.Append("No hay conceptos de ingresos extras.").Append(Environment.NewLine);
+            }
+
+            if (this.chkInfoNomina.Checked)
+            {
+                infoEgresos.Append(Environment.NewLine).Append(Environment.NewLine);
+                DataTable dtNomina;
+
+                dtNomina = NNomina.BuscarNomina("ID TURNO", "", out string rptaNomina);
+
+                if (dtNomina != null)
+                {
+                    if (dtNomina.Rows.Count == 0)
+                    {
+                        infoEgresos.Append("No hay nómina paga.").Append(Environment.NewLine);
+                    }
+                    else
+                    {
+                        infoEgresos.Append("Descripción de la nómina: ").Append(Environment.NewLine);
+                        foreach (DataRow row in dtNomina.Rows)
+                        {
+                            EmpleadoNominaBinding nomina = new EmpleadoNominaBinding(row);
+                            if (nomina.Estado_nomina.Equals("TERMINADO"))
+                            {
+                                infoEgresos.Append("*Fecha: ").Append(nomina.Fecha_nomina.ToString("dd-MM-yyyy")).Append(" | ");
+                                infoEgresos.Append(nomina.Empleado.Nombre_empleado).Append(" | ");
+                                infoEgresos.Append("Valor: ").Append(nomina.Total_nomina.ToString("C").Replace(",00", "")).Append(Environment.NewLine);
+                                if (!string.IsNullOrEmpty(nomina.Observaciones))
+                                    infoEgresos.Append("Observaciones: " + nomina.Observaciones).Append(Environment.NewLine);
+                                else
+                                    infoEgresos.Append(Environment.NewLine);
+                            }
+                        }
+                    }
+                }
+                else
+                    infoEgresos.Append("No hay nómina paga.").Append(Environment.NewLine);
+            }
+
+            if (this.chkInfoPagos.Checked)
+            {
+                StringBuilder infoPagos = new StringBuilder();
+                infoPagos.Append(Environment.NewLine + "Métodos de pago: ").Append(Environment.NewLine);
+                foreach (DataRow rowPago in dtPagos.Rows)
+                {
+                    int cantidad = Convert.ToInt32(rowPago["Cantidad"]);
+                    string metodo = Convert.ToString(rowPago["Metodo_pago"]);
+                    decimal total = Convert.ToInt32(rowPago["Total"]);
+                    infoPagos.Append("*").Append(metodo).Append(" - Cantidad " + cantidad + " por valor de " + total.ToString("C").Replace(",00", "")).Append(Environment.NewLine);
+                }
+                resumenResultados.Append(infoPagos);
+            }
+
+            if (this.chkDeletePedidos.Checked)
+            {
+                DataTable dtPedidos = NPedido.BuscarPedidos("ID TURNO", id_turno.ToString());
+
+                if (dtPedidos != null)
+                {
+                    StringBuilder infoDeletePedidos = new StringBuilder();
+                    infoDeletePedidos.Append("Información de pedidos cancelados").Append(Environment.NewLine);
+
+                    bool pedidos_cancelados = false;
+                    foreach (DataRow row in dtPedidos.Rows)
+                    {
+                        string estado_pedido = Convert.ToString(row["Estado_pedido"]);
+                        if (estado_pedido.Equals("CANCELADO"))
+                        {
+                            pedidos_cancelados = true;
+                            Pedidos pedido = new Pedidos(row);
+                            infoDeletePedidos.Append("* Fecha: " + pedido.Fecha_pedido.ToString("dd-MM-yy") + " - Hora: " + pedido.Hora_pedido + " - Motivo: " + pedido.Observaciones_pedido).Append(Environment.NewLine);
+                        }
+                    }
+
+                    if (pedidos_cancelados == false)
+                        infoDeletePedidos = new StringBuilder();
+
+                    resumenResultados.Append(infoDeletePedidos);
+                }
+            }
+
+            this.InformacionEmpleado = informacionEmpleado;
+            this.CantidadPedidos = cantidadPedidos;
+            this.ResumenResultados = resumenResultados.ToString();
+            this.InformacionEgresos = infoEgresos.ToString();
+            this.InformacionIngresos = infoIngresos.ToString();
+            this.IdentificacionTurno = info_id_turno;
             this.FechaHora = DateTime.Now.ToLongDateString();
             this.ObtenerReporte();
             MensajeEspera.CloseForm();

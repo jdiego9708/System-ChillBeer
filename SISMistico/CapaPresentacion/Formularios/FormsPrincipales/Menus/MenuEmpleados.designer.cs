@@ -48,7 +48,7 @@
             this.btnEditarEmpleado.Image = ((System.Drawing.Image)(resources.GetObject("btnEditarEmpleado.Image")));
             this.btnEditarEmpleado.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnEditarEmpleado.Location = new System.Drawing.Point(19, 88);
-            this.btnEditarEmpleado.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
+            this.btnEditarEmpleado.Margin = new System.Windows.Forms.Padding(5);
             this.btnEditarEmpleado.Name = "btnEditarEmpleado";
             this.btnEditarEmpleado.Size = new System.Drawing.Size(278, 81);
             this.btnEditarEmpleado.TabIndex = 2;
@@ -66,7 +66,7 @@
             this.btnObservarEmpleados.Image = ((System.Drawing.Image)(resources.GetObject("btnObservarEmpleados.Image")));
             this.btnObservarEmpleados.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnObservarEmpleados.Location = new System.Drawing.Point(19, 174);
-            this.btnObservarEmpleados.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
+            this.btnObservarEmpleados.Margin = new System.Windows.Forms.Padding(5);
             this.btnObservarEmpleados.Name = "btnObservarEmpleados";
             this.btnObservarEmpleados.Size = new System.Drawing.Size(278, 81);
             this.btnObservarEmpleados.TabIndex = 3;
@@ -84,7 +84,7 @@
             this.btnAgregarEmpleado.Image = ((System.Drawing.Image)(resources.GetObject("btnAgregarEmpleado.Image")));
             this.btnAgregarEmpleado.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnAgregarEmpleado.Location = new System.Drawing.Point(19, 2);
-            this.btnAgregarEmpleado.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
+            this.btnAgregarEmpleado.Margin = new System.Windows.Forms.Padding(5);
             this.btnAgregarEmpleado.Name = "btnAgregarEmpleado";
             this.btnAgregarEmpleado.Size = new System.Drawing.Size(278, 81);
             this.btnAgregarEmpleado.TabIndex = 4;
@@ -102,7 +102,7 @@
             this.btnInactivarEmpleados.Image = ((System.Drawing.Image)(resources.GetObject("btnInactivarEmpleados.Image")));
             this.btnInactivarEmpleados.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnInactivarEmpleados.Location = new System.Drawing.Point(19, 260);
-            this.btnInactivarEmpleados.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
+            this.btnInactivarEmpleados.Margin = new System.Windows.Forms.Padding(5);
             this.btnInactivarEmpleados.Name = "btnInactivarEmpleados";
             this.btnInactivarEmpleados.Size = new System.Drawing.Size(140, 81);
             this.btnInactivarEmpleados.TabIndex = 5;
@@ -120,7 +120,7 @@
             this.btnActivarEmpleado.Image = ((System.Drawing.Image)(resources.GetObject("btnActivarEmpleado.Image")));
             this.btnActivarEmpleado.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnActivarEmpleado.Location = new System.Drawing.Point(161, 260);
-            this.btnActivarEmpleado.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
+            this.btnActivarEmpleado.Margin = new System.Windows.Forms.Padding(5);
             this.btnActivarEmpleado.Name = "btnActivarEmpleado";
             this.btnActivarEmpleado.Size = new System.Drawing.Size(136, 81);
             this.btnActivarEmpleado.TabIndex = 6;
@@ -138,7 +138,7 @@
             this.btnCambiarClaveUsuario.Image = ((System.Drawing.Image)(resources.GetObject("btnCambiarClaveUsuario.Image")));
             this.btnCambiarClaveUsuario.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnCambiarClaveUsuario.Location = new System.Drawing.Point(19, 351);
-            this.btnCambiarClaveUsuario.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
+            this.btnCambiarClaveUsuario.Margin = new System.Windows.Forms.Padding(5);
             this.btnCambiarClaveUsuario.Name = "btnCambiarClaveUsuario";
             this.btnCambiarClaveUsuario.Size = new System.Drawing.Size(278, 81);
             this.btnCambiarClaveUsuario.TabIndex = 8;
@@ -156,13 +156,14 @@
             this.btnNomina.Image = ((System.Drawing.Image)(resources.GetObject("btnNomina.Image")));
             this.btnNomina.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnNomina.Location = new System.Drawing.Point(19, 437);
-            this.btnNomina.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
+            this.btnNomina.Margin = new System.Windows.Forms.Padding(5);
             this.btnNomina.Name = "btnNomina";
             this.btnNomina.Size = new System.Drawing.Size(278, 81);
             this.btnNomina.TabIndex = 11;
             this.btnNomina.Text = "Nómina";
             this.btnNomina.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.btnNomina.UseVisualStyleBackColor = true;
+            this.btnNomina.Visible = false;
             // 
             // MenuEmpleados
             // 
@@ -180,7 +181,7 @@
             this.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.Margin = new System.Windows.Forms.Padding(6, 7, 6, 7);
             this.Name = "MenuEmpleados";
-            this.Size = new System.Drawing.Size(317, 522);
+            this.Size = new System.Drawing.Size(317, 439);
             this.ResumeLayout(false);
 
         }

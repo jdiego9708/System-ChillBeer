@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 using System.Data;
 using System.Data.SqlClient;
+using CapaEntidades.Models;
 
 namespace CapaDatos
 {
@@ -35,16 +36,9 @@ namespace CapaDatos
         #endregion
 
         #region METODO INSERTAR VENTA
-        public string InsertarVenta(List<string> Variables, DataTable detalle_pago,
-            out int id_venta)
+        public string InsertarVenta(Ventas venta, DataTable detalle_pago)
         {
-            id_venta = 0;
-            int contador = 0;
-            string consulta = "INSERT INTO Ventas VALUES (@Id_pedido, @Fecha_venta, @Hora_venta, @Total_parcial, " +
-                "@Propina, @Subtotal, @Descuento, @Bono_cupon, @Desechables, @Domicilio, @Total_final, @Observaciones, @Estado); " +
-                "SELECT CAST (SCOPE_IDENTITY() AS int)";
-            //asignamos a una cadena string la variable rpta y la iniciamos en vacía
-            string rpta = "";
+            string rpta = "OK";
             SqlConnection SqlCon = new SqlConnection();
             SqlCon.InfoMessage += new SqlInfoMessageEventHandler(SqlCon_InfoMessage);
             SqlCon.FireInfoMessageEventOnUserErrors = true;
@@ -56,8 +50,8 @@ namespace CapaDatos
                 SqlCommand SqlCmd = new SqlCommand
                 {
                     Connection = SqlCon,
-                    CommandText = consulta,
-                    CommandType = CommandType.Text
+                    CommandText = "sp_Ventas_i",
+                    CommandType = CommandType.StoredProcedure
                 };
 
                 SqlParameter Id_venta = new SqlParameter
@@ -72,16 +66,23 @@ namespace CapaDatos
                 {
                     ParameterName = "@Id_pedido",
                     SqlDbType = SqlDbType.Int,
-                    Value = Convert.ToInt32(Variables[contador])
+                    Value = venta.Id_pedido,
                 };
                 SqlCmd.Parameters.Add(Id_pedido);
-                contador += 1;
+
+                SqlParameter Id_turno = new SqlParameter
+                {
+                    ParameterName = "@Id_turno",
+                    SqlDbType = SqlDbType.Int,
+                    Value = venta.Id_turno,
+                };
+                SqlCmd.Parameters.Add(Id_turno);
 
                 SqlParameter Fecha_venta = new SqlParameter
                 {
                     ParameterName = "@Fecha_venta",
                     SqlDbType = SqlDbType.Date,
-                    Value = DateTime.Now.ToString("yyyy-MM-dd")
+                    Value = venta.Fecha_venta,
                 };
                 SqlCmd.Parameters.Add(Fecha_venta);
 
@@ -89,132 +90,160 @@ namespace CapaDatos
                 {
                     ParameterName = "@Hora_venta",
                     SqlDbType = SqlDbType.Time,
-                    Value = DateTime.Now.ToString("HH:mm")
+                    Value = venta.Hora_venta,
                 };
                 SqlCmd.Parameters.Add(Hora_venta);
 
                 SqlParameter Total_parcial = new SqlParameter
                 {
                     ParameterName = "@Total_parcial",
-                    SqlDbType = SqlDbType.Int,
-                    Value = Convert.ToInt32(Variables[contador])
+                    SqlDbType = SqlDbType.Decimal,
+                    Value = venta.Total_parcial
                 };
                 SqlCmd.Parameters.Add(Total_parcial);
-                contador += 1;
 
                 SqlParameter Propina = new SqlParameter
                 {
                     ParameterName = "@Propina",
-                    SqlDbType = SqlDbType.Int,
-                    Value = Convert.ToInt32(Variables[contador])
+                    SqlDbType = SqlDbType.Decimal,
+                    Value = venta.Propina
                 };
                 SqlCmd.Parameters.Add(Propina);
-                contador += 1;
 
                 SqlParameter Subtotal = new SqlParameter
                 {
                     ParameterName = "@Subtotal",
-                    SqlDbType = SqlDbType.Int,
-                    Value = Convert.ToInt32(Variables[contador])
+                    SqlDbType = SqlDbType.Decimal,
+                    Value = venta.Subtotal,
                 };
                 SqlCmd.Parameters.Add(Subtotal);
-                contador += 1;
 
                 SqlParameter Descuento = new SqlParameter
                 {
                     ParameterName = "@Descuento",
-                    SqlDbType = SqlDbType.Int,
-                    Value = Convert.ToInt32(Variables[contador])
+                    SqlDbType = SqlDbType.Decimal,
+                    Value = venta.Descuento,
                 };
                 SqlCmd.Parameters.Add(Descuento);
-                contador += 1;
 
                 SqlParameter Bono_cupon = new SqlParameter
                 {
                     ParameterName = "@Bono_cupon",
                     SqlDbType = SqlDbType.VarChar,
                     Size = 50,
-                    Value = Variables[contador].Trim()
+                    Value = venta.Bono_cupon,
                 };
                 SqlCmd.Parameters.Add(Bono_cupon);
-                contador += 1;
 
                 SqlParameter Desechables = new SqlParameter
                 {
                     ParameterName = "@Desechables",
                     SqlDbType = SqlDbType.Decimal,
-                    Value = Convert.ToDecimal(Variables[contador])
+                    Value = venta.Desechables
                 };
                 SqlCmd.Parameters.Add(Desechables);
-                contador += 1;
 
                 SqlParameter Domicilio = new SqlParameter
                 {
                     ParameterName = "@Domicilio",
                     SqlDbType = SqlDbType.Decimal,
-                    Value = Convert.ToDecimal(Variables[contador])
+                    Value = venta.Domicilio
                 };
                 SqlCmd.Parameters.Add(Domicilio);
-                contador += 1;
 
                 SqlParameter Total_final = new SqlParameter
                 {
                     ParameterName = "@Total_final",
-                    SqlDbType = SqlDbType.Int,
-                    Value = Convert.ToInt32(Variables[contador])
+                    SqlDbType = SqlDbType.Decimal,
+                    Value = venta.Total_final
                 };
                 SqlCmd.Parameters.Add(Total_final);
-                contador += 1;
 
                 SqlParameter Observaciones = new SqlParameter
                 {
                     ParameterName = "@Observaciones",
                     SqlDbType = SqlDbType.VarChar,
                     Size = 500,
-                    Value = Variables[contador].Trim()
+                    Value = venta.Observaciones,
                 };
                 SqlCmd.Parameters.Add(Observaciones);
-                contador += 1;
 
                 SqlParameter Estado = new SqlParameter
                 {
                     ParameterName = "@Estado",
                     SqlDbType = SqlDbType.VarChar,
                     Size = 50,
-                    Value = "ACTIVO"
+                    Value = venta.Estado,
                 };
                 SqlCmd.Parameters.Add(Estado);
-                contador += 1;             
 
                 //Ejecutamos nuestro comando
                 //Se puede ejecutar este metodo pero ya tenemos el mensaje que devuelve sql
-                id_venta = Convert.ToInt32(SqlCmd.ExecuteScalar());
-                rpta = id_venta > 0 ? "OK" : "ERROR";
-            
+                rpta = SqlCmd.ExecuteNonQuery() >= 1 ? "OK" : "NO se Ingreso el Registro";
+
                 if (rpta.Equals("OK"))
                 {
+                    venta.Id_venta = Convert.ToInt32(SqlCmd.Parameters["@Id_venta"].Value);
+
                     if (detalle_pago != null)
-                    {
+                    {                       
                         StringBuilder query = new StringBuilder();
                         foreach (DataRow row in detalle_pago.Rows)
                         {
+                            SqlCmd = new SqlCommand
+                            {
+                                Connection = SqlCon,
+                                CommandText = "sp_Detalle_ventas_i",
+                                CommandType = CommandType.StoredProcedure
+                            };
+
                             string pago = Convert.ToString(row["Pago"]);
                             decimal valor_pago = Convert.ToDecimal(row["Valor_pago"]);
                             string vaucher = Convert.ToString(row["Vaucher"]);
                             string observaciones = Convert.ToString(row["Observaciones"]);
+                       
+                            SqlParameter Id_venta1 = new SqlParameter
+                            {
+                                ParameterName = "@Id_venta",
+                                SqlDbType = SqlDbType.Int,
+                                Value = venta.Id_venta,
+                            };
+                            SqlCmd.Parameters.Add(Id_venta1);
 
-                            query.Append("INSERT INTO Detalle_venta VALUES(" + id_venta + ",'" + pago + "'," +
-                                valor_pago + ",'" + vaucher + "','" + observaciones + "'); ");
-                           
-                        }
+                            SqlParameter Metodo_pago = new SqlParameter
+                            {
+                                ParameterName = "@Metodo_pago",
+                                SqlDbType = SqlDbType.VarChar,
+                                Value = pago,
+                            };
+                            SqlCmd.Parameters.Add(Metodo_pago);
 
-                        SqlCmd = new SqlCommand
-                        {
-                            Connection = SqlCon,
-                            CommandText = query.ToString(),
-                            CommandType = CommandType.Text
-                        };
-                        rpta = SqlCmd.ExecuteNonQuery() >= 1 ? "OK" : "ERROR";
+                            SqlParameter Valor_pago = new SqlParameter
+                            {
+                                ParameterName = "@Valor_pago",
+                                SqlDbType = SqlDbType.Decimal,
+                                Value = valor_pago,
+                            };
+                            SqlCmd.Parameters.Add(Valor_pago);
+
+                            SqlParameter Vaucher = new SqlParameter
+                            {
+                                ParameterName = "@Vaucher",
+                                SqlDbType = SqlDbType.VarChar,
+                                Value = vaucher,
+                            };
+                            SqlCmd.Parameters.Add(Vaucher);
+
+                            SqlParameter Observaciones1 = new SqlParameter
+                            {
+                                ParameterName = "@Observaciones",
+                                SqlDbType = SqlDbType.VarChar,
+                                Value = observaciones,
+                            };
+                            SqlCmd.Parameters.Add(Observaciones1);
+
+                            rpta = SqlCmd.ExecuteNonQuery() >= 1 ? "OK" : "ERROR";
+                        }                       
                     }
                 }
                 else
@@ -242,6 +271,7 @@ namespace CapaDatos
             }
             return rpta;
         }
+
         #endregion
 
         #region METODO INACTIVAR VENTA
@@ -486,21 +516,19 @@ namespace CapaDatos
                 };
                 SqlCmd.Parameters.Add(Texto_busqueda);
 
-                DateTime FechaInicio = Convert.ToDateTime(fecha1);
                 SqlParameter Fecha1 = new SqlParameter
                 {
                     ParameterName = "@Fecha1",
                     SqlDbType = SqlDbType.Date,
-                    Value = FechaInicio.ToString("yyyy-MM-dd")
+                    Value = fecha1 == "" ? DateTime.Now.ToString("yyyy-MM-dd") : fecha1
                 };
                 SqlCmd.Parameters.Add(Fecha1);
 
-                DateTime FechaFin = Convert.ToDateTime(fecha2);
                 SqlParameter Fecha2 = new SqlParameter
                 {
                     ParameterName = "@Fecha2",
                     SqlDbType = SqlDbType.Date,
-                    Value = FechaFin.ToString("yyyy-MM-dd")
+                    Value = fecha2 == "" ? DateTime.Now.ToString("yyyy-MM-dd") : fecha2
                 };
                 SqlCmd.Parameters.Add(Fecha2);
 
@@ -508,7 +536,7 @@ namespace CapaDatos
                 {
                     ParameterName = "@Hora1",
                     SqlDbType = SqlDbType.Time,
-                    Value = hora1
+                    Value = hora1 == "" ? DateTime.Now.ToString("HH:mm") : hora1
                 };
                 SqlCmd.Parameters.Add(Hora1);
 
@@ -516,7 +544,7 @@ namespace CapaDatos
                 {
                     ParameterName = "@Hora2",
                     SqlDbType = SqlDbType.Time,
-                    Value = hora2
+                    Value = hora2 == "" ? DateTime.Now.ToString("HH:mm") : hora2
                 };
                 SqlCmd.Parameters.Add(Hora2);
 

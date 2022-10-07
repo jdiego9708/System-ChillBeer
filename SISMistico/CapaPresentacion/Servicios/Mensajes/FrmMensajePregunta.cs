@@ -37,6 +37,9 @@ namespace CapaPresentacion.Servicios.Mensajes
             this.btn1.Text = this.Boton1;
             this.btn2.Text = this.Boton2;
             this.textBox1.Text = this.Pregunta;
+
+            this.Show();
+            this.btn1.Focus();
         }
 
         private string boton1;

@@ -13,7 +13,8 @@ namespace CapaEntidades.Models
         public Ventas(DataRow row)
         {
             this.Id_venta = ConvertValueHelper.ConvertirNumero(row["Id_venta"]);
-            this.Id_pedido = ConvertValueHelper.ConvertirNumero(row["Id_pedido"]);
+            this.Id_pedido = ConvertValueHelper.ConvertirNumero(row["Id_pedido"]);    
+            this.Id_turno = ConvertValueHelper.ConvertirNumero(row["Id_turno"]);    
             this.Fecha_venta = ConvertValueHelper.ConvertirFecha(row["Fecha_venta"]);
             this.Hora_venta = ConvertValueHelper.ConvertirHora(row["Hora_venta"]);
             this.Total_parcial = ConvertValueHelper.ConvertirDecimal(row["Total_parcial"]);
@@ -26,9 +27,12 @@ namespace CapaEntidades.Models
             this.Total_final = ConvertValueHelper.ConvertirDecimal(row["Total_final"]);
             this.Observaciones = ConvertValueHelper.ConvertirCadena(row["Observaciones"]);
             this.Estado = ConvertValueHelper.ConvertirCadena(row["Estado"]);
+            this.Pedido = new Pedidos(row);
         }
         public int Id_venta { get; set; }
         public int Id_pedido { get; set; }
+        public int Id_turno { get; set; }
+        public Pedidos Pedido { get; set; }
         public DateTime Fecha_venta { get; set; }
         public TimeSpan Hora_venta { get; set; }
         public decimal Total_parcial { get; set; }

@@ -6,17 +6,17 @@ using System.Threading.Tasks;
 
 using System.Data;
 using CapaDatos;
+using CapaEntidades.Models;
 
 namespace CapaNegocio
 {
     public class NVentas
     {
         #region INSERTAR VENTA
-        public static string InsertarVenta(List<string> variables,
-            out int id_venta, DataTable detalle_pago)
+        public static string InsertarVenta(Ventas venta, DataTable detalle_pago)
         {
             DVenta DVenta = new DVenta();
-            return DVenta.InsertarVenta(variables, detalle_pago, out id_venta);
+            return DVenta.InsertarVenta(venta, detalle_pago);
         }
 
         #endregion

@@ -61,12 +61,20 @@
             out string rpta)
         {
             if (this.Pedido == null)
-                pedido = new Pedidos();
+            {
+                pedido = new Pedidos
+                {
+                    Fecha_pedido = DateTime.Now,
+                    Hora_pedido = DateTime.Now.ToString("HH:mm"),
+                    Observaciones_pedido = string.Empty,
+                    CantidadClientes = 0
+                };
+            }
             else
                 pedido = this.Pedido;
 
             detalles = new List<Detalle_pedido>();
-            rpta = string.Empty;
+            rpta = "OK";
             try
             {
                 int id_pedido = this.Pedido == null ? 0 : this.Pedido.Id_pedido;
@@ -86,12 +94,15 @@
                     estado_pedido = "PENDIENTE";
                     tipo_pedido = "CUENTA ABIERTA";
 
-                    FrmObservarClientes frmObservarClientes = new FrmObservarClientes()
+                    if (this.ClienteSelected == null)
                     {
-                        StartPosition = FormStartPosition.CenterScreen,
-                    };
-                    frmObservarClientes.OnBtnNext += FrmObservarClientes_OnBtnNext;
-                    frmObservarClientes.ShowDialog();
+                        FrmObservarClientes frmObservarClientes = new FrmObservarClientes()
+                        {
+                            StartPosition = FormStartPosition.CenterScreen,
+                        };
+                        frmObservarClientes.OnBtnNext += FrmObservarClientes_OnBtnNext;
+                        frmObservarClientes.ShowDialog();
+                    }
                 }
 
                 if (this.ClienteSelected == null)
@@ -104,6 +115,8 @@
                         this.ClienteSelected = new Clientes
                         {
                             Id_cliente = 0,
+                            Nombre_cliente = "CLIENTE CHILL",
+                            Correo_electronico = "solucionesinformaticas9708@gmail.com",
                         };
                 }
 
@@ -128,6 +141,7 @@
                     {
                         Id_pedido = id_pedido,
                         Id_producto = product.Id_producto,
+                        Id_tipo = product.Id_producto,
                         Fecha_detalle = DateTime.Now,
                         Hora_detalle = DateTime.Now.TimeOfDay,
                         Precio = product.DetallePedido.Precio,
@@ -142,22 +156,20 @@
                     detalles.Add(detalle);
                 }
 
-                pedido = new Pedidos()
-                {
-                    Fecha_pedido = DateTime.Now,
-                    Hora_pedido = DateTime.Now.ToString("HH:mm"),
-                    Id_cliente = this.ClienteSelected.Id_cliente,
-                    Id_empleado = datos.EmpleadoClaveMaestra.Id_empleado,
-                    Estado_pedido = estado_pedido,
-                    Tipo_pedido = tipo_pedido,
-                    Observaciones_pedido = string.Empty,
-                    CantidadClientes = 0,
-                };
+                pedido.Cliente = this.ClienteSelected;
+                pedido.Id_cliente = this.ClienteSelected.Id_cliente;
+                pedido.Empleado = datos.EmpleadoClaveMaestra;
+                pedido.Id_empleado = datos.EmpleadoClaveMaestra.Id_empleado;
+                pedido.Estado_pedido = estado_pedido;
+                pedido.Tipo_pedido = tipo_pedido;
+
+                pedido.Id_turno = datos.Turno.Id_turno;
 
                 return true;
             }
             catch (Exception ex)
             {
+                Mensajes.MensajeInformacion(ex.Message);
                 rpta = ex.Message;
                 return false;
             }
@@ -174,7 +186,8 @@
                 if (!this.Comprobaciones(out Pedidos pedido, out List<Detalle_pedido> detalles, out string rpta))
                     return;
 
-                rpta = NPedido.InsertarPedido(pedido);
+                if (this.Pedido == null)
+                    rpta = NPedido.InsertarPedido(pedido);
 
                 if (!rpta.Equals("OK"))
                     throw new Exception($"No se pudo insertar el pedido, comuníquese con el administrador | {rpta}");
@@ -187,7 +200,18 @@
                         throw new Exception($"No se pudo insertar un detalle de un pedido, se canceló la operación | {rpta}");
                 }
 
-                Mensajes.MensajeInformacion("¡Pedido realizado!");
+                if (this.chkFacturar.Checked && this.Pedido == null)
+                {
+                    FrmFacturarPedido frmFacturarPedido = new FrmFacturarPedido
+                    {
+                        StartPosition = FormStartPosition.CenterScreen,
+                        MinimizeBox = false,
+                        MaximizeBox = false,
+                        Pedido = pedido,
+                    };
+                    frmFacturarPedido.ShowDialog();
+                }
+
                 this.OnBtnPedidoSuccess?.Invoke(pedido, e);
                 this.Close();
             }
@@ -324,7 +348,10 @@
         }
         private void FrmPedido_Load(object sender, EventArgs e)
         {
-            this.gbInfo.Text = $"Nueva venta | {DateTime.Now.ToLongDateString()} | {DateTime.Now.ToLongTimeString()}";
+            if (Pedido == null)
+                this.gbInfo.Text = $"Nueva venta | {DateTime.Now.ToLongDateString()} | {DateTime.Now.ToLongTimeString()}";
+            else
+                this.gbInfo.Text = $"Agregar/Remover productos | {this.Pedido.Tipo_pedido}";
 
             this.LoadCategorias("CATALOGO PADRE", "TIPOS DE PRODUCTOS");
 
@@ -496,8 +523,11 @@
         }
         private void AsignarDatos(Pedidos pedido)
         {
+            this.chkFacturar.Visible = false;
+            this.ClienteSelected = pedido.Cliente;
+
             //Obtener los detalles del pedido
-            DataTable dtDetallePedido = NPedido.BuscarPedidos("DETALLE ID PEDIDO", pedido.Id_pedido.ToString());
+            DataTable dtDetallePedido = NPedido.BuscarPedidos("ID PEDIDO DETALLE PRODUCTOS", pedido.Id_pedido.ToString());
             if (dtDetallePedido != null)
             {
                 List<ProductoPedidoBindingModel> listProducts = new List<ProductoPedidoBindingModel>();
@@ -508,6 +538,8 @@
                     Detalle_pedido detalle = new Detalle_pedido(row);
                     ProductoPedidoBindingModel productoPedido = new ProductoPedidoBindingModel()
                     {
+                        Id_producto = detalle.Id_producto,
+                        Producto = detalle.Producto,
                         DetallePedido = detalle,
                     };
                     listProducts.Add(productoPedido);
@@ -515,8 +547,8 @@
 
                 this.ProductsSelected = listProducts;
                 this.LoadProductosSelected(listProducts);
+                this.LoadInfoInformacionSuperior();
             }
-            this.gbInfo.Text = $"Agregar/Remover productos | {pedido.Tipo_pedido}";
         }
         private void LoadImages()
         {
@@ -550,27 +582,34 @@
         {
             if (this.ProductsSelected != null || this.ProductsAddSelected != null)
             {
-                foreach (UserControl control in this.panelPedido.controlsUser)
+                try
                 {
-                    if (control is ProductoPedidoSmall product)
+                    foreach (UserControl control in this.panelPedido.controlsUser)
                     {
-                        Image img;
-                        string nombreimagen = product.Producto.Producto.Imagen_producto;
-                        if (!string.IsNullOrEmpty(nombreimagen))
+                        if (control is ProductoPedidoSmall product)
                         {
-                            img = Imagenes.ObtenerImagen("RUTAIMAGES", nombreimagen, out string ruta_destino);
+                            Image img;
+                            string nombreimagen = product.Producto.Producto.Imagen_producto;
+                            if (!string.IsNullOrEmpty(nombreimagen))
+                            {
+                                img = Imagenes.ObtenerImagen("RUTAIMAGES", nombreimagen, out string ruta_destino);
 
-                            if (img == null)
+                                if (img == null)
+                                    img = Resources.SIN_IMAGENES;
+
+                                product.ImagenProducto = img;
+                            }
+                            else
+                            {
                                 img = Resources.SIN_IMAGENES;
-
-                            product.ImagenProducto = img;
-                        }
-                        else
-                        {
-                            img = Resources.SIN_IMAGENES;
-                            product.ImagenProducto = img;
+                                product.ImagenProducto = img;
+                            }
                         }
                     }
+                }
+                catch (Exception)
+                {
+
                 }
 
                 if (this.threadLoadImages.IsAlive)

@@ -1,4 +1,5 @@
-﻿using CapaEntidades.Models;
+﻿using CapaEntidades.Helpers;
+using CapaEntidades.Models;
 using CapaNegocio;
 using CapaPresentacion.Formularios.FormsEmpleados;
 using System;
@@ -21,7 +22,6 @@ namespace CapaPresentacion.Formularios.FormsPedido
             this.opcionesPedido = new DescuentosOpcionesPedido();
             this.poperContainer1 = new PoperContainer(opcionesPedido);
 
-            this.lblCliente.Click += LblCliente_Click;
             this.Load += FrmFacturarPedido_Load;
             this.btnTerminar.Click += BtnTerminar_Click;
             this.lblMesero.Click += LblMesero_Click;
@@ -85,24 +85,84 @@ namespace CapaPresentacion.Formularios.FormsPedido
             return rpta;
         }
 
-        private List<string> Variables(out DataTable detallePago)
+        private bool Comprobaciones(out Ventas venta, out DataTable detallePago)
         {
             detallePago = this.opcionesPedido.TablaPago(this.IsPrecuenta);
-
-            List<string> vs = new List<string>
+            venta = null;
+            try
             {
-                Convert.ToString(this.Id_pedido),
-                Convert.ToString(this.Total_parcial),
-                Convert.ToString(this.opcionesPedido.txtPropina.Tag),
-                Convert.ToString(this.lblSubTotal.Tag),
-                Convert.ToString(this.opcionesPedido.ListaDescuentos.SelectedValue),
-                Convert.ToString(this.opcionesPedido.txtCupon.Text),
-                Convert.ToString(this.opcionesPedido.txtPrecioDesechables.Tag),
-                Convert.ToString(this.opcionesPedido.txtDomicilio.Tag),
-                Convert.ToString(this.Total_final),
-                Convert.ToString(this.opcionesPedido.txtObservaciones.Text),
-            };
-            return vs;
+                if (!decimal.TryParse(Convert.ToString(this.opcionesPedido.txtPropina.Tag), out decimal propina))
+                {
+                    Mensajes.MensajeInformacion("Verifique la propina");
+                    return false;
+                }
+
+                if (!decimal.TryParse(Convert.ToString(this.lblSubTotal.Tag), out decimal subtotal))
+                {
+                    Mensajes.MensajeInformacion("Verifique el subtotal");
+                    return false;
+                }
+
+                if (!decimal.TryParse(Convert.ToString(this.opcionesPedido.ListaDescuentos.SelectedValue), out decimal descuento))
+                {
+                    Mensajes.MensajeInformacion("Verifique el descuento");
+                    return false;
+                }
+
+                if (!decimal.TryParse(Convert.ToString(this.opcionesPedido.txtPrecioDesechables.Tag), out decimal desechables))
+                {
+                    Mensajes.MensajeInformacion("Verifique el precio de desechables");
+                    return false;
+                }
+
+                if (!decimal.TryParse(Convert.ToString(this.opcionesPedido.txtDomicilio.Tag), out decimal domicilio))
+                {
+                    Mensajes.MensajeInformacion("Verifique el precio de domicilio");
+                    return false;
+                }
+
+                if (this.rdCorreo.Checked)
+                {
+                    if (string.IsNullOrEmpty(this.txtCorreo.Text))
+                    {
+                        Mensajes.MensajeInformacion("Verifique el correo electrónico para enviar el comprobante");
+                        return false;
+                    }
+
+                    if (!MailHelper.Email_comprobation(this.txtCorreo.Text))
+                    {
+                        Mensajes.MensajeInformacion("Verifique el correo electrónico para enviar el comprobante, direccion no valida");
+                        return false;
+                    }
+                }
+
+                DatosInicioSesion datos = DatosInicioSesion.GetInstancia();
+
+                venta = new Ventas
+                {
+                    Id_turno = datos.Turno.Id_turno,
+                    Id_pedido = this.Pedido.Id_pedido,
+                    Total_parcial = this.Total_parcial,
+                    Propina = propina,
+                    Subtotal = subtotal,
+                    Descuento = descuento,
+                    Bono_cupon = this.opcionesPedido.txtCupon.Text,
+                    Desechables = desechables,
+                    Domicilio = domicilio,
+                    Total_final = this.Total_final,
+                    Observaciones = this.opcionesPedido.txtObservaciones.Text,
+                    Fecha_venta = DateTime.Now,
+                    Hora_venta = DateTime.Now.TimeOfDay,
+                    Estado = "TERMINADO",
+                    Pedido = this.Pedido,
+                };
+            }
+            catch (Exception)
+            {
+                venta = null;
+            }
+           
+            return true;
         }
 
         public event EventHandler OnFacturarPedidoSuccess;
@@ -116,112 +176,65 @@ namespace CapaPresentacion.Formularios.FormsPedido
                 if (this.panelSubTotal.Visible)
                 {
                     DataTable detalle_pago;
-                    List<string> variables = this.Variables(out detalle_pago);
+                    bool result = this.Comprobaciones(out Ventas venta, out detalle_pago);
+                    if (!result)
+                        return;
 
-                    if (this.IsPrecuenta)
+                    if (detalle_pago != null)
                     {
-                        frmFacturaFinal.Is_precuenta = this.IsPrecuenta;
-                        frmFacturaFinal.Id_pedido = this.Id_pedido;
-
-                        frmFacturaFinal.AsignarReporte();
-                        frmFacturaFinal.AsignarTablasPrecuenta(variables);
-
-                        string metodo = this.ObtenerValorPanel(this.panelTipoPedido);
-                        if (metodo.Equals("IMPRIMIR"))
+                        if (detalle_pago.Rows.Count > 0)
                         {
-                            frmFacturaFinal.ImprimirFactura(1);
-                        }
-                        else if (metodo.Equals("CORREO"))
-                        {
-                            string rpta_email =
-                                EmailFactura.SendEmailFactura(this.Id_pedido, this.Correo_electronico);
-                            if (!rpta_email.Equals("OK"))
+                            MensajeEspera.ShowWait("Facturando y terminando");
+
+                            rpta =
+                                NVentas.InsertarVenta(venta, detalle_pago);
+                            if (rpta.Equals("OK"))
                             {
-                                Mensajes.MensajeErrorForm("Hubo un error al enviar el correo electrónico");
-                            }
-                        }
-                        else if (metodo.Equals("AMBAS"))
-                        {
-                            frmFacturaFinal.ImprimirFactura(1);
-                            string rpta_email =
-                                EmailFactura.SendEmailFactura(this.Id_pedido, this.Correo_electronico);
-                            if (!rpta_email.Equals("OK"))
-                            {
-                                Mensajes.MensajeErrorForm("Hubo un error al enviar el correo electrónico");
-                            }
-                        }
-
-                        FrmObservarMesas frm = FrmObservarMesas.GetInstancia();
-                        frm.MesaSaliendo(this.Id_mesa, this.Id_pedido);
-
-                        MensajeEspera.CloseForm();
-                        Mensajes.MensajeOkForm("Se realizó la precuenta correctamente");
-                        this.OnFacturarPedidoSuccess?.Invoke(this.Id_pedido, e);
-                        this.Close();
-                    }
-                    else
-                    {
-                        if (detalle_pago != null)
-                        {
-                            if (detalle_pago.Rows.Count > 0)
-                            {
-                                MensajeEspera.ShowWait("Facturando y terminando");
-
-                                rpta =
-                                    NVentas.InsertarVenta(variables, out id_venta, detalle_pago);
-                                if (rpta.Equals("OK"))
+                                string metodo = this.ObtenerValorPanel(this.panelTipoPedido);
+                                if (metodo.Equals("IMPRIMIR"))
                                 {
-                                    FrmObservarMesas frm = FrmObservarMesas.GetInstancia();
-                                    frm.LiberarMesa(this.Id_mesa);
-                                    MensajeEspera.CloseForm();
                                     frmFacturaFinal.Id_pedido = this.Id_pedido;
                                     frmFacturaFinal.AsignarReporte();
                                     frmFacturaFinal.AsignarTablasCuentaFinal();
-                                    MensajeEspera.CloseForm();
-                                    string metodo = this.ObtenerValorPanel(this.panelTipoPedido);
-                                    if (metodo.Equals("IMPRIMIR"))
-                                    {
-                                        frmFacturaFinal.ImprimirFactura(1);
-                                    }
-                                    else if (metodo.Equals("CORREO"))
-                                    {
-                                        string rpta_email =
-                                            EmailFactura.SendEmailFactura(this.Id_pedido, this.Correo_electronico);
-                                        if (!rpta_email.Equals("OK"))
-                                        {
-                                            MensajeEspera.CloseForm();
-                                            Mensajes.MensajeErrorForm("Hubo un error al enviar el correo electrónico");
-                                        }
-                                    }
-                                    else if (metodo.Equals("AMBAS"))
-                                    {
-                                        frmFacturaFinal.ImprimirFactura(1);
-                                        string rpta_email =
-                                            EmailFactura.SendEmailFactura(this.Id_pedido, this.Correo_electronico);
-                                        if (!rpta_email.Equals("OK"))
-                                        {
-                                            MensajeEspera.CloseForm();
-                                            Mensajes.MensajeErrorForm("Hubo un error al enviar el correo electrónico");
-                                        }
-                                    }
-
-                                    MensajeEspera.CloseForm();
-                                    Mensajes.MensajeOkForm("Se realizó la facturación correctamente");
-                                    this.OnFacturarPedidoSuccess?.Invoke(this.Id_pedido, e);
-                                    this.Close();
+                                    frmFacturaFinal.ImprimirFactura(1);
                                 }
-                                else
+                                else if (metodo.Equals("CORREO"))
                                 {
-                                    throw new Exception(rpta);
+                                    MailHelper mail = new MailHelper();
+                                    string rpta_email =
+                                        mail.SendEmailFactura(this.Correo_electronico, venta, this.DetallesPedido, detalle_pago);
+                                    if (!rpta_email.Equals("OK"))
+                                    {
+                                        MensajeEspera.CloseForm();
+                                        Mensajes.MensajeErrorForm("Hubo un error al enviar el correo electrónico");
+                                    }
+                                }
+                                else if (metodo.Equals("AMBAS"))
+                                {
+                                    frmFacturaFinal.Id_pedido = this.Id_pedido;
+                                    frmFacturaFinal.AsignarReporte();
+                                    frmFacturaFinal.AsignarTablasCuentaFinal();
+                                    frmFacturaFinal.ImprimirFactura(1);
+                                    string rpta_email =
+                                        EmailFactura.SendEmailFactura(this.Id_pedido, this.txtCorreo.Text);
+                                    if (!rpta_email.Equals("OK"))
+                                    {
+                                        MensajeEspera.CloseForm();
+                                        Mensajes.MensajeErrorForm("Hubo un error al enviar el correo electrónico");
+                                    }
                                 }
 
                                 MensajeEspera.CloseForm();
+                                Mensajes.MensajeOkForm("Se realizó la facturación correctamente");
+                                this.OnFacturarPedidoSuccess?.Invoke(this.Pedido, e);
+                                this.Close();
                             }
                             else
                             {
-                                MensajeEspera.CloseForm();
-                                Mensajes.MensajeErrorForm("Debe de seleccionar un método de pago");
+                                throw new Exception(rpta);
                             }
+
+                            MensajeEspera.CloseForm();
                         }
                         else
                         {
@@ -229,6 +242,12 @@ namespace CapaPresentacion.Formularios.FormsPedido
                             Mensajes.MensajeErrorForm("Debe de seleccionar un método de pago");
                         }
                     }
+                    else
+                    {
+                        MensajeEspera.CloseForm();
+                        Mensajes.MensajeErrorForm("Debe de seleccionar un método de pago");
+                    }
+
                 }
                 MensajeEspera.CloseForm();
             }
@@ -238,12 +257,6 @@ namespace CapaPresentacion.Formularios.FormsPedido
                 Mensajes.MensajeErrorCompleto(this.Name, "BtnTerminar_Click",
                     "Hubo un error al terminar una venta", ex.Message);
             }
-        }
-
-        private void LblCliente_Click(object sender, EventArgs e)
-        {
-            //this.datosUsuario.Id_cliente = this.Id_cliente;
-            this.poperContainer2.Show(this.lblCliente);
         }
 
         public void ObtenerTotales(decimal total_parcial, int sub_total, int total)
@@ -264,8 +277,6 @@ namespace CapaPresentacion.Formularios.FormsPedido
         private void FrmFacturarPedido_Load(object sender, EventArgs e)
         {
             this.panelSubTotal.Visible = false;
-            this.rdImprimir.Checked = true;
-            this.chkRecordarOpcion.Checked = true;
             this.frmFacturaFinal.Is_precuenta = this.IsPrecuenta;
             this.frmFacturaFinal.AsignarReporte();
 
@@ -289,7 +300,7 @@ namespace CapaPresentacion.Formularios.FormsPedido
         }
 
         #region VARIABLES
-        private int id_pedido;
+        private int _id_pedido;
         private DateTime fecha_pedido;
         private int id_cliente;
         private string nombre_cliente;
@@ -305,7 +316,7 @@ namespace CapaPresentacion.Formularios.FormsPedido
         private string mesa;
         private string _cargo_empleado;
         private bool isPrecuenta;
-        public int Id_pedido { get => id_pedido; set => id_pedido = value; }
+        public int Id_pedido { get => _id_pedido; set => _id_pedido = value; }
         public DateTime Fecha_pedido { get => fecha_pedido; set => fecha_pedido = value; }
         public int Id_cliente { get => id_cliente; set => id_cliente = value; }
         public string Nombre_cliente { get => nombre_cliente; set => nombre_cliente = value; }
@@ -353,7 +364,7 @@ namespace CapaPresentacion.Formularios.FormsPedido
                 this.toolTip1.SetToolTip(this.lblCliente, "Correo electrónico registrado: " + pedido.Cliente.Correo_electronico);
 
                 this.gbInfo.Text = pedido.Id_pedido.ToString();
-                this.lblFecha.Text = $"{pedido.Fecha_pedido.ToLongDateString()} | {pedido.Hora_pedido}" ;
+                this.lblFecha.Text = $"{pedido.Fecha_pedido.ToLongDateString()} | {pedido.Hora_pedido}";
                 this.lblCliente.Text = pedido.Cliente.Nombre_cliente;
                 this.lblMesero.Text = pedido.Empleado.Nombre_empleado;
 
@@ -391,7 +402,7 @@ namespace CapaPresentacion.Formularios.FormsPedido
         }
         public void AsignarDatos(Pedidos pedido)
         {
-            this.Id_pedido = id_pedido;
+            this.Id_pedido = pedido.Id_pedido;
             try
             {
                 this.Nombre_cliente = pedido.Cliente.Nombre_cliente;
@@ -402,15 +413,16 @@ namespace CapaPresentacion.Formularios.FormsPedido
                 this.gbInfo.Text = $"Pedido número {pedido.Id_pedido}";
                 this.lblFecha.Text = $"{pedido.Fecha_pedido.ToLongDateString()} | {pedido.Hora_pedido}";
                 this.lblCliente.Text = pedido.Cliente.Nombre_cliente;
+                this.txtCorreo.Text = pedido.Cliente.Correo_electronico;
                 this.lblMesero.Text = pedido.Empleado.Nombre_empleado;
 
-                DataTable dtDetalles = NPedido.BuscarPedidos("ID PEDIDO DETALLE PRODUCTOS", id_pedido.ToString());
+                DataTable dtDetalles = NPedido.BuscarPedidos("ID PEDIDO DETALLE PRODUCTOS", pedido.Id_pedido.ToString());
 
                 if (dtDetalles == null)
-                    throw new Exception($"Error buscando los detalles del pedido {id_pedido}");
+                    throw new Exception($"Error buscando los detalles del pedido {pedido.Id_pedido}");
 
                 if (dtDetalles.Rows.Count < 1)
-                    throw new Exception($"Error buscando los detalles del pedido {id_pedido}");
+                    throw new Exception($"Error buscando los detalles del pedido {pedido.Id_pedido}");
 
                 List<Detalle_pedido> detalles = (from DataRow row in dtDetalles.Rows
                                                  select new Detalle_pedido(row)).ToList();
@@ -441,7 +453,7 @@ namespace CapaPresentacion.Formularios.FormsPedido
             decimal total_parcial = 0;
 
             if (this.DetallesPedido != null)
-                total_parcial = this.DetallesPedido.Sum(x => x.Precio_total); 
+                total_parcial = this.DetallesPedido.Sum(x => x.Precio_total);
 
             this.Total_parcial = total_parcial;
             this.lblTotalParcial.Text = string.Format("{0:C}", this.Total_parcial);

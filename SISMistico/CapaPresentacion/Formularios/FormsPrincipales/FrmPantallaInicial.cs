@@ -21,13 +21,22 @@ namespace CapaPresentacion.Formularios.FormsPrincipales
             InitializeComponent();
             this.btnNuevaVenta.Click += BtnNuevaVenta_Click;
             this.btnClose.Click += BtnClose_Click;
-
+            this.btnHistorialVentas.Click += BtnHistorialVentas_Click;
             this.Load += FrmPantallaInicial_Load;
         }
 
+        private void BtnHistorialVentas_Click(object sender, EventArgs e)
+        {
+            FrmObservarVentas frmObservarVentas = new FrmObservarVentas
+            {
+                StartPosition = FormStartPosition.CenterScreen,
+                MaximizeBox = true,
+            };
+            frmObservarVentas.Show();
+        }
         private void FrmPantallaInicial_Load(object sender, EventArgs e)
         {
-            this.LoadVentas("FECHA", DateTime.Now.ToString("yyyy-MM-dd"));
+            this.LoadVentas("ULTIMAS VENTAS", string.Empty);
 
             this.LoadCuentas();
         }
@@ -37,6 +46,13 @@ namespace CapaPresentacion.Formularios.FormsPrincipales
         }
         private void BtnNuevaVenta_Click(object sender, EventArgs e)
         {
+            DatosInicioSesion datos = DatosInicioSesion.GetInstancia();
+            if (datos.Turno.Estado_turno.Equals("CERRADO"))
+            {
+                Mensajes.MensajeInformacion("La caja está cerrada debe abrirla para realizar ventas");
+                return;
+            }
+             
             FrmPedido frmPedido = new FrmPedido()
             {
                 WindowState = FormWindowState.Maximized,
@@ -46,7 +62,7 @@ namespace CapaPresentacion.Formularios.FormsPrincipales
         }
         private void FrmPedido_OnBtnPedidoSuccess(object sender, EventArgs e)
         {
-            this.LoadVentas("FECHA", DateTime.Now.ToString("yyyy-MM-dd"));
+            this.LoadVentas("ULTIMAS VENTAS", string.Empty);
 
             this.LoadCuentas();
         }
@@ -54,6 +70,8 @@ namespace CapaPresentacion.Formularios.FormsPrincipales
         {
             try
             {
+                this.panelVentas.clearDataSource();
+
                 DataTable dtVentas = NVentas.BuscarVenta(tipo_busqueda, 
                     texto_busqueda, DateTime.Now.ToString("yyyy-MM-dd"), 
                     DateTime.Now.ToString("yyyy-MM-dd"),
@@ -86,16 +104,24 @@ namespace CapaPresentacion.Formularios.FormsPrincipales
                 Mensajes.MensajeInformacion($"Error cargando las ventas | {ex.Message}");
             }
         }
-
         private void VentaSmall_OnBtnNextClick(object sender, EventArgs e)
         {
-            
+            Ventas venta = (Ventas)sender;
+            FrmPerfilVenta frmPerfilVenta = new FrmPerfilVenta
+            {
+                StartPosition = FormStartPosition.CenterScreen,
+                MinimizeBox = false,
+                MaximizeBox = false,
+                Venta = venta,
+            };
+            frmPerfilVenta.ShowDialog();
         }
-
         public void LoadCuentas()
         {
             try
             {
+                this.panelCuentas.clearDataSource();
+
                 DataTable dtPedidos = NVentas.BuscarVenta("TIPO PEDIDO",
                     "CUENTA ABIERTA", DateTime.Now.ToString("yyyy-MM-dd"),
                     DateTime.Now.ToString("yyyy-MM-dd"),
@@ -128,13 +154,20 @@ namespace CapaPresentacion.Formularios.FormsPrincipales
                 Mensajes.MensajeInformacion($"Error cargando las cuentas abiertas | {ex.Message}");
             }
         }
-
         private void PedidoSmall_OnBtnNextClick(object sender, EventArgs e)
         {
             //Si es venta va a mostrar el perfil de la venta
             if (sender is Ventas)
             {
-
+                Ventas venta = (Ventas)sender;
+                FrmPerfilVenta frmPerfilVenta = new FrmPerfilVenta
+                {
+                    StartPosition = FormStartPosition.CenterScreen,
+                    MinimizeBox = false,
+                    MaximizeBox = false,
+                    Venta = venta,
+                };
+                frmPerfilVenta.ShowDialog();
             }
             else
             {
@@ -144,14 +177,33 @@ namespace CapaPresentacion.Formularios.FormsPrincipales
                 {
                     Pedido = pe,
                 };
-                //datosMesa.OnBtnCancelarPedidoClick += DatosMesa_OnBtnCancelarPedidoClick;
-                //datosMesa.OnBtnEditarPedidoClick += DatosMesa_OnBtnEditarPedidoClick;
+                datosMesa.OnBtnCancelarPedidoClick += DatosMesa_OnBtnCancelarPedidoClick;
+                datosMesa.OnBtnEditarPedidoClick += DatosMesa_OnBtnEditarPedidoClick;
                 datosMesa.OnBtnFacturarPedidoClick += DatosMesa_OnBtnFacturarPedidoClick;
                 PoperContainer container = new PoperContainer(datosMesa);
                 container.Show(Cursor.Position);
             }
         }
-
+        private void DatosMesa_OnBtnEditarPedidoClick(object sender, EventArgs e)
+        {
+            Pedidos pedido = (Pedidos)sender;
+            FrmPedido frmPedido = new FrmPedido()
+            {
+                WindowState = FormWindowState.Maximized,
+                Pedido = pedido,
+            };
+            frmPedido.OnBtnPedidoSuccess += FrmPedido_OnBtnPedidoSuccess;
+            frmPedido.ShowDialog();
+        }
+        private void DatosMesa_OnBtnCancelarPedidoClick(object sender, EventArgs e)
+        {
+            Pedidos pedido = (Pedidos)sender;
+            string rpta = NPedido.CancelarPedido(pedido.Id_pedido, pedido.Observaciones_pedido);
+            if (rpta.Equals("OK"))
+                Mensajes.MensajeOkForm("Pedido cancelado con éxito!");
+            else
+                Mensajes.MensajeInformacion("No se pudo cancelar el pedido, comuniquese con el administrador");
+        }
         private void DatosMesa_OnBtnFacturarPedidoClick(object sender, EventArgs e)
         {
             Pedidos pe = (Pedidos)sender;
@@ -166,10 +218,15 @@ namespace CapaPresentacion.Formularios.FormsPrincipales
             frmFacturarPedido.OnFacturarPedidoSuccess += FrmFacturarPedido_OnFacturarPedidoSuccess;
             frmFacturarPedido.ShowDialog();
         }
-
         private void FrmFacturarPedido_OnFacturarPedidoSuccess(object sender, EventArgs e)
         {
-            this.LoadVentas("FECHA", DateTime.Now.ToString("yyyy-MM-dd"));
+            Pedidos pe = (Pedidos)sender;
+
+            string rpta = NPedido.CambiarEstadoPedido(pe.Id_pedido, "TERMINADO");
+            if (!rpta.Equals("OK"))
+                Mensajes.MensajeInformacion("Hubo un error cambiando el pedido de estado, comuniquese con el administrador");
+
+            this.LoadVentas("ULTIMAS VENTAS", DateTime.Now.ToString("yyyy-MM-dd"));
 
             this.LoadCuentas();
         }

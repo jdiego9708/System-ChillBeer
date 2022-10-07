@@ -44,7 +44,7 @@ namespace CapaDatos
         {
             int contador = 0;
             int id_ingreso = 0;
-            string consulta = "INSERT INTO Ingresos VALUES (@Id_empleado, @Fecha_ingreso, @Valor_ingreso, " +
+            string consulta = "INSERT INTO Ingresos VALUES (@Id_empleado, @Id_turno, @Fecha_ingreso, @Hora_ingreso, @Valor_ingreso, " +
                 "@Descripcion_ingreso, @Estado_ingreso) " +
                 "SET @Id_ingreso = SCOPE_IDENTITY(); ";
 
@@ -82,6 +82,15 @@ namespace CapaDatos
                 };
                 SqlCmd.Parameters.Add(Id_empleado);
 
+                SqlParameter Id_turno = new SqlParameter
+                {
+                    ParameterName = "@Id_turno",
+                    SqlDbType = SqlDbType.Int,
+                    Value = ingreso.Id_turno,
+                };
+                SqlCmd.Parameters.Add(Id_turno);
+                contador += 1;
+
                 SqlParameter Fecha_ingreso = new SqlParameter
                 {
                     ParameterName = "@Fecha_ingreso",
@@ -89,6 +98,15 @@ namespace CapaDatos
                     Value = ingreso.Fecha_ingreso,
                 };
                 SqlCmd.Parameters.Add(Fecha_ingreso);
+                contador += 1;
+
+                SqlParameter Hora_ingreso = new SqlParameter
+                {
+                    ParameterName = "@Hora_ingreso",
+                    SqlDbType = SqlDbType.Time,
+                    Value = ingreso.Hora_ingreso,
+                };
+                SqlCmd.Parameters.Add(Hora_ingreso);
                 contador += 1;
 
                 SqlParameter Valor_ingreso = new SqlParameter
@@ -315,7 +333,7 @@ namespace CapaDatos
                 Sqlcmd.Parameters.Add(Texto_busqueda2);
 
                 SqlDataAdapter SqlData = new SqlDataAdapter(Sqlcmd);
-                await Task.Run(() => SqlData.Fill(dtNomina));                
+                SqlData.Fill(dtNomina);                
             }
             catch (SqlException ex)
             {

@@ -35,7 +35,7 @@
             this.btnVentas = new System.Windows.Forms.Button();
             this.btnEmpleados = new System.Windows.Forms.Button();
             this.btnClientes = new System.Windows.Forms.Button();
-            this.btnBebidas = new System.Windows.Forms.Button();
+            this.btnProductos = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.gbOpciones.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -62,7 +62,7 @@
             this.gbOpciones.Controls.Add(this.btnVentas);
             this.gbOpciones.Controls.Add(this.btnEmpleados);
             this.gbOpciones.Controls.Add(this.btnClientes);
-            this.gbOpciones.Controls.Add(this.btnBebidas);
+            this.gbOpciones.Controls.Add(this.btnProductos);
             this.gbOpciones.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.gbOpciones.Location = new System.Drawing.Point(15, 15);
             this.gbOpciones.Margin = new System.Windows.Forms.Padding(6);
@@ -145,23 +145,23 @@
             this.btnClientes.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.btnClientes.UseVisualStyleBackColor = true;
             // 
-            // btnBebidas
+            // btnProductos
             // 
-            this.btnBebidas.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnBebidas.FlatAppearance.BorderSize = 0;
-            this.btnBebidas.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnBebidas.Font = new System.Drawing.Font("Segoe UI Emoji", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnBebidas.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.btnBebidas.Image = ((System.Drawing.Image)(resources.GetObject("btnBebidas.Image")));
-            this.btnBebidas.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnBebidas.Location = new System.Drawing.Point(366, 37);
-            this.btnBebidas.Margin = new System.Windows.Forms.Padding(6);
-            this.btnBebidas.Name = "btnBebidas";
-            this.btnBebidas.Size = new System.Drawing.Size(170, 57);
-            this.btnBebidas.TabIndex = 6;
-            this.btnBebidas.Text = "Productos";
-            this.btnBebidas.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.btnBebidas.UseVisualStyleBackColor = true;
+            this.btnProductos.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnProductos.FlatAppearance.BorderSize = 0;
+            this.btnProductos.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnProductos.Font = new System.Drawing.Font("Segoe UI Emoji", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnProductos.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.btnProductos.Image = ((System.Drawing.Image)(resources.GetObject("btnProductos.Image")));
+            this.btnProductos.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnProductos.Location = new System.Drawing.Point(366, 37);
+            this.btnProductos.Margin = new System.Windows.Forms.Padding(6);
+            this.btnProductos.Name = "btnProductos";
+            this.btnProductos.Size = new System.Drawing.Size(170, 57);
+            this.btnProductos.TabIndex = 6;
+            this.btnProductos.Text = "Productos";
+            this.btnProductos.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.btnProductos.UseVisualStyleBackColor = true;
             // 
             // groupBox2
             // 
@@ -170,7 +170,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox2.Controls.Add(this.panel1);
             this.groupBox2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.groupBox2.Location = new System.Drawing.Point(14, 119);
+            this.groupBox2.Location = new System.Drawing.Point(14, 114);
             this.groupBox2.Margin = new System.Windows.Forms.Padding(6);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Padding = new System.Windows.Forms.Padding(6);
@@ -184,8 +184,8 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(997, 725);
-            this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.gbOpciones);
+            this.Controls.Add(this.groupBox2);
             this.Font = new System.Drawing.Font("Segoe UI Emoji", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -201,7 +201,7 @@
         #endregion
         private System.Windows.Forms.Button btnEmpleados;
         private System.Windows.Forms.Button btnClientes;
-        private System.Windows.Forms.Button btnBebidas;
+        private System.Windows.Forms.Button btnProductos;
         public System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Button btnAdministracion;
         private System.Windows.Forms.GroupBox gbOpciones;

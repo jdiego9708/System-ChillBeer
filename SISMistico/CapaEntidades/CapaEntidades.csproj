@@ -43,12 +43,19 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BindingModels\ProductoPedidoBindingModel.cs" />
+    <Compile Include="Helpers\ConfigEmail.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>ConfigEmail.settings</DependentUpon>
+    </Compile>
     <Compile Include="Helpers\ConvertValueHelper.cs" />
+    <Compile Include="Helpers\MailHelper.cs" />
     <Compile Include="Helpers\ModelHelperSearch.cs" />
     <Compile Include="Helpers\ValidationType.cs" />
     <Compile Include="Models\Catalogo.cs" />
     <Compile Include="Models\Detalle_ingredientes_pedido.cs" />
     <Compile Include="Models\Detalle_pedido.cs" />
+    <Compile Include="Models\Detalle_venta.cs" />
     <Compile Include="Models\Ingredientes.cs" />
     <Compile Include="Models\Mesas.cs" />
     <Compile Include="Models\Clientes.cs" />
@@ -63,9 +70,28 @@
     <Compile Include="Models\Tipo_platos.cs" />
     <Compile Include="Models\Tipo_bebidas.cs" />
     <Compile Include="Models\Turno.cs" />
+    <Compile Include="Models\Turnos_cierres.cs" />
     <Compile Include="Models\Ventas.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="Helpers\ConfigEmail.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>ConfigEmail.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="Resources\templateMail.htm" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

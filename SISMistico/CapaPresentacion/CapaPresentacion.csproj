@@ -60,6 +60,18 @@
     </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
+    <Reference Include="Syncfusion.Core.WinForms, Version=20.2460.0.50, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <HintPath>..\packages\Syncfusion.Core.WinForms.20.2.0.50\lib\net46\Syncfusion.Core.WinForms.dll</HintPath>
+    </Reference>
+    <Reference Include="Syncfusion.Licensing, Version=20.2460.0.50, Culture=neutral, PublicKeyToken=632609b4d040f6b4, processorArchitecture=MSIL">
+      <HintPath>..\packages\Syncfusion.Licensing.20.2.0.50\lib\net46\Syncfusion.Licensing.dll</HintPath>
+    </Reference>
+    <Reference Include="Syncfusion.SfInput.WinForms, Version=20.2460.0.50, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <HintPath>..\packages\Syncfusion.SfInput.WinForms.20.2.0.50\lib\net46\Syncfusion.SfInput.WinForms.dll</HintPath>
+    </Reference>
+    <Reference Include="Syncfusion.Shared.Base, Version=20.2460.0.50, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <HintPath>..\packages\Syncfusion.Shared.Base.20.2.0.50\lib\net46\Syncfusion.Shared.Base.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
@@ -113,6 +125,12 @@
     <Compile Include="Formularios\Controles\CustomDataGridView.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Formularios\Controles\CustomDateTimePicker.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Formularios\Controles\CustomDateTimePicker.Designer.cs">
+      <DependentUpon>CustomDateTimePicker.cs</DependentUpon>
+    </Compile>
     <Compile Include="Formularios\Controles\CustomGridPanel.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -144,6 +162,12 @@
       <DependentUpon>UploadImage.cs</DependentUpon>
     </Compile>
     <Compile Include="Formularios\DatosInicioSesion.cs" />
+    <Compile Include="Formularios\FormsAdministracion\FrmAdministracion.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Formularios\FormsAdministracion\FrmAdministracion.Designer.cs">
+      <DependentUpon>FrmAdministracion.cs</DependentUpon>
+    </Compile>
     <Compile Include="Formularios\FormsBebidas\FrmAgregarBebida.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -228,6 +252,18 @@
     </Compile>
     <Compile Include="Formularios\FormsEmpleados\FrmObservarEmpleados.Designer.cs">
       <DependentUpon>FrmObservarEmpleados.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Formularios\FormsEstadisticas\FormEstadisticasIniciales\GraphicsGastos.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Formularios\FormsEstadisticas\FormEstadisticasIniciales\GraphicsGastos.Designer.cs">
+      <DependentUpon>GraphicsGastos.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Formularios\FormsEstadisticas\FormEstadisticasIniciales\GraphicsVentas.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Formularios\FormsEstadisticas\FormEstadisticasIniciales\GraphicsVentas.Designer.cs">
+      <DependentUpon>GraphicsVentas.cs</DependentUpon>
     </Compile>
     <Compile Include="Formularios\FormsEstadisticas\FrmCentroEstadisticas.cs">
       <SubType>Form</SubType>
@@ -549,6 +585,18 @@
     <Compile Include="Formularios\FormsProductos\FrmAgregarProducto.Designer.cs">
       <DependentUpon>FrmAgregarProducto.cs</DependentUpon>
     </Compile>
+    <Compile Include="Formularios\FormsProductos\FrmObservarProductos.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Formularios\FormsProductos\FrmObservarProductos.Designer.cs">
+      <DependentUpon>FrmObservarProductos.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Formularios\FormsProductos\ProductoSmall.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Formularios\FormsProductos\ProductoSmall.Designer.cs">
+      <DependentUpon>ProductoSmall.cs</DependentUpon>
+    </Compile>
     <Compile Include="Formularios\FormsReservas\EReservas.cs" />
     <Compile Include="Formularios\FormsReservas\FrmNuevaReserva.cs">
       <SubType>Form</SubType>
@@ -573,6 +621,18 @@
     </Compile>
     <Compile Include="Formularios\FormsReservas\ReservaMesaSmall.Designer.cs">
       <DependentUpon>ReservaMesaSmall.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Formularios\FormsTurnos\FrmTurno.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Formularios\FormsTurnos\FrmTurno.Designer.cs">
+      <DependentUpon>FrmTurno.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Formularios\FormsVentas\FrmPerfilVenta.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Formularios\FormsVentas\FrmPerfilVenta.Designer.cs">
+      <DependentUpon>FrmPerfilVenta.cs</DependentUpon>
     </Compile>
     <Compile Include="Formularios\FormsVentas\VentaSmall.cs">
       <SubType>UserControl</SubType>
@@ -762,6 +822,9 @@
     <EmbeddedResource Include="Formularios\Controles\CustomButtonMesa.resx">
       <DependentUpon>CustomButtonMesa.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Formularios\Controles\CustomDateTimePicker.resx">
+      <DependentUpon>CustomDateTimePicker.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Formularios\Controles\CustomTextBox.resx">
       <DependentUpon>CustomTextBox.cs</DependentUpon>
     </EmbeddedResource>
@@ -770,6 +833,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Formularios\Controles\UploadImage.resx">
       <DependentUpon>UploadImage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Formularios\FormsAdministracion\FrmAdministracion.resx">
+      <DependentUpon>FrmAdministracion.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Formularios\FormsBebidas\FrmAgregarBebida.resx">
       <DependentUpon>FrmAgregarBebida.cs</DependentUpon>
@@ -812,6 +878,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Formularios\FormsEmpleados\FrmObservarEmpleados.resx">
       <DependentUpon>FrmObservarEmpleados.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Formularios\FormsEstadisticas\FormEstadisticasIniciales\GraphicsGastos.resx">
+      <DependentUpon>GraphicsGastos.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Formularios\FormsEstadisticas\FormEstadisticasIniciales\GraphicsVentas.resx">
+      <DependentUpon>GraphicsVentas.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Formularios\FormsEstadisticas\FrmCentroEstadisticas.resx">
       <DependentUpon>FrmCentroEstadisticas.cs</DependentUpon>
@@ -983,6 +1055,12 @@
     <EmbeddedResource Include="Formularios\FormsProductos\FrmAgregarProducto.resx">
       <DependentUpon>FrmAgregarProducto.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Formularios\FormsProductos\FrmObservarProductos.resx">
+      <DependentUpon>FrmObservarProductos.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Formularios\FormsProductos\ProductoSmall.resx">
+      <DependentUpon>ProductoSmall.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Formularios\FormsReservas\FrmNuevaReserva.resx">
       <DependentUpon>FrmNuevaReserva.cs</DependentUpon>
     </EmbeddedResource>
@@ -995,6 +1073,9 @@
     <EmbeddedResource Include="Formularios\FormsReservas\ReservaMesaSmall.resx">
       <DependentUpon>ReservaMesaSmall.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Formularios\FormsTurnos\FrmTurno.resx">
+      <DependentUpon>FrmTurno.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Formularios\FormsVentas\Filtrosventa.resx">
       <DependentUpon>Filtrosventa.cs</DependentUpon>
     </EmbeddedResource>
@@ -1003,6 +1084,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Formularios\FormsVentas\FrmObservarVentas.resx">
       <DependentUpon>FrmObservarVentas.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Formularios\FormsVentas\FrmPerfilVenta.resx">
+      <DependentUpon>FrmPerfilVenta.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Formularios\FormsVentas\ResumenVenta.resx">
       <DependentUpon>ResumenVenta.cs</DependentUpon>
@@ -1143,6 +1227,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\commentsx128.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\No hay productos.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

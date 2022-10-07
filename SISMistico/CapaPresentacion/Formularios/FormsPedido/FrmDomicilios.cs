@@ -114,15 +114,15 @@ namespace CapaPresentacion.Formularios.FormsPedido
         {
             int id_pedido = (int)sender;
 
-            string rpta = NPedido.CambiarEstadoPedido(new List<string>
-            {
-                id_pedido.ToString(),
-                "DISPONIBLE",
-                "0",
-            });
+            //string rpta = NPedido.CambiarEstadoPedido(new List<string>
+            //{
+            //    id_pedido.ToString(),
+            //    "DISPONIBLE",
+            //    "0",
+            //});
 
-            if (!rpta.Equals("OK"))
-                Mensajes.MensajeInformacion("Hubo un error al actualizar el estado del pedido", "Entendido");
+            //if (!rpta.Equals("OK"))
+            //    Mensajes.MensajeInformacion("Hubo un error al actualizar el estado del pedido", "Entendido");
 
             this.rdEnCurso.Checked = true;
             this.BuscarPedidos("DOMICILIOS PENDIENTES", DateTime.Now.ToString("yyyy-MM-dd"));

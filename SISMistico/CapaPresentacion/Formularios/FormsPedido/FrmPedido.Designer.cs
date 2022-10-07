@@ -32,19 +32,19 @@ namespace CapaPresentacion.Formularios.FormsPedido
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmPedido));
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.panelCategorias = new CapaPresentacion.Controles.CustomGridPanel();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.panelProductos = new CapaPresentacion.Controles.CustomGridPanel();
             this.btnRefresh = new System.Windows.Forms.Button();
             this.btnAddProduct = new System.Windows.Forms.Button();
             this.txtBusqueda = new System.Windows.Forms.TextBox();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.panelPedido = new CapaPresentacion.Controles.CustomGridPanel();
             this.gbInfo = new System.Windows.Forms.GroupBox();
             this.chkFacturar = new System.Windows.Forms.CheckBox();
             this.btnSave = new System.Windows.Forms.Button();
             this.txtInfoPedido = new System.Windows.Forms.TextBox();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-            this.panelPedido = new CapaPresentacion.Controles.CustomGridPanel();
-            this.panelProductos = new CapaPresentacion.Controles.CustomGridPanel();
-            this.panelCategorias = new CapaPresentacion.Controles.CustomGridPanel();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.groupBox4.SuspendLayout();
@@ -65,6 +65,19 @@ namespace CapaPresentacion.Formularios.FormsPedido
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Tipos";
             // 
+            // panelCategorias
+            // 
+            this.panelCategorias.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.panelCategorias.AutoScroll = true;
+            this.panelCategorias.Location = new System.Drawing.Point(15, 37);
+            this.panelCategorias.Margin = new System.Windows.Forms.Padding(5);
+            this.panelCategorias.Name = "panelCategorias";
+            this.panelCategorias.PageSize = 10;
+            this.panelCategorias.Size = new System.Drawing.Size(179, 455);
+            this.panelCategorias.TabIndex = 0;
+            // 
             // groupBox3
             // 
             this.groupBox3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -81,6 +94,19 @@ namespace CapaPresentacion.Formularios.FormsPedido
             this.groupBox3.TabIndex = 7;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Búsqueda de productos";
+            // 
+            // panelProductos
+            // 
+            this.panelProductos.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.panelProductos.AutoScroll = true;
+            this.panelProductos.Location = new System.Drawing.Point(10, 85);
+            this.panelProductos.Margin = new System.Windows.Forms.Padding(5);
+            this.panelProductos.Name = "panelProductos";
+            this.panelProductos.PageSize = 10;
+            this.panelProductos.Size = new System.Drawing.Size(521, 408);
+            this.panelProductos.TabIndex = 1;
             // 
             // btnRefresh
             // 
@@ -142,10 +168,25 @@ namespace CapaPresentacion.Formularios.FormsPedido
             this.groupBox4.Margin = new System.Windows.Forms.Padding(5);
             this.groupBox4.Name = "groupBox4";
             this.groupBox4.Padding = new System.Windows.Forms.Padding(5);
-            this.groupBox4.Size = new System.Drawing.Size(521, 502);
+            this.groupBox4.Size = new System.Drawing.Size(827, 502);
             this.groupBox4.TabIndex = 8;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Pedido";
+            // 
+            // panelPedido
+            // 
+            this.panelPedido.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.panelPedido.AutoScroll = true;
+            this.panelPedido.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("panelPedido.BackgroundImage")));
+            this.panelPedido.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.panelPedido.Location = new System.Drawing.Point(5, 35);
+            this.panelPedido.Margin = new System.Windows.Forms.Padding(5);
+            this.panelPedido.Name = "panelPedido";
+            this.panelPedido.PageSize = 10;
+            this.panelPedido.Size = new System.Drawing.Size(811, 458);
+            this.panelPedido.TabIndex = 0;
             // 
             // gbInfo
             // 
@@ -158,7 +199,7 @@ namespace CapaPresentacion.Formularios.FormsPedido
             this.gbInfo.Margin = new System.Windows.Forms.Padding(5);
             this.gbInfo.Name = "gbInfo";
             this.gbInfo.Padding = new System.Windows.Forms.Padding(5);
-            this.gbInfo.Size = new System.Drawing.Size(1288, 102);
+            this.gbInfo.Size = new System.Drawing.Size(1594, 102);
             this.gbInfo.TabIndex = 8;
             this.gbInfo.TabStop = false;
             this.gbInfo.Text = "Información";
@@ -167,7 +208,9 @@ namespace CapaPresentacion.Formularios.FormsPedido
             // 
             this.chkFacturar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.chkFacturar.AutoSize = true;
-            this.chkFacturar.Location = new System.Drawing.Point(1061, 29);
+            this.chkFacturar.Checked = true;
+            this.chkFacturar.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chkFacturar.Location = new System.Drawing.Point(1367, 29);
             this.chkFacturar.Name = "chkFacturar";
             this.chkFacturar.Size = new System.Drawing.Size(141, 60);
             this.chkFacturar.TabIndex = 28;
@@ -188,7 +231,7 @@ namespace CapaPresentacion.Formularios.FormsPedido
             this.btnSave.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
             this.btnSave.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnSave.Font = new System.Drawing.Font("Segoe UI Semibold", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnSave.Location = new System.Drawing.Point(1217, 29);
+            this.btnSave.Location = new System.Drawing.Point(1523, 29);
             this.btnSave.Margin = new System.Windows.Forms.Padding(5);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(60, 60);
@@ -211,57 +254,16 @@ namespace CapaPresentacion.Formularios.FormsPedido
             this.txtInfoPedido.Name = "txtInfoPedido";
             this.txtInfoPedido.ReadOnly = true;
             this.txtInfoPedido.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.txtInfoPedido.Size = new System.Drawing.Size(1030, 58);
+            this.txtInfoPedido.Size = new System.Drawing.Size(1336, 58);
             this.txtInfoPedido.TabIndex = 0;
             this.txtInfoPedido.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
-            // panelPedido
-            // 
-            this.panelPedido.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.panelPedido.AutoScroll = true;
-            this.panelPedido.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("panelPedido.BackgroundImage")));
-            this.panelPedido.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.panelPedido.Location = new System.Drawing.Point(5, 35);
-            this.panelPedido.Margin = new System.Windows.Forms.Padding(5);
-            this.panelPedido.Name = "panelPedido";
-            this.panelPedido.PageSize = 10;
-            this.panelPedido.Size = new System.Drawing.Size(505, 458);
-            this.panelPedido.TabIndex = 0;
-            // 
-            // panelProductos
-            // 
-            this.panelProductos.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.panelProductos.AutoScroll = true;
-            this.panelProductos.Location = new System.Drawing.Point(10, 85);
-            this.panelProductos.Margin = new System.Windows.Forms.Padding(5);
-            this.panelProductos.Name = "panelProductos";
-            this.panelProductos.PageSize = 10;
-            this.panelProductos.Size = new System.Drawing.Size(521, 408);
-            this.panelProductos.TabIndex = 1;
-            // 
-            // panelCategorias
-            // 
-            this.panelCategorias.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.panelCategorias.AutoScroll = true;
-            this.panelCategorias.Location = new System.Drawing.Point(15, 37);
-            this.panelCategorias.Margin = new System.Windows.Forms.Padding(5);
-            this.panelCategorias.Name = "panelCategorias";
-            this.panelCategorias.PageSize = 10;
-            this.panelCategorias.Size = new System.Drawing.Size(179, 455);
-            this.panelCategorias.TabIndex = 0;
             // 
             // FrmPedido
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 28F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(1316, 633);
+            this.ClientSize = new System.Drawing.Size(1622, 633);
             this.Controls.Add(this.gbInfo);
             this.Controls.Add(this.groupBox4);
             this.Controls.Add(this.groupBox3);

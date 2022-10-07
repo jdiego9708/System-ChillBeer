@@ -12,15 +12,39 @@ namespace CapaNegocio
 {
     public class NTurnos
     {
-        #region BUSCAR TURNOS
-
-        public static async Task<(string rpta, DataTable dtTurnos)> BuscarTurnos(string tipo_busqueda, string texto_busqueda1,
-            string texto_busqueda2)
+        public static Task<string> InsertarCierreTurno(Turnos_cierres cierre)
         {
-            DEgresos DEgresos = new DEgresos();
-            return await DEgresos.BuscarEgreso(tipo_busqueda, texto_busqueda1, texto_busqueda2);
+            DTurnos DTurnos = new DTurnos();
+            return DTurnos.InsertarCierreTurno(cierre);
+        }
+        public static Task<string> InsertarTurno(Turno turno)
+        {
+            DTurnos DTurnos = new DTurnos();
+            return DTurnos.InsertarTurno(turno);
         }
 
-        #endregion
+        public static Task<(string rpta, DataTable dtTurnos)> BuscarTurnos(string tipo_busqueda, string texto_busqueda1,
+            string texto_busqueda2)
+        {
+            DTurnos DTurnos = new DTurnos();
+            return DTurnos.BuscarTurnos(tipo_busqueda, texto_busqueda1, texto_busqueda2);
+        }
+
+        public static Task<string> InsertarBase(int id_turno, decimal base_nueva)
+        {
+            DTurnos DTurnos = new DTurnos();
+            return DTurnos.InsertarBase(id_turno, base_nueva);
+        }
+        public static Task<string> EditarEstadoTurno(int id_turno, string estado)
+        {
+            DTurnos DTurnos = new DTurnos();
+            return DTurnos.EditarEstadoTurno(id_turno, estado);
+        }
+        public static Task<(string rpta, DataTable dtEstadistica, DataTable dtDetalle, DataTable dtPagos)> BuscarEstadistica(int id_turno)
+        {
+            DTurnos dTurnos = new DTurnos();
+            return dTurnos.BuscarEstadistica(id_turno);
+        }
+
     }
 }

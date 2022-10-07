@@ -22,8 +22,13 @@ namespace CapaPresentacion.Formularios.FormsClientes
             this.Load += FrmObservarClientes_Load;
             this.btnAddCliente.Click += BtnAddCliente_Click;
             this.txtBusqueda.KeyPress += TxtBusqueda_KeyPress;
-
+            this.btnRefresh.Click += BtnRefresh_Click;
             this.btnClose.Click += BtnClose_Click;
+        }
+
+        private void BtnRefresh_Click(object sender, EventArgs e)
+        {
+            this.BuscarClientes("COMPLETO", "");
         }
 
         private void BtnClose_Click(object sender, EventArgs e)

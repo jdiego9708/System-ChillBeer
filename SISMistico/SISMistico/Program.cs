@@ -16,6 +16,8 @@ namespace SISMistico
         [STAThread]
         static void Main()
         {
+            Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("NzI0MzY4QDMyMzAyZTMyMmUzMFZnd2g4SEFwWHNhaUxBcEdzNDJWUTVTUFd2TitYaGlFZlA0a3RmWFlRMEE9");
+
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new FrmIniciarSesion());

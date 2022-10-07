@@ -32,6 +32,28 @@ namespace CapaPresentacion.Formularios.FormsVentas
         {
             try
             {
+                DateTime fechaVenta = venta.Fecha_venta;
+                DateTime horaVenta = fechaVenta.Add(venta.Hora_venta);
+                StringBuilder sb = new StringBuilder();
+                if (venta.Estado.Equals("CANCELADO"))
+                {                  
+                    if (venta.Pedido.Fecha_pedido.ToString("yyyy-MM-dd") == DateTime.Now.ToString("yyyy-MM-dd"))
+                        sb.Append($"HOY | Hora: {horaVenta:hh:mm tt} | {venta.Pedido.Cliente.Nombre_cliente} | CANCELADO | ");
+                    else if (venta.Pedido.Fecha_pedido.ToString("yyyy-MM-dd") == DateTime.Now.AddDays(-1).ToString("yyyy-MM-dd"))
+                        sb.Append($"AYER | Hora: {horaVenta:hh:mm tt} | {venta.Pedido.Cliente.Nombre_cliente} | CANCELADO | ");
+                    else if (venta.Pedido.Fecha_pedido.ToString("yyyy-MM-dd") == DateTime.Now.AddDays(-2).ToString("yyyy-MM-dd"))
+                        sb.Append($"HACE DOS DIAS | Hora: {horaVenta:hh:mm tt} | CANCELADO | ");
+                    else
+                        sb.Append($"{venta.Fecha_venta:yyyy-MM-dd} | Hora: {horaVenta:hh:mm tt} | {venta.Pedido.Cliente.Nombre_cliente} | CANCELADO | ");
+
+                    this.txtInfo.Text = sb.ToString();
+
+                    this.txtInfo.BackColor = Color.FromArgb(255, 226, 226);
+                    this.BackColor = Color.FromArgb(255, 226, 226);
+
+                    return;
+                }
+
                 //Obtener el detalle del pedido de la venta
                 DataTable dtVentas = NVentas.BuscarVenta("ID VENTA DETALLE", venta.Id_pedido.ToString());
 
@@ -42,8 +64,14 @@ namespace CapaPresentacion.Formularios.FormsVentas
 
                 if (detalles == null) return;
 
-                StringBuilder sb = new StringBuilder();
-                sb.Append($"Hora: {DateTime.Now:hh:mm tt} | Total: ${venta.Total_final:N} | ");
+                if (fechaVenta.ToString("yyyy-MM-dd") == DateTime.Now.ToString("yyyy-MM-dd"))
+                    sb.Append($"HOY | Hora: {horaVenta:hh:mm tt} | {venta.Pedido.Cliente.Nombre_cliente} | Total: ${venta.Total_final:N} | ");
+                else if (fechaVenta.ToString("yyyy-MM-dd") == DateTime.Now.AddDays(-1).ToString("yyyy-MM-dd"))
+                    sb.Append($"AYER | Hora: {horaVenta:hh:mm tt} | {venta.Pedido.Cliente.Nombre_cliente} | Total: ${venta.Total_final:N} | ");
+                else if (fechaVenta.ToString("yyyy-MM-dd") == DateTime.Now.AddDays(-2).ToString("yyyy-MM-dd"))
+                    sb.Append($"HACE DOS DIAS | Hora: {horaVenta:hh:mm tt} | {venta.Pedido.Cliente.Nombre_cliente} | Total: ${venta.Total_final:N} | ");
+                else
+                    sb.Append($"{fechaVenta:yyyy-MM-dd} | Hora: {horaVenta:hh:mm tt} | {venta.Pedido.Cliente.Nombre_cliente} | Total: ${venta.Total_final:N} | ");
 
                 if (detalles.Count == 1)
                 {
