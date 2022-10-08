@@ -94,7 +94,7 @@ namespace CapaPresentacion.Formularios.FormsEstadisticas.FormEstadisticasInicial
 
                 Series serie = new Series
                 {
-                    Font = new Font("Segoe UI Emoji", 12F, FontStyle.Bold, GraphicsUnit.Point, 0),
+                    Font = new Font("Segoe UI Emoji", 10F, FontStyle.Bold, GraphicsUnit.Point, 0),
                     LabelForeColor = Color.FromArgb(4, 0, 85),
                     LabelBorderWidth = 0,
                     BorderWidth = 0,
@@ -209,7 +209,7 @@ namespace CapaPresentacion.Formularios.FormsEstadisticas.FormEstadisticasInicial
 
                 Series serie = new Series
                 {
-                    Font = new Font("Segoe UI Emoji", 12F, FontStyle.Bold, GraphicsUnit.Point, 0),
+                    Font = new Font("Segoe UI Emoji", 10F, FontStyle.Bold, GraphicsUnit.Point, 0),
                     LabelForeColor = Color.FromArgb(4, 0, 85),
                     LabelBorderWidth = 0,
                     BorderWidth = 0,
