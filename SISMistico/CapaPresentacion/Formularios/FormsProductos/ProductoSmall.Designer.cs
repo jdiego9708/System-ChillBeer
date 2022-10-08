@@ -40,11 +40,11 @@
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.txtInformacion = new System.Windows.Forms.TextBox();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-            this.groupBox5 = new System.Windows.Forms.GroupBox();
-            this.pxImagen = new System.Windows.Forms.PictureBox();
             this.btnStockProducto = new System.Windows.Forms.Button();
             this.btnEditar = new System.Windows.Forms.Button();
             this.btnNext = new System.Windows.Forms.Button();
+            this.groupBox5 = new System.Windows.Forms.GroupBox();
+            this.pxImagen = new System.Windows.Forms.PictureBox();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -57,7 +57,7 @@
             // 
             this.groupBox1.Controls.Add(this.txtNombre);
             this.groupBox1.Font = new System.Drawing.Font("Segoe UI Emoji", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.groupBox1.Location = new System.Drawing.Point(250, 16);
+            this.groupBox1.Location = new System.Drawing.Point(220, 16);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(329, 76);
             this.groupBox1.TabIndex = 30;
@@ -84,14 +84,14 @@
             this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(33)))), ((int)(((byte)(116)))));
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(757, 10);
+            this.panel1.Size = new System.Drawing.Size(725, 10);
             this.panel1.TabIndex = 29;
             // 
             // groupBox2
             // 
             this.groupBox2.Controls.Add(this.txtTipo);
             this.groupBox2.Font = new System.Drawing.Font("Segoe UI Emoji", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.groupBox2.Location = new System.Drawing.Point(585, 16);
+            this.groupBox2.Location = new System.Drawing.Point(556, 16);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(163, 76);
             this.groupBox2.TabIndex = 31;
@@ -115,7 +115,7 @@
             // 
             this.groupBox3.Controls.Add(this.txtStock);
             this.groupBox3.Font = new System.Drawing.Font("Segoe UI Emoji", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.groupBox3.Location = new System.Drawing.Point(585, 93);
+            this.groupBox3.Location = new System.Drawing.Point(556, 93);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Size = new System.Drawing.Size(163, 76);
             this.groupBox3.TabIndex = 32;
@@ -139,9 +139,9 @@
             // 
             this.groupBox4.Controls.Add(this.txtInformacion);
             this.groupBox4.Font = new System.Drawing.Font("Segoe UI Emoji", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.groupBox4.Location = new System.Drawing.Point(250, 93);
+            this.groupBox4.Location = new System.Drawing.Point(220, 93);
             this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(329, 161);
+            this.groupBox4.Size = new System.Drawing.Size(329, 144);
             this.groupBox4.TabIndex = 33;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Información";
@@ -156,29 +156,9 @@
             this.txtInformacion.Multiline = true;
             this.txtInformacion.Name = "txtInformacion";
             this.txtInformacion.ReadOnly = true;
-            this.txtInformacion.Size = new System.Drawing.Size(317, 124);
+            this.txtInformacion.Size = new System.Drawing.Size(317, 107);
             this.txtInformacion.TabIndex = 0;
             this.txtInformacion.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
-            // groupBox5
-            // 
-            this.groupBox5.Controls.Add(this.pxImagen);
-            this.groupBox5.Font = new System.Drawing.Font("Segoe UI Emoji", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.groupBox5.Location = new System.Drawing.Point(3, 16);
-            this.groupBox5.Name = "groupBox5";
-            this.groupBox5.Size = new System.Drawing.Size(241, 238);
-            this.groupBox5.TabIndex = 37;
-            this.groupBox5.TabStop = false;
-            this.groupBox5.Text = "Imagen";
-            // 
-            // pxImagen
-            // 
-            this.pxImagen.Location = new System.Drawing.Point(10, 29);
-            this.pxImagen.Name = "pxImagen";
-            this.pxImagen.Size = new System.Drawing.Size(220, 200);
-            this.pxImagen.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pxImagen.TabIndex = 37;
-            this.pxImagen.TabStop = false;
             // 
             // btnStockProducto
             // 
@@ -191,7 +171,7 @@
             this.btnStockProducto.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
             this.btnStockProducto.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnStockProducto.Font = new System.Drawing.Font("Segoe UI Semibold", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnStockProducto.Location = new System.Drawing.Point(642, 187);
+            this.btnStockProducto.Location = new System.Drawing.Point(613, 187);
             this.btnStockProducto.Name = "btnStockProducto";
             this.btnStockProducto.Size = new System.Drawing.Size(50, 50);
             this.btnStockProducto.TabIndex = 36;
@@ -209,7 +189,7 @@
             this.btnEditar.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
             this.btnEditar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnEditar.Font = new System.Drawing.Font("Segoe UI Semibold", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnEditar.Location = new System.Drawing.Point(586, 187);
+            this.btnEditar.Location = new System.Drawing.Point(557, 187);
             this.btnEditar.Name = "btnEditar";
             this.btnEditar.Size = new System.Drawing.Size(50, 50);
             this.btnEditar.TabIndex = 35;
@@ -227,12 +207,32 @@
             this.btnNext.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
             this.btnNext.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnNext.Font = new System.Drawing.Font("Segoe UI Semibold", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnNext.Location = new System.Drawing.Point(698, 187);
+            this.btnNext.Location = new System.Drawing.Point(669, 187);
             this.btnNext.Name = "btnNext";
             this.btnNext.Size = new System.Drawing.Size(50, 50);
             this.btnNext.TabIndex = 34;
             this.toolTip1.SetToolTip(this.btnNext, "Ver perfil del producto");
             this.btnNext.UseVisualStyleBackColor = true;
+            // 
+            // groupBox5
+            // 
+            this.groupBox5.Controls.Add(this.pxImagen);
+            this.groupBox5.Font = new System.Drawing.Font("Segoe UI Emoji", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.groupBox5.Location = new System.Drawing.Point(3, 16);
+            this.groupBox5.Name = "groupBox5";
+            this.groupBox5.Size = new System.Drawing.Size(211, 221);
+            this.groupBox5.TabIndex = 37;
+            this.groupBox5.TabStop = false;
+            this.groupBox5.Text = "Imagen";
+            // 
+            // pxImagen
+            // 
+            this.pxImagen.Location = new System.Drawing.Point(10, 29);
+            this.pxImagen.Name = "pxImagen";
+            this.pxImagen.Size = new System.Drawing.Size(195, 186);
+            this.pxImagen.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pxImagen.TabIndex = 37;
+            this.pxImagen.TabStop = false;
             // 
             // ProductoSmall
             // 
@@ -249,9 +249,9 @@
             this.Controls.Add(this.btnEditar);
             this.Controls.Add(this.btnNext);
             this.Font = new System.Drawing.Font("Segoe UI Emoji", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.Margin = new System.Windows.Forms.Padding(6);
             this.Name = "ProductoSmall";
-            this.Size = new System.Drawing.Size(757, 262);
+            this.Size = new System.Drawing.Size(725, 244);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.groupBox2.ResumeLayout(false);

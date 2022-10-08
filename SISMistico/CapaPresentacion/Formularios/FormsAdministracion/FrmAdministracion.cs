@@ -131,5 +131,10 @@ namespace CapaPresentacion.Formularios.FormsAdministracion
             this.LoadTurno();
         }
         public FrmTurno FrmTurno { get; set; }
+
+        private void graphicsVentas1_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

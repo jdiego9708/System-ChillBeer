@@ -190,8 +190,9 @@
             this.graphicsVentas1.Location = new System.Drawing.Point(9, 25);
             this.graphicsVentas1.Margin = new System.Windows.Forms.Padding(6);
             this.graphicsVentas1.Name = "graphicsVentas1";
-            this.graphicsVentas1.Size = new System.Drawing.Size(745, 385);
+            this.graphicsVentas1.Size = new System.Drawing.Size(693, 371);
             this.graphicsVentas1.TabIndex = 0;
+            this.graphicsVentas1.Load += new System.EventHandler(this.graphicsVentas1_Load);
             // 
             // FrmAdministracion
             // 
